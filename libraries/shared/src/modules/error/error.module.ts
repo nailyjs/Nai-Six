@@ -17,7 +17,7 @@
 
 import { DynamicModule, Module } from "@nestjs/common";
 import { APP_FILTER } from "@nestjs/core";
-import { CommonHttpFilter, CommonUnknownFilter } from "../../errors";
+import { CommonHttpFilter, CommonPrismaClientKnownRequestErrorFilter, CommonUnknownFilter } from "../../errors";
 import { CommonAxiosFilter } from "../../errors/axios.filter";
 
 @Module({})
@@ -46,6 +46,10 @@ export class CommonErrorModule {
         {
           provide: APP_FILTER,
           useClass: CommonAxiosFilter,
+        },
+        {
+          provide: APP_FILTER,
+          useClass: CommonPrismaClientKnownRequestErrorFilter,
         },
       ],
     };

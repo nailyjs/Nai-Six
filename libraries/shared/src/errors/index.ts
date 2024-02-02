@@ -17,3 +17,4 @@
 
 export * from "./http.filter";
 export * from "./unknown.filter";
+export * from "./prismaClientKnownRequest.filter";

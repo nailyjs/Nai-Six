@@ -2,6 +2,8 @@ import { CanActivate, ExecutionContext, ForbiddenException, Injectable, Unauthor
 import { ConfigService } from "@nestjs/config";
 import { JwtService } from "@nestjs/jwt";
 import { Request } from "express";
+import { JwtLoginPayload } from "../modules/jwt";
+import { ObjectId } from "mongodb";
 
 declare global {
   namespace Express {
@@ -26,9 +28,10 @@ export class CommonAuthGuard implements CanActivate {
     const token = this.extractTokenFromHeader(request);
     if (!token) throw new ForbiddenException(1006);
     try {
-      const payload = await this.jwtService.verifyAsync(token, {
+      const payload: JwtLoginPayload = await this.jwtService.verifyAsync(token, {
         secret: this.configService.getOrThrow("global.jwt.secret"),
       });
+      if (!ObjectId.isValid(payload.userID)) throw new ForbiddenException(1006);
       request.user = payload;
     } catch {
       throw new ForbiddenException(1006);
@@ -59,9 +62,10 @@ export class CommonAuthGuardOptional implements CanActivate {
 
     if (token) {
       try {
-        const payload = await this.jwtService.verifyAsync(token, {
+        const payload: JwtLoginPayload = await this.jwtService.verifyAsync(token, {
           secret: this.configService.getOrThrow("global.jwt.secret"),
         });
+        if (!ObjectId.isValid(payload.userID)) throw new ForbiddenException(1006);
         request.user = payload;
       } catch {
         return true;

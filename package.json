@@ -74,6 +74,7 @@
     "js-yaml": "^4.1.0",
     "listr2": "^8.0.2",
     "logform": "^2.6.0",
+    "mongodb": "^6.3.0",
     "nestjs-i18n": "^10.4.0",
     "nodemailer": "^6.9.9",
     "passport": "^0.7.0",

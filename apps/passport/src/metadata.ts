@@ -114,6 +114,10 @@ export default async () => {
             },
           },
         ],
+        [
+          import("./modules/transport/controllers/qrcode.controller"),
+          { QrCodeController: { getQrCode: { summary: "\u4E8C\u7EF4\u7801\u767B\u5F55\uFF1A\u83B7\u53D6\u4E8C\u7EF4\u7801" } } },
+        ],
         [import("./modules/login/controllers/logout.controller"), { LogoutController: { logout: { summary: "\u767B\u51FA", type: Number } } }],
         [
           import("./modules/register/controllers/register.controller"),
@@ -131,10 +135,6 @@ export default async () => {
               deleteUser: { summary: "\u6CE8\u9500\u8D26\u53F7" },
             },
           },
-        ],
-        [
-          import("./modules/transport/controllers/qrcode.controller"),
-          { QrCodeController: { getQrCode: { summary: "\u4E8C\u7EF4\u7801\u767B\u5F55\uFF1A\u83B7\u53D6\u4E8C\u7EF4\u7801" } } },
         ],
       ],
     },
