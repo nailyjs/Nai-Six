@@ -37,7 +37,7 @@ export class TransportController {
    * @param {*} body
    * @memberof TransportController
    */
-  @Post("phone")
+  @Post("sms")
   @UseInterceptors(ResInterceptor)
   public phone(@Body() body: PostTransportPhoneBodyDTO) {
     return this.phoneService.sendCode(body.phone);
