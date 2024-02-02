@@ -1,0 +1,19 @@
+passport:
+  port: 3000
+  maxIdentifierCount:
+    watchOS: 3
+    android: 3
+    web: 0
+    harmonyOS_wearable: 3
+    ios: 3
+
+lightning:
+  port: 3003
+
+# 脚本
+scripts:
+  buildDeps:
+    commands:
+      - pnpm build:shared
+      - pnpm build:auth
+      - pnpm build:database
