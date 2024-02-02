@@ -21,6 +21,7 @@ import { join } from "path";
 import { NailyContext } from "../module.module";
 import { parse } from "dotenv";
 import { existsSync, readFileSync } from "fs";
+import { CommonLogger } from "../logger";
 
 declare global {
   namespace NodeJS {
@@ -41,14 +42,17 @@ process.env.VENDOR_ROOT = join(__dirname, "..", "..", "..", "..", "..", "..", ".
 process.env.PUBLIC_ROOT = join(__dirname, "..", "..", "..", "..", "..", "..", "..", "public");
 process.env.RESOURCE_ROOT = join(__dirname, "..", "..", "..", "..", "..", "..");
 process.env.DATABASE_URL = (() => {
-  let path = join(process.env.PROJECT_ROOT, ".env", process.env.NODE_ENV ? process.env.NODE_ENV : "");
+  let path = join(process.env.PROJECT_ROOT, ".env" + (process.env.NODE_ENV ? "." + process.env.NODE_ENV : ""));
   let env: string;
   if (existsSync(path)) {
+    new CommonLogger().warn(path, "ENV");
     env = readFileSync(path).toString();
   } else if (existsSync(join(process.env.PROJECT_ROOT, ".env"))) {
+    new CommonLogger().warn(path, "ENV");
     path = join(process.env.PROJECT_ROOT, ".env");
     env = readFileSync(path).toString();
   } else {
+    new CommonLogger().error(path, "ENV");
     throw new Error("The .env file does not exist");
   }
   return parse(env).DATABASE_URL;
