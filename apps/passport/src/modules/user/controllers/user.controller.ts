@@ -41,13 +41,21 @@ export class UserController {
   @Delete()
   @UseInterceptors(ResInterceptor)
   public async deleteUser(@User() user: UserEntity) {
-    const userInstance = await this.prismaService.user.findUnique({
+    await this.prismaService.userIdentifier.deleteMany({
       where: { userID: user.userID },
     });
-    userInstance.isDeleted = true;
-    return this.prismaService.user.update({
+    await this.prismaService.userAppStoreSubscribe.deleteMany({
       where: { userID: user.userID },
-      data: userInstance,
+    });
+    await this.prismaService.browserBookMark.deleteMany({
+      where: { userID: user.userID },
+    });
+    await this.prismaService.browserTrack.deleteMany({
+      where: { userID: user.userID },
+    });
+    return await this.prismaService.user.update({
+      where: { userID: user.userID },
+      data: { isDeleted: true, phone: null, email: null },
     });
   }
 }
