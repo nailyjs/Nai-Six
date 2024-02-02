@@ -20,7 +20,6 @@ export class BrowserMarkController {
    *
    * @author Zero <gczgroup@qq.com>
    * @date 2024/02/02
-   * @return {*}
    * @memberof BrowserMarkController
    */
   @Get()
@@ -60,11 +59,11 @@ export class BrowserMarkController {
     await this.prismaService.browserBookMark.createMany({
       data: body.list.map((item) => {
         return {
-          title: item.title,
-          icon: item.icon,
-          link: item.link,
-          color: item.color,
-          index: item.index,
+          bookMarkTitle: item.title,
+          bookMarkIcon: item.icon,
+          bookMarkLink: item.link,
+          bookMarkColor: item.color,
+          bookMarkIndex: item.index,
           userID: user.userID,
         };
       }),
