@@ -23,13 +23,13 @@ export class UserChangerController {
   @UseInterceptors(ResInterceptor)
   public async changeUsername(@User() user: UserEntity, @Body() body: PutUserUsernameBodyDTO) {
     const checkUsername = await this.prismaService.user.findFirst({ where: { username: body.username } });
-    if (checkUsername) return 1050;
+    if (checkUsername) return 1048;
     await this.prismaService.user.update({
       where: { userID: user.userID },
       data: {
         username: body.username,
       },
     });
-    return 1048;
+    return 1000;
   }
 }
