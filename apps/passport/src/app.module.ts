@@ -12,6 +12,7 @@ import {
   CommonValidationPipe,
   LoggerMiddleware,
   ThrottlerBehindProxyGuard,
+  CommonErrorModule,
 } from "cc.naily.six.shared";
 import { CommonJwtModule } from "cc.naily.six.auth";
 import { LoginModule } from "./modules/login/login.module";
@@ -31,6 +32,7 @@ import { UserModule } from "./modules/user/user.module";
     CommonTencentCloudModule.forRoot(),
     CommonMailerModule.forRoot(),
     CommonJwtModule.forRoot(),
+    CommonErrorModule.forRoot(),
     LoginModule.register(),
     RegisterModule.register(),
     TransportModule.register(),
