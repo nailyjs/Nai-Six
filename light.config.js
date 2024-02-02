@@ -20,26 +20,26 @@ module.exports = {
   /** @type {import("pm2").StartOptions[]} */
   apps: [
     {
-      name: "ele-Lightning",
+      name: "six-Lightning",
       script: "./resources/dist/apps/lightning/main.js",
       env: {
         NODE_ENV: "production",
       },
     },
     {
-      name: "ele-Passport",
+      name: "six-Passport",
       script: "./resources/dist/apps/passport/main.js",
       env: {
         NODE_ENV: "production",
       },
     },
-    {
-      name: "ele-shop",
-      script: "./resources/dist/apps/shop/main.js",
-      env: {
-        NODE_ENV: "production",
-      },
-    },
+    // {
+    //   name: "six-shop",
+    //   script: "./resources/dist/apps/shop/main.js",
+    //   env: {
+    //     NODE_ENV: "production",
+    //   },
+    // },
   ],
   exec_mode: "cluster",
   combine_logs: true,
