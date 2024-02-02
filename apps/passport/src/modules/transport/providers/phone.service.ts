@@ -24,9 +24,9 @@ export class PhoneService extends TransportCodeService {
 
   public async sendCode(phone: string): Promise<any>;
   public async sendCode(phone: string): Promise<SendSmsResponse> {
-    const code = await super.sendCode(phone);
+    const code = this.getCode();
+    const key = this.getRediskey(phone);
     if (phone === "13370544360") {
-      await this.cacheManager.store.set(this.getRediskey(phone), 123456);
       return {
         SendStatusSet: [
           {
@@ -41,7 +41,6 @@ export class PhoneService extends TransportCodeService {
         ],
       };
     }
-
     const isSended = await this.smsClient.SendSms({
       SmsSdkAppId: this.configService.get("global.tencent.cloud.sms.SmsSdkAppId"),
       SignName: this.configService.get("global.tencent.cloud.sms.SignName"),
@@ -49,7 +48,9 @@ export class PhoneService extends TransportCodeService {
       TemplateId: this.configService.get("global.tencent.cloud.sms.TemplateId"),
       TemplateParamSet: [`${code}`, "5"],
     });
-    if (isSended.SendStatusSet[0].Code !== "Ok") await super.deleteCode(phone);
+    if (isSended.SendStatusSet[0].Code === "Ok") {
+      await this.cacheManager.set(key, code, 1000 * 60 * 5);
+    }
     return isSended;
   }
 }
