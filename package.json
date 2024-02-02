@@ -3,12 +3,17 @@
   "scripts": {
     "dev:passport": "pnpm -F cc.naily.six.passport start:dev",
     "dev:light": "pnpm -F cc.naily.six.lightning start:dev",
+    "build": "tsx scripts/buildDeps.ts",
+    "build:passport": "pnpm -F cc.naily.six.passport build",
+    "build:light": "pnpm -F cc.naily.six.lightning build",
     "build:database": "pnpm -F cc.naily.six.database build",
     "build:shared": "pnpm -F cc.naily.six.shared build",
     "build:auth": "pnpm -F cc.naily.six.auth build",
+    "start:passport": "pnpm -F cc.naily.six.passport start:prod",
+    "start:light": "pnpm -F cc.naily.six.lightning start:prod",
     "format": "prettier --write ./",
     "lint": "eslint \"./**/*.ts\" --fix",
-    "prepare": "husky install",
+    "prepare": "husky install && pnpx prisma generate && pnpm build",
     "generate": "pnpx prisma generate",
     "lint-staged": "lint-staged"
   },
@@ -60,9 +65,11 @@
     "chalk": "^4",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
+    "cross-env": "^7.0.3",
     "glob": "^10.3.10",
     "ioredis": "^5.3.2",
     "joi": "^17.12.1",
+    "listr2": "^8.0.2",
     "logform": "^2.6.0",
     "nestjs-i18n": "^10.4.0",
     "nodemailer": "^6.9.9",
@@ -74,6 +81,7 @@
     "studio": "github:prisma/studio",
     "swagger-ui-express": "^5.0.0",
     "tencentcloud-sdk-nodejs": "^4.0.792",
+    "tsx": "^4.7.0",
     "winston": "^3.11.0"
   },
   "peerDependencies": {
