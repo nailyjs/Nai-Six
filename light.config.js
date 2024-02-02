@@ -21,14 +21,14 @@ module.exports = {
   apps: [
     {
       name: "six-Lightning",
-      script: "./resources/dist/apps/lightning/main.js",
+      script: "./resources/dist/apps/lightning/src/main.js",
       env: {
         NODE_ENV: "production",
       },
     },
     {
       name: "six-Passport",
-      script: "./resources/dist/apps/passport/main.js",
+      script: "./resources/dist/apps/passport/src/main.js",
       env: {
         NODE_ENV: "production",
       },
