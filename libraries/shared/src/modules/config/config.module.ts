@@ -19,15 +19,19 @@ import { DynamicModule, Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { join } from "path";
 import { NailyContext } from "../module.module";
+import { parse } from "dotenv";
+import { existsSync, readFileSync } from "fs";
 
 declare global {
   namespace NodeJS {
     export interface ProcessEnv {
+      NODE_ENV: "development" | "production" | string;
       PROJECT_ROOT: string;
       RESOURCE_ROOT: string;
       VENDOR_ROOT: string;
       PUBLIC_ROOT: string;
       CONFIG_PATH?: string;
+      DATABASE_URL: string;
     }
   }
 }
@@ -36,6 +40,19 @@ process.env.PROJECT_ROOT = join(__dirname, "..", "..", "..", "..", "..", "..", "
 process.env.VENDOR_ROOT = join(__dirname, "..", "..", "..", "..", "..", "..", "..", "vendors");
 process.env.PUBLIC_ROOT = join(__dirname, "..", "..", "..", "..", "..", "..", "..", "public");
 process.env.RESOURCE_ROOT = join(__dirname, "..", "..", "..", "..", "..", "..");
+process.env.DATABASE_URL = (() => {
+  let path = join(process.env.PROJECT_ROOT, ".env", process.env.NODE_ENV ? process.env.NODE_ENV : "");
+  let env: string;
+  if (existsSync(path)) {
+    env = readFileSync(path).toString();
+  } else if (existsSync(join(process.env.PROJECT_ROOT, ".env"))) {
+    path = join(process.env.PROJECT_ROOT, ".env");
+    env = readFileSync(path).toString();
+  } else {
+    throw new Error("The .env file does not exist");
+  }
+  return parse(env).DATABASE_URL;
+})();
 
 @Module({})
 export class CommonConfigModule extends ConfigModule implements ConfigModule {
