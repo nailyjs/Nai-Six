@@ -37,9 +37,9 @@ model User {
     /// 用户的头像
     avatar                String?
     /// 用户的邮箱
-    email                 String?                 @unique
+    email                 String?
     /// 用户的手机号
-    phone                 String?                 @unique
+    phone                 String?
     /// 用户是否被删除
     isDeleted             Boolean?                @default(false)
     /// 用户的登录标识符
