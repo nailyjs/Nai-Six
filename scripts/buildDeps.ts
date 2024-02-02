@@ -45,7 +45,7 @@ new Listr(
       title: "Build All Dependencies",
       async task(ctx, renderer) {
         // eslint-disable-next-line @typescript-eslint/no-var-requires
-        const { CommonConfigModule } = require("cc.naily.element.shared");
+        const { CommonConfigModule } = require("cc.naily.six.shared");
 
         class BuildModule {}
         Module({

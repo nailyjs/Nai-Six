@@ -13,7 +13,7 @@
     "start:light": "pnpm -F cc.naily.six.lightning start:prod",
     "format": "prettier --write ./",
     "lint": "eslint \"./**/*.ts\" --fix",
-    "prepare": "husky install && pnpx prisma generate && pnpm build",
+    "prepare": "husky install && pnpx prisma generate && pnpm build:shared && pnpm build",
     "generate": "pnpx prisma generate",
     "lint-staged": "lint-staged"
   },
