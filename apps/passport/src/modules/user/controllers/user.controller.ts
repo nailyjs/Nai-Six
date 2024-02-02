@@ -21,10 +21,12 @@ export class UserController {
   @Auth()
   @Get("logging")
   @UseInterceptors(ResInterceptor)
-  public getUser(@User() user: UserEntity) {
-    return this.prismaService.user.findUnique({
-      where: { userID: user.userID },
-    });
+  public async getUser(@User() user: UserEntity) {
+    return {
+      user: await this.prismaService.user.findUnique({
+        where: { userID: user.userID },
+      }),
+    };
   }
 
   /**
