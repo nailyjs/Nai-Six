@@ -2,7 +2,7 @@ import { BadRequestException, Body, Controller, Get, Post, Query, UseInterceptor
 import { BrowserMarkService } from "../providers/mark.service";
 import { ApiTags } from "@nestjs/swagger";
 import { Auth, User } from "cc.naily.six.auth";
-import { ResInterceptor } from "cc.naily.six.shared";
+import { CommonLogger, ResInterceptor } from "cc.naily.six.shared";
 import { PrismaService } from "cc.naily.six.database";
 import { User as UserEntity } from "@prisma/client";
 import { GetBroswerMarkQueryDTO, PostBrowserMarkBodyDTO } from "../dtos/mark/mark.dto";
@@ -13,7 +13,10 @@ export class BrowserMarkController {
   constructor(
     private readonly markService: BrowserMarkService,
     private readonly prismaService: PrismaService,
-  ) {}
+    private readonly commonLogger: CommonLogger,
+  ) {
+    commonLogger.setContext(BrowserMarkController.name);
+  }
 
   /**
    * 获取书签列表
@@ -51,24 +54,31 @@ export class BrowserMarkController {
   public async createMark(@User() user: UserEntity, @Body() body: PostBrowserMarkBodyDTO) {
     if (!this.markService.canFind(user.userID)) throw new BadRequestException(1054);
     this.markService.addUpdating(user.userID);
-    await this.prismaService.browserBookMark.deleteMany({
-      where: {
-        user: { userID: user.userID },
-      },
-    });
-    await this.prismaService.browserBookMark.createMany({
-      data: body.list.map((item) => {
-        return {
-          bookMarkTitle: item.title,
-          bookMarkIcon: item.icon,
-          bookMarkLink: item.link,
-          bookMarkColor: item.color,
-          bookMarkIndex: item.index,
-          userID: user.userID,
-        };
-      }),
-    });
-    this.markService.removeUpdating(user.userID);
-    return 1000;
+    try {
+      await this.prismaService.browserBookMark.deleteMany({
+        where: {
+          user: { userID: user.userID },
+        },
+      });
+      if (!body.list || body.list.length === 0) return 1000;
+      await this.prismaService.browserBookMark.createMany({
+        data: body.list.map((item) => {
+          return {
+            bookMarkTitle: item.title,
+            bookMarkIcon: item.icon,
+            bookMarkLink: item.link,
+            bookMarkColor: item.color,
+            bookMarkIndex: item.index,
+            userID: user.userID,
+          };
+        }),
+      });
+    } catch (error) {
+      this.commonLogger.error("创建书签出错！");
+      return 1060;
+    } finally {
+      this.markService.removeUpdating(user.userID);
+      return 1000;
+    }
   }
 }

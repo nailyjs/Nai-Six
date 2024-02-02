@@ -23,7 +23,7 @@ interface IsUpdatedBookMark {
 
 @Injectable()
 export class BrowserMarkService {
-  public isUpdating: IsUpdatedBookMark[] = [];
+  private isUpdating: IsUpdatedBookMark[] = [];
 
   public canFind(userID: string): boolean {
     const isUpdated = this.isUpdating.find((item) => item.userID === userID);
