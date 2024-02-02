@@ -23,3 +23,6 @@ public/production
 application-*.yml
 
 vendors/database/src/migrations_v2
+
+.env.development
+.env.production
