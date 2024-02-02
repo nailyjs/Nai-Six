@@ -27,7 +27,6 @@ export class LoginService {
   }
 
   private updateIp(loginPayload: ILoginPayload, user: User) {
-    user.ip = loginPayload.loginIP;
     return this.prismaService.user.update({
       where: { userID: user.userID },
       data: { ip: loginPayload.loginIP },
