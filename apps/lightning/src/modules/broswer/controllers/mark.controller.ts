@@ -5,7 +5,7 @@ import { Auth, User } from "cc.naily.six.auth";
 import { ResInterceptor } from "cc.naily.six.shared";
 import { PrismaService } from "cc.naily.six.database";
 import { User as UserEntity } from "@prisma/client";
-import { PostBrowserMarkBodyDTO } from "../dtos/mark/mark.dto";
+import { GetBroswerMarkQueryDTO, PostBrowserMarkBodyDTO } from "../dtos/mark/mark.dto";
 
 @ApiTags("浏览器书签")
 @Controller("broswer/mark")
@@ -26,7 +26,7 @@ export class BrowserMarkController {
   @Get()
   @Auth()
   @UseInterceptors(ResInterceptor)
-  public async getMarks(@Query() query, @User() user: UserEntity) {
+  public async getMarks(@Query() query: GetBroswerMarkQueryDTO, @User() user: UserEntity) {
     if (!query.take) query.take = 10;
     if (!query.skip) query.skip = 0;
     const canFind = this.markService.canFind(user.userID);
@@ -38,8 +38,8 @@ export class BrowserMarkController {
       });
     }
     return this.prismaService.browserBookMark.findMany({
-      take: parseInt(query.take),
-      skip: parseInt(query.skip),
+      take: parseInt(query.take as unknown as string),
+      skip: parseInt(query.skip as unknown as string),
       where: {
         user: { userID: user.userID },
       },
