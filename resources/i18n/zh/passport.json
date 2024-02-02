@@ -1,0 +1,14 @@
+{
+  "email": {
+    "template": {
+      "verify": "腕上 - 心电社区 - 验证码",
+      "your-code-is": "您的验证码是 ",
+      "tip1": "有效期为10分钟，请尽快使用。",
+      "tip2": "如果您没有注册过，请忽略此邮件。",
+      "link": {
+        "text": "官网",
+        "href": "https://www.naily.cc"
+      }
+    }
+  }
+}

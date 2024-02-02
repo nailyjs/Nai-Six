@@ -1,0 +1,10 @@
+{
+  "name": "cc.naily.six.database",
+  "version": "6.0.0",
+  "main": "../../resources/dist/vendors/database/cjs/index.js",
+  "module": "../../resources/dist/vendors/database/esm/index.js",
+  "types": "./src/index.ts",
+  "scripts": {
+    "build": "rollup -c rollup.config.mjs"
+  }
+}

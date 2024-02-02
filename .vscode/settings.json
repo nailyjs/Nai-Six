@@ -1,0 +1,29 @@
+{
+  "material-icon-theme.activeIconPack": "nest",
+  "material-icon-theme.files.associations": {
+    "vitest.workspace.ts": "vitest",
+    "*.repository.ts": "nest-service",
+    "db.config.ts": "database"
+  },
+  "material-icon-theme.folders.associations": {
+    ".nova": "vscode",
+    "migrations": "database",
+    "repositories": "interface",
+    "entities": "class",
+    "passport": "secure",
+    "swagger": "docs",
+    "user": "admin",
+    "login": "admin",
+    "register": "admin",
+    "transport": "mail",
+    "pay": "controller",
+    "file": "images",
+    "broswer": "client",
+    "gpt": "class",
+    "lightning": "shared",
+    "panel": "admin",
+    "panel-backend": "admin",
+    "panel-frontend": "admin",
+    "dtos": "controller"
+  }
+}

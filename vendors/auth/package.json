@@ -1,0 +1,11 @@
+{
+  "name": "cc.naily.six.auth",
+  "version": "6.0.0",
+  "private": true,
+  "main": "../../resources/dist/vendors/auth/cjs/index.js",
+  "module": "../../resources/dist/vendors/auth/esm/index.js",
+  "types": "./src/index.ts",
+  "scripts": {
+    "build": "rollup -c rollup.config.mjs"
+  }
+}

@@ -1,0 +1,117 @@
+datasource db {
+    provider = "mongodb"
+    url      = "mongodb+srv://zj56789012:my3kwo2MJpieRBZQ@cluster0.c6nthvk.mongodb.net/Cluster0?retryWrites=true&w=majority"
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+enum ILoginType {
+    WatchOS
+    HarmonyOS_Wearable
+    Android
+    Web
+    IOS
+}
+
+enum ILoginMethod {
+    QrCode
+    PhoneCode
+    EmailCode
+    UsernamePassword
+}
+
+model User {
+    userID                String                  @id @default(auto()) @map("_id") @db.ObjectId
+    createdAt             DateTime                @default(now())
+    updatedAt             DateTime                @updatedAt
+    /// 用户的用户名
+    username              String                  @unique
+    /// 用户的密码
+    password              String?
+    /// 用户的ip
+    ip                    String?
+    /// 用户的昵称
+    saying                String?
+    /// 用户的头像
+    avatar                String?
+    /// 用户的邮箱
+    email                 String?                 @unique
+    /// 用户的手机号
+    phone                 String?                 @unique
+    /// 用户是否被删除
+    isDeleted             Boolean?                @default(false)
+    /// 用户的登录标识符
+    identifiers           UserIdentifier[]
+    BrowserBookMark       BrowserBookMark[]
+    BrowserTrack          BrowserTrack[]
+    UserAppStoreSubscribe UserAppStoreSubscribe[]
+}
+
+model UserIdentifier {
+    userIdentifierID String       @id @default(auto()) @map("_id") @db.ObjectId
+    createdAt        DateTime     @default(now())
+    updatedAt        DateTime     @updatedAt
+    /// 登录设备类型
+    loginType        ILoginType
+    /// 登录的客户端 是哪个APP
+    loginClient      String?
+    /// 登录的设备名
+    loginDeviceName  String?
+    /// 登录的IP
+    loginIP          String?
+    /// 登录的渠道
+    loginMethod      ILoginMethod
+    /// 登录的标识符
+    identifier       String?
+    /// 登录的用户
+    user             User         @relation(fields: [userID], references: [userID])
+    /// 登录的用户ID
+    userID           String       @db.ObjectId
+}
+
+model BrowserBookMark {
+    browserBookMarkID String   @id @default(auto()) @map("_id") @db.ObjectId
+    createdAt         DateTime @default(now())
+    updatedAt         DateTime @updatedAt
+    /// 标题
+    title             String
+    /// 链接
+    link              String
+    /// 图标
+    icon              String
+    /// 颜色
+    color             String
+    /// 索引
+    index             Int
+    /// 用户
+    user              User     @relation(fields: [userID], references: [userID])
+    /// 用户ID
+    userID            String   @db.ObjectId
+}
+
+model BrowserTrack {
+    browserTrackID String   @id @default(auto()) @map("_id") @db.ObjectId
+    createdAt      DateTime @default(now())
+    updatedAt      DateTime @updatedAt
+    /// 标题
+    webPageTitle   String
+    /// 链接
+    webPageLink    String
+    /// 用户
+    user           User     @relation(fields: [userID], references: [userID])
+    /// 用户ID
+    userID         String   @db.ObjectId
+}
+
+model UserAppStoreSubscribe {
+    userAppStoreSubscribeID String   @id @default(auto()) @map("_id") @db.ObjectId
+    createdAt               DateTime @default(now())
+    updatedAt               DateTime @updatedAt
+    /// 原始交易ID
+    originalTransactionID   String
+
+    user   User   @relation(fields: [userID], references: [userID])
+    userID String @db.ObjectId
+}

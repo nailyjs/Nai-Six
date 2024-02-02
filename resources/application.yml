@@ -1,0 +1,53 @@
+global:
+  ###################### 数据源配置 ######################
+  datasource:
+    mongodb:
+      uri: mongodb://101.33.221.245:27017/element
+    redis:
+      host: "8.134.198.96"
+      port: 6379
+      keyPrefix: six_
+      password: "14789632"
+  ####################### 苹果配置 #######################
+  apple:
+    # 配置Storekit
+    storekit:
+      keyId: "7LG3W6XA7G"
+      issuerId: "afbcfee9-9919-4854-ab92-c08694aeb30c"
+      environment: "Production"
+  ####################### 腾讯配置 #######################
+  tencent:
+    # 配置腾讯云
+    cloud:
+      # 配置腾讯云短信
+      sms:
+        SmsSdkAppId: "1400791572"
+        TemplateId: "1672732"
+        SignName: "腕上RSS后端个人网"
+        credential:
+          region: ap-guangzhou
+          secretId: "AKIDa0FHTTEm4B7sT5gGfryve7DDoAGYQEsG"
+          secretKey: "FI7h4E8nGJAsMemgNsAG9pLcoqV1RpBR"
+        region: ap-guangzhou
+  ####################### 邮箱配置 #######################
+  email:
+    # smtp地址，一行写完就行
+    transport: smtp://gczgroup@qq.com:uzmnmbdulihugjif@smtp.qq.com
+    # 发件人
+    from: '"腕上小助手" <gczgroup@qq.com>'
+  ####################### JWT配置 ########################
+  jwt:
+    secret: Watch-LightningLion
+    expiresIn: 365d
+
+passport:
+  port: 3000
+  maxIdentifierCount:
+    watchOS: 3
+    android: 3
+    web: 0
+    harmonyOS_wearable: 3
+    ios: 3
+
+lightning:
+  port: 3003

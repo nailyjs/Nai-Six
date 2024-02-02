@@ -1,3 +1,25 @@
 node_modules
-dist
-lib
+
+*/**dist/**/*
+!.gitkeep
+!README.md
+!package.json
+!tsconfig.json
+
+# macOS finder file
+.DS_Store
+
+# log files
+log
+
+# coverage test
+coverage
+
+# development environment's files
+public/development
+public/production
+
+# custom environment's config files
+application-*.yml
+
+vendors/database/src/migrations_v2
