@@ -28,8 +28,8 @@ export class BroswerTrackController {
     if (!query.take) query.take = 10;
     if (!query.skip) query.skip = 0;
     return this.prismaService.browserTrack.findMany({
-      take: query.take,
-      skip: query.skip,
+      take: parseInt(query.take as unknown as string),
+      skip: parseInt(query.skip as unknown as string),
       where: {
         user: { userID: user.userID },
       },

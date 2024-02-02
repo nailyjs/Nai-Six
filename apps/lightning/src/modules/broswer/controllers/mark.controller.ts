@@ -38,8 +38,8 @@ export class BrowserMarkController {
       });
     }
     return this.prismaService.browserBookMark.findMany({
-      take: query.take,
-      skip: query.skip,
+      take: parseInt(query.take),
+      skip: parseInt(query.skip),
       where: {
         user: { userID: user.userID },
       },
