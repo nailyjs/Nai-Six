@@ -4,6 +4,7 @@ import { JwtService } from "@nestjs/jwt";
 import { Request } from "express";
 import { JwtLoginPayload } from "../modules/jwt";
 import { ObjectId } from "mongodb";
+import { PrismaService } from "cc.naily.six.database";
 
 declare global {
   namespace Express {
@@ -18,6 +19,7 @@ export class CommonAuthGuard implements CanActivate {
   constructor(
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
+    private readonly prismaService: PrismaService,
   ) {
     configService.getOrThrow("global.jwt.secret");
   }
@@ -32,7 +34,11 @@ export class CommonAuthGuard implements CanActivate {
         secret: this.configService.getOrThrow("global.jwt.secret"),
       });
       if (!ObjectId.isValid(payload.userID)) throw new ForbiddenException(1006);
-      request.user = payload;
+      const user = await this.prismaService.user.findUnique({
+        where: { userID: payload.userID },
+      });
+      if (!user) throw new ForbiddenException(1006);
+      request.user = user;
     } catch {
       throw new ForbiddenException(1006);
     }

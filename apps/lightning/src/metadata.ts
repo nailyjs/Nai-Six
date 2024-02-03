@@ -67,7 +67,7 @@ export default async () => {
         [import("./app.controller"), { AppController: { getHello: { type: Number } } }],
         [
           import("./modules/broswer/controllers/mark.controller"),
-          { BrowserMarkController: { getMarks: { summary: "\u83B7\u53D6\u4E66\u7B7E\u5217\u8868", type: Object }, createMark: { type: Number } } },
+          { BrowserMarkController: { getMarks: { summary: "\u83B7\u53D6\u4E66\u7B7E\u5217\u8868", type: Object }, createMark: { type: Object } } },
         ],
         [
           import("./modules/broswer/controllers/track.controller"),
