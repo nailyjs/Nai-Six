@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Post, Query, UseInterceptors } from "@ne
 import { ApiTags } from "@nestjs/swagger";
 import { User as UserEntity } from "@prisma/client";
 import { Auth, User } from "cc.naily.six.auth";
-import { PrismaService } from "cc.naily.six.database";
+import { PrismaService } from "@nailyjs.nest.modules/prisma";
 import { ResInterceptor } from "cc.naily.six.shared";
 import { GetBrowserTrackListQueryDTO, PostBrowserTrackBodyDTO } from "../dtos/track/track.dto";
 

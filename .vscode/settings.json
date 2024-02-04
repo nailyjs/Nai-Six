@@ -1,8 +1,10 @@
 {
   "material-icon-theme.activeIconPack": "nest",
+  "unocss.root": ["panel/frontend"],
   "material-icon-theme.files.associations": {
     "vitest.workspace.ts": "vitest",
     "*.repository.ts": "nest-service",
+    "*.subscriber.ts": "nest-module",
     "db.config.ts": "database"
   },
   "material-icon-theme.folders.associations": {
@@ -24,6 +26,7 @@
     "panel": "admin",
     "panel-backend": "admin",
     "panel-frontend": "admin",
-    "dtos": "controller"
+    "dtos": "controller",
+    "subscribers": "class"
   }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { PrismaService } from "cc.naily.six.database";
+import { PrismaService } from "@nailyjs.nest.modules/prisma";
 import { ILoginMethod, ILoginType, User, UserIdentifier } from "@prisma/client";
 import { ConfigService } from "@nestjs/config";
 import { JwtLoginPayload } from "./jwt.protocol";

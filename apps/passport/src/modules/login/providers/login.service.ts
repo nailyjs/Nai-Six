@@ -2,7 +2,7 @@ import { BadRequestException, Injectable, NotFoundException } from "@nestjs/comm
 import { JwtService } from "@nestjs/jwt";
 import { User } from "@prisma/client";
 import { CommonIdentifierService, ILoginPayload, JwtLoginPayload } from "cc.naily.six.auth";
-import { PrismaService } from "cc.naily.six.database";
+import { PrismaService } from "@nailyjs.nest.modules/prisma";
 import { PhoneService } from "src/modules/transport/providers/phone.service";
 
 @Injectable()

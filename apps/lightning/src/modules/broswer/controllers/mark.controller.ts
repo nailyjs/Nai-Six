@@ -3,7 +3,7 @@ import { BrowserMarkService } from "../providers/mark.service";
 import { ApiTags } from "@nestjs/swagger";
 import { Auth, User } from "cc.naily.six.auth";
 import { CommonLogger, ResInterceptor } from "cc.naily.six.shared";
-import { PrismaService } from "cc.naily.six.database";
+import { PrismaService } from "@nailyjs.nest.modules/prisma";
 import { User as UserEntity } from "@prisma/client";
 import { GetBroswerMarkQueryDTO, PostBrowserMarkBodyDTO } from "../dtos/mark/mark.dto";
 

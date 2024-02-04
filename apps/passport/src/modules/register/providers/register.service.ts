@@ -1,5 +1,5 @@
 import { ForbiddenException, Injectable } from "@nestjs/common";
-import { PrismaService } from "cc.naily.six.database";
+import { PrismaService } from "@nailyjs.nest.modules/prisma";
 
 @Injectable()
 export class RegisterService {

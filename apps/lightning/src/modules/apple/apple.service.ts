@@ -1,6 +1,6 @@
 import { Environment, Status } from "@apple/app-store-server-library";
 import { Injectable } from "@nestjs/common";
-import { PrismaService } from "cc.naily.six.database";
+import { PrismaService } from "@nailyjs.nest.modules/prisma";
 import { CommonAppStoreService } from "cc.naily.six.shared";
 
 @Injectable()

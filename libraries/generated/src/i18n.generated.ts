@@ -67,6 +67,10 @@ export type I18nTranslations = {
             "1059": string;
             "1060": string;
             "40001005": string;
+            "---": string;
+            "----": string;
+            "P2020": string;
+            "-----": string;
         };
     };
     "passport": {

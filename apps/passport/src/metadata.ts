@@ -92,6 +92,21 @@ export default async () => {
           import("./modules/user/dtos/change/change.dto"),
           { PutUserUsernameBodyDTO: { username: { required: true, type: () => String, description: "\u65B0\u7528\u6237\u540D" } } },
         ],
+        [
+          import("./modules/user/dtos/user/user.dto"),
+          {
+            GetUserQueryDTO: {
+              orderRegisterTime: {
+                required: false,
+                type: () => Object,
+                description: "\u6839\u636E\u6CE8\u518C\u65F6\u95F4\u6392\u5E8F",
+                default: "early",
+              },
+              take: { required: false, type: () => Number, description: "\u83B7\u53D6\u6570\u91CF" },
+              skip: { required: false, type: () => Number, description: "\u8DF3\u8FC7\u6570\u91CF" },
+            },
+          },
+        ],
       ],
       controllers: [
         [import("./app.controller"), { AppController: { getHello: { type: Number } } }],
@@ -132,6 +147,7 @@ export default async () => {
           {
             UserController: {
               getUser: { summary: "\u83B7\u53D6\u5DF2\u767B\u5F55\u7528\u6237\u4FE1\u606F" },
+              getUserList: { summary: "\u83B7\u53D6\u7528\u6237\u5217\u8868" },
               deleteUser: { summary: "\u6CE8\u9500\u8D26\u53F7" },
             },
           },

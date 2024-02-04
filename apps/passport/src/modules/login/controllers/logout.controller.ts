@@ -20,7 +20,7 @@ import { JwtService } from "@nestjs/jwt";
 import { ApiTags } from "@nestjs/swagger";
 import { User as UserEntity } from "@prisma/client";
 import { Auth, JwtLoginPayload, Token, User } from "cc.naily.six.auth";
-import { PrismaService } from "cc.naily.six.database";
+import { PrismaService } from "@nailyjs.nest.modules/prisma";
 import { ResInterceptor } from "cc.naily.six.shared";
 
 @ApiTags("登出")

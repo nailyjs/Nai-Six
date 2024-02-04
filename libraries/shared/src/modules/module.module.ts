@@ -46,7 +46,7 @@ export abstract class NailyContext {
    * @return {(Record<string | symbol, any>)}
    * @memberof CommonConfigModule
    */
-  protected static getYmlConfigDynamic(): Record<string | symbol, any> {
+  public static getYmlConfigDynamic(): Record<string | symbol, any> {
     // 判断环境变量中是否有配置文件路径
     if (process.env.CONFIG_PATH) {
       if (!existsSync(process.env.CONFIG_PATH)) {

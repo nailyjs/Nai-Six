@@ -1,9 +1,10 @@
-import { Controller, Delete, Get, UseInterceptors } from "@nestjs/common";
+import { Controller, Delete, Get, Query, UseInterceptors } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { User as UserEntity } from "@prisma/client";
 import { Auth, User } from "cc.naily.six.auth";
-import { PrismaService } from "cc.naily.six.database";
+import { PrismaService } from "@nailyjs.nest.modules/prisma";
 import { ResInterceptor } from "cc.naily.six.shared";
+import { GetUserQueryDTO } from "../dtos/user/user.dto";
 
 @ApiTags("用户")
 @Controller("user")
@@ -27,6 +28,32 @@ export class UserController {
         where: { userID: user.userID },
       }),
     };
+  }
+
+  /**
+   * 获取用户列表
+   *
+   * @author Zero <gczgroup@qq.com>
+   * @date 2024/02/05
+   * @memberof UserController
+   */
+  @Get()
+  @UseInterceptors(ResInterceptor)
+  public async getUserList(@Query() query: GetUserQueryDTO) {
+    if (!query.take) query.take = 10;
+    if (!query.skip) query.skip = 0;
+    let users = await this.prismaService.user.findMany({
+      take: query.take,
+      skip: query.skip,
+      orderBy: {
+        createdAt: query.orderRegisterTime === "early" ? "asc" : "desc",
+      },
+    });
+    users = users.map((item) => {
+      item.password = undefined;
+      return item;
+    });
+    return { users };
   }
 
   /**

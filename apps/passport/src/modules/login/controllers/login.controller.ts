@@ -5,7 +5,7 @@ import { ResInterceptor } from "cc.naily.six.shared";
 import { PostLoginPhoneCodeBodyDTO } from "../dtos/phone/phone.dto";
 import { Auth, User } from "cc.naily.six.auth";
 import { User as UserEntity } from "@prisma/client";
-import { PrismaService } from "cc.naily.six.database";
+import { PrismaService } from "@nailyjs.nest.modules/prisma";
 import { QrCodeService } from "../providers/qrcode.service";
 import { PostLoginQrcodeBodyDTO, PostLoginQrcodeConfirmBodyDTO } from "../dtos/qrcode/qrcode.dto";
 

@@ -19,9 +19,6 @@ import { DynamicModule, Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { join } from "path";
 import { NailyContext } from "../module.module";
-import { parse } from "dotenv";
-import { existsSync, readFileSync } from "fs";
-import { CommonLogger } from "../logger";
 
 declare global {
   namespace NodeJS {
@@ -42,20 +39,17 @@ process.env.VENDOR_ROOT = join(__dirname, "..", "..", "..", "..", "..", "..", ".
 process.env.PUBLIC_ROOT = join(__dirname, "..", "..", "..", "..", "..", "..", "..", "public");
 process.env.RESOURCE_ROOT = join(__dirname, "..", "..", "..", "..", "..", "..");
 process.env.DATABASE_URL = (() => {
-  let path = join(process.env.PROJECT_ROOT, ".env" + (process.env.NODE_ENV ? "." + process.env.NODE_ENV : ""));
-  let env: string;
-  if (existsSync(path)) {
-    new CommonLogger().warn(path, "ENV");
-    env = readFileSync(path).toString();
-  } else if (existsSync(join(process.env.PROJECT_ROOT, ".env"))) {
-    new CommonLogger().warn(path, "ENV");
-    path = join(process.env.PROJECT_ROOT, ".env");
-    env = readFileSync(path).toString();
+  const config = NailyContext.getYmlConfigDynamic();
+  if (
+    process.env.NODE_ENV &&
+    (!config || !config.global || !config.global.datasource || !config.global.datasource.mongodb || !config.global.datasource.mongodb.url)
+  ) {
+    throw new Error("No mongodb database url found");
+  } else if (!process.env.NODE_ENV) {
+    return "";
   } else {
-    new CommonLogger().error(path, "ENV");
-    throw new Error("The .env file does not exist");
+    return config.global.datasource.mongodb.url;
   }
-  return parse(env).DATABASE_URL;
 })();
 
 @Module({})

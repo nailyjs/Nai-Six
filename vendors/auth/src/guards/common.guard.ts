@@ -4,7 +4,7 @@ import { JwtService } from "@nestjs/jwt";
 import { Request } from "express";
 import { JwtLoginPayload } from "../modules/jwt";
 import { ObjectId } from "mongodb";
-import { PrismaService } from "cc.naily.six.database";
+import { PrismaService } from "@nailyjs.nest.modules/prisma";
 
 declare global {
   namespace Express {

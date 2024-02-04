@@ -22,6 +22,49 @@ enum ILoginMethod {
     UsernamePassword
 }
 
+/// 权限库
+model Permission {
+    permissionID          String           @id @default(auto()) @map("_id") @db.ObjectId
+    createdAt             DateTime         @default(now())
+    updatedAt             DateTime         @updatedAt
+    /// 权限的名称
+    permissionName        String           @unique
+    /// 权限的描述
+    permissionDescription String?
+    RolePermission        RolePermission[]
+}
+
+/// 角色拥有的权限列表
+model RolePermission {
+    rolePermissionID String     @id @default(auto()) @map("_id") @db.ObjectId
+    createdAt        DateTime   @default(now())
+    updatedAt        DateTime   @updatedAt
+    /// 角色
+    role             Role       @relation(fields: [roleID], references: [roleID])
+    roleID           String     @db.ObjectId
+    /// 权限
+    permission       Permission @relation(fields: [permissionID], references: [permissionID])
+    permissionID     String     @db.ObjectId
+}
+
+/// 角色
+model Role {
+    roleID          String           @id @default(auto()) @map("_id") @db.ObjectId
+    createdAt       DateTime         @default(now())
+    updatedAt       DateTime         @updatedAt
+    /// 角色的名称
+    roleName        String           @unique
+    /// 角色的描述
+    roleDescription String?
+    /// 角色的权限
+    RolePermission  RolePermission[]
+    /// 角色的用户
+    User            User?            @relation(fields: [userID], references: [userID])
+    /// 角色的用户ID
+    userID          String?          @db.ObjectId
+}
+
+/// 用户
 model User {
     userID                String                  @id @default(auto()) @map("_id") @db.ObjectId
     createdAt             DateTime                @default(now())
@@ -44,11 +87,17 @@ model User {
     isDeleted             Boolean?                @default(false)
     /// 用户的登录标识符
     identifiers           UserIdentifier[]
+    /// 用户的浏览器书签
     BrowserBookMark       BrowserBookMark[]
+    /// 用户的浏览器足迹
     BrowserTrack          BrowserTrack[]
+    /// 用户的App Store订阅
     UserAppStoreSubscribe UserAppStoreSubscribe[]
+    /// 用户的角色
+    roles                 Role[]
 }
 
+/// 用户登录标识符
 model UserIdentifier {
     userIdentifierID String       @id @default(auto()) @map("_id") @db.ObjectId
     createdAt        DateTime     @default(now())
@@ -71,6 +120,7 @@ model UserIdentifier {
     userID           String       @db.ObjectId
 }
 
+/// 浏览器书签
 model BrowserBookMark {
     browserBookMarkID String   @id @default(auto()) @map("_id") @db.ObjectId
     createdAt         DateTime @default(now())
@@ -91,6 +141,7 @@ model BrowserBookMark {
     userID            String   @db.ObjectId
 }
 
+/// 浏览器足迹
 model BrowserTrack {
     browserTrackID String   @id @default(auto()) @map("_id") @db.ObjectId
     createdAt      DateTime @default(now())
@@ -105,6 +156,7 @@ model BrowserTrack {
     userID         String   @db.ObjectId
 }
 
+/// 闪电：用户App Store订阅
 model UserAppStoreSubscribe {
     userAppStoreSubscribeID String   @id @default(auto()) @map("_id") @db.ObjectId
     createdAt               DateTime @default(now())
