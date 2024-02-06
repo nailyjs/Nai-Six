@@ -66,5 +66,5 @@ export class GetSubscribeAppleUserQueryDTO {
   @IsBooleanString()
   @IsString()
   @IsOptional()
-  isSandbox: boolean = false;
+  isSandbox: "true" | "false" = "false";
 }

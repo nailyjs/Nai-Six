@@ -31,12 +31,12 @@ export class AppleController {
   @Get("user")
   @UseInterceptors(ResInterceptor)
   public getUserStatus(@User() user: UserEntity, @Query() { isSandbox }: GetSubscribeAppleUserQueryDTO): Promise<unknown> {
+    let isSandboxLower: boolean;
     if (typeof isSandbox === "string") {
-      const isSandboxLower = isSandbox as unknown;
-      if (isSandboxLower === "true") isSandbox = true;
-      if (isSandboxLower === "false") isSandbox = false;
+      if (isSandbox === "true") isSandboxLower = true;
+      if (isSandbox === "false") isSandboxLower = false;
     }
-    return this.appleService.getAllSubscriptionStatuses(user.userID, isSandbox);
+    return this.appleService.getAllSubscriptionStatuses(user.userID, isSandboxLower);
   }
 
   /**
