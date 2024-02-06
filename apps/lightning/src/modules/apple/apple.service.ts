@@ -1,5 +1,5 @@
 import { Environment, Status } from "@apple/app-store-server-library";
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { PrismaService } from "@nailyjs.nest.modules/prisma";
 import { CommonAppStoreService } from "cc.naily.six.shared";
 
@@ -24,10 +24,17 @@ export class AppleService {
   }
 
   public async linkTransactionID(userID: string, originalTransactionID: string) {
+    // 查询该originalTransactionID看看是否有
     const hasTransactionID = await this.prismaService.userAppStoreSubscribe.findFirst({
       where: { originalTransactionID },
     });
-    if (hasTransactionID) return 1000;
+    // 如果有，判断是否是同一个用户 如果是同一个用户，返回1000  如果不是同一个用户，抛出1061
+    if (hasTransactionID && hasTransactionID.userID === userID) {
+      return 1000;
+    } else if (hasTransactionID && hasTransactionID.userID !== userID) {
+      throw new BadRequestException(1061);
+    }
+    // 如果没有，创建用户和transactionID的关联
     return this.prismaService.userAppStoreSubscribe.create({
       data: {
         user: { connect: { userID } },
