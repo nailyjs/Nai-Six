@@ -12,6 +12,8 @@
     "build:database": "pnpm -F cc.naily.six.database build",
     "build:shared": "pnpm -F cc.naily.six.shared build",
     "build:auth": "pnpm -F cc.naily.six.auth build",
+    "build:frontend": "pnpm -F cc.naily.six.panel.frontend build",
+    "start:frontend": "pnpm -F cc.naily.six.panel.frontend preview",
     "start:passport": "pnpm -F cc.naily.six.passport start:prod",
     "start:light": "pnpm -F cc.naily.six.lightning start:prod",
     "format": "prettier --write ./",

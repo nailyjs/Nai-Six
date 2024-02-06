@@ -31,7 +31,11 @@ export class AppleController {
   @Get("user")
   @UseInterceptors(ResInterceptor)
   public getUserStatus(@User() user: UserEntity, @Query() { isSandbox }: GetSubscribeAppleUserQueryDTO): Promise<unknown> {
-    if (typeof isSandbox === "string") isSandbox === "true" ? true : false;
+    if (typeof isSandbox === "string") {
+      const isSandboxLower = isSandbox as unknown;
+      if (isSandboxLower === "true") isSandbox = true;
+      if (isSandboxLower === "false") isSandbox = false;
+    }
     return this.appleService.getAllSubscriptionStatuses(user.userID, isSandbox);
   }
 
