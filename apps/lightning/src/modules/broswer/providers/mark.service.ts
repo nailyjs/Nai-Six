@@ -31,20 +31,19 @@ export class BrowserMarkService {
   private isUpdating: IsUpdatedBookMark[] = [];
 
   public canFind(userID: string): boolean {
-    this.commonLogger.debug(`canFind: ${JSON.stringify(this.isUpdating)}`);
     const isUpdated = this.isUpdating.find((item) => item.userID === userID);
     if (isUpdated) return false;
     return true;
   }
 
   public addUpdating(userID: string): void {
-    this.commonLogger.debug(`addUpdating: ${userID}`);
     this.isUpdating.push({ userID });
+    this.commonLogger.debug(`addUpdating: ${userID}`);
   }
 
   public removeUpdating(userID: string): void {
-    this.commonLogger.debug(`removeUpdating: ${userID}`);
     const index = this.isUpdating.findIndex((item) => item.userID === userID);
     this.isUpdating.splice(index, 1);
+    this.commonLogger.debug(`removeUpdating: ${userID}`);
   }
 }
