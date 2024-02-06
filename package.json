@@ -27,22 +27,20 @@
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
       "eslint --fix",
-      "prettier --write"
+      "pnpm format"
     ],
     "*.json": [
-      "prettier --write"
+      "pnpm format"
     ],
     "*.vue": [
       "eslint --fix",
-      "prettier --write",
-      "stylelint --fix"
+      "pnpm format"
     ],
     "*.{scss,less,html}": [
-      "stylelint --fix",
-      "prettier --write"
+      "pnpm format"
     ],
     "*.md": [
-      "prettier --write"
+      "pnpm format"
     ]
   },
   "packageManager": "pnpm@8.8.0",
