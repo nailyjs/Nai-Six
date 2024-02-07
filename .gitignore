@@ -26,3 +26,5 @@ vendors/database/src/migrations_v2
 
 .env.development
 .env.production
+
+resources/cache

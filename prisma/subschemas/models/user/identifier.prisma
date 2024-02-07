@@ -1,0 +1,25 @@
+import { ILoginType, ILoginMethod } from "../../types/user.type"
+import { User } from "./user"
+
+/// 用户登录标识符
+model UserIdentifier {
+    userIdentifierID String       @id @default(auto()) @map("_id") @db.ObjectId
+    createdAt        DateTime     @default(now())
+    updatedAt        DateTime     @updatedAt
+    /// 登录设备类型
+    loginType        ILoginType
+    /// 登录的客户端 是哪个APP
+    loginClient      String?
+    /// 登录的设备名
+    loginDeviceName  String?
+    /// 登录的IP
+    loginIP          String?
+    /// 登录的渠道
+    loginMethod      ILoginMethod
+    /// 登录的标识符
+    identifier       String?
+    /// 登录的用户
+    user             User         @relation(fields: [userID], references: [userID])
+    /// 登录的用户ID
+    userID           String       @db.ObjectId
+}

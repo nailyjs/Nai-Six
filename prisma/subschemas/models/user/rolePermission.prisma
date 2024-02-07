@@ -1,0 +1,15 @@
+import { Role } from "./role"
+import { Permission } from "./permission"
+
+/// 角色拥有的权限列表
+model RolePermission {
+    rolePermissionID String     @id @default(auto()) @map("_id") @db.ObjectId
+    createdAt        DateTime   @default(now())
+    updatedAt        DateTime   @updatedAt
+    /// 角色
+    role             Role       @relation(fields: [roleID], references: [roleID])
+    roleID           String     @db.ObjectId
+    /// 权限
+    permission       Permission @relation(fields: [permissionID], references: [permissionID])
+    permissionID     String     @db.ObjectId
+}

@@ -27,6 +27,8 @@
     "panel-backend": "admin",
     "panel-frontend": "admin",
     "dtos": "controller",
-    "subscribers": "class"
-  }
+    "subscribers": "class",
+    "subschemas": "prisma"
+  },
+  "prisma.fileWatcher": true
 }

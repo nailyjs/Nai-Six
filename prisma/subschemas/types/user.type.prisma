@@ -1,0 +1,16 @@
+/// 登录设备类型
+enum ILoginType {
+    WatchOS
+    HarmonyOS_Wearable
+    Android
+    Web
+    IOS
+}
+
+/// 登录方式
+enum ILoginMethod {
+    QrCode
+    PhoneCode
+    EmailCode
+    UsernamePassword
+}

@@ -1,0 +1,43 @@
+import { UserIdentifier } from "./identifier"
+import { Role } from "./role"
+import { BrowserBookMark } from "../lightning/bookmark"
+import { BrowserTrack } from "../lightning/broswertrack"
+import { BrowserScript, BrowserScriptStore } from "../lightning/script/broswerScript"
+import { UserAppStoreSubscribe } from "../lightning/app/appStore"
+
+/// 用户
+model User {
+    userID                String                  @id @default(auto()) @map("_id") @db.ObjectId
+    createdAt             DateTime                @default(now())
+    updatedAt             DateTime                @updatedAt
+    /// 用户的用户名
+    username              String                  @unique
+    /// 用户的密码
+    password              String?
+    /// 用户的ip
+    ip                    String?
+    /// 用户的昵称
+    saying                String?
+    /// 用户的头像
+    avatar                String?
+    /// 用户的邮箱
+    email                 String?
+    /// 用户的手机号
+    phone                 String?
+    /// 用户是否被删除
+    isDeleted             Boolean?                @default(false)
+    /// 用户的登录标识符
+    identifiers           UserIdentifier[]
+    /// 用户的浏览器书签
+    BrowserBookMark       BrowserBookMark[]
+    /// 用户的浏览器足迹
+    BrowserTrack          BrowserTrack[]
+    /// 用户的App Store订阅
+    UserAppStoreSubscribe UserAppStoreSubscribe[]
+    /// 用户的角色
+    roles                 Role[]
+    /// 用户的浏览器脚本
+    BrowserScript         BrowserScript[]
+    BrowserScriptStore    BrowserScriptStore[]
+}
+

@@ -18,6 +18,7 @@ import { CommonJwtModule } from "cc.naily.six.auth";
 import { APP_GUARD, APP_PIPE } from "@nestjs/core";
 import { BroswerModule } from "./modules/broswer/broswer.module";
 import { AppleModule } from "./modules/apple/apple.module";
+import { ScriptModule } from "./modules/script/script.module";
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { AppleModule } from "./modules/apple/apple.module";
     CommonJwtModule.forRoot(),
     BroswerModule.register(),
     AppleModule.register(),
+    ScriptModule.register(),
   ],
   controllers: [AppController],
   providers: [
