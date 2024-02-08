@@ -1,6 +1,6 @@
 {
   "name": "cc.naily.six.shared",
-  "version": "6.0.0",
+  "version": "6.0.1",
   "main": "../../resources/dist/libraries/shared/cjs/index.js",
   "module": "../../resources/dist/libraries/shared/esm/index.js",
   "types": "./src/index.ts",
