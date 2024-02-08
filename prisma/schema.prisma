@@ -1,4 +1,4 @@
-//🧩Don't Edit this file.✨Generated in Thu Feb 08 2024 03:20:12 GMT+0800 (中国标准时间)✨
+//🧩Don't Edit this file.✨Generated in Thu Feb 08 2024 15:31:51 GMT+0800 (中国标准时间)✨
 
 generator client {
   provider = "prisma-client-js"
@@ -7,6 +7,22 @@ generator client {
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
+}
+
+model Tag {
+  tagID                 String               @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt             DateTime             @default(now())
+  updatedAt             DateTime             @updatedAt
+  /// 标签名
+  tagName               String               @unique
+  /// 标签描述
+  tagDescription        String?
+  /// 标签浏览量
+  tagViewCount          Int                  @default(0)
+  /// 链接的脚本
+  browserScriptStore    BrowserScriptStore[] @relation(fields: [browserScriptStoreIDs], references: [browserScriptStoreID])
+  /// 链接的脚本ID
+  browserScriptStoreIDs String[]             @db.ObjectId
 }
 
 /// 闪电：用户App Store订阅
@@ -42,21 +58,6 @@ model BrowserBookMark {
   userID            String   @db.ObjectId
 }
 
-/// 闪电：浏览器足迹
-model BrowserTrack {
-  browserTrackID String   @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-  /// 标题
-  webPageTitle   String
-  /// 链接
-  webPageLink    String
-  /// 用户
-  user           User     @relation(fields: [userID], references: [userID])
-  /// 用户ID
-  userID         String   @db.ObjectId
-}
-
 /// 闪电：浏览器脚本
 model BrowserScript {
   browserScriptID String   @id @default(auto()) @map("_id") @db.ObjectId
@@ -88,6 +89,24 @@ model BrowserScriptStore {
   uploader             User         @relation(fields: [uploaderUserID], references: [userID])
   /// 上传者ID
   uploaderUserID       String       @db.ObjectId
+  /// 标签
+  tags                 Tag[]        @relation(fields: [tagIDs], references: [tagID])
+  tagIDs               String[]     @db.ObjectId
+}
+
+/// 闪电：浏览器足迹
+model BrowserTrack {
+  browserTrackID String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  /// 标题
+  webPageTitle   String
+  /// 链接
+  webPageLink    String
+  /// 用户
+  user           User     @relation(fields: [userID], references: [userID])
+  /// 用户ID
+  userID         String   @db.ObjectId
 }
 
 /// 用户登录标识符
@@ -188,6 +207,7 @@ model User {
   roles                 Role[]
   /// 用户的浏览器脚本
   BrowserScript         BrowserScript[]
+  /// 用户在商店创建的浏览器脚本
   BrowserScriptStore    BrowserScriptStore[]
 }
 

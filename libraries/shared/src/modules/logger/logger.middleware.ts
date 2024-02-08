@@ -22,7 +22,7 @@ import { CommonLogger } from "./logger.service";
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware {
   constructor(private readonly commonLogger: CommonLogger) {
-    commonLogger.setContext(LoggerMiddleware.name);
+    commonLogger.setContext(`Request`);
   }
 
   public generateFiveDigitNumber() {
@@ -35,9 +35,12 @@ export class LoggerMiddleware implements NestMiddleware {
 
   public use(req: Request, res: Response, next: NextFunction) {
     const random = this.generateFiveDigitNumber();
-    this.commonLogger.log(`START ${random} ${req.method} {${req.originalUrl}} ${req.ip}`);
+    this.commonLogger.log(`${random} START ${req.method} {${req.originalUrl}} ${req.ip}`);
+    this.commonLogger.debug(`${random} PARAMS: ${JSON.stringify(req.params)}`);
+    this.commonLogger.debug(`${random} QUERY: ${JSON.stringify(req.query)}`);
+    this.commonLogger.debug(`${random} BODY: ${JSON.stringify(req.body)}`);
     req.once("end", () => {
-      this.commonLogger.log(`END ${random} ${req.method} {${req.originalUrl}} ${req.ip} ${res.statusCode}`);
+      this.commonLogger.log(`${random} END ${req.method} {${req.originalUrl}} ${req.ip} ${res.statusCode}`);
     });
     next();
   }

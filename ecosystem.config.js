@@ -26,9 +26,16 @@ module.exports = {
         NODE_ENV: "production",
       },
     },
+    // {
+    //   name: "ele-Shop",
+    //   script: "./resources/dist/apps/shop/main.js",
+    //   env: {
+    //     NODE_ENV: "production",
+    //   },
+    // },
     {
-      name: "ele-Shop",
-      script: "./resources/dist/apps/shop/main.js",
+      name: "ele-Common",
+      script: "./resources/dist/apps/common/main.js",
       env: {
         NODE_ENV: "production",
       },

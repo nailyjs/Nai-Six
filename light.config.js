@@ -40,6 +40,13 @@ module.exports = {
     //     NODE_ENV: "production",
     //   },
     // },
+    {
+      name: "six-Common",
+      script: "./resources/dist/apps/common/main.js",
+      env: {
+        NODE_ENV: "production",
+      },
+    },
   ],
   exec_mode: "cluster",
   combine_logs: true,

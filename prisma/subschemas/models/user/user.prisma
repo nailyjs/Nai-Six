@@ -2,8 +2,8 @@ import { UserIdentifier } from "./identifier"
 import { Role } from "./role"
 import { BrowserBookMark } from "../lightning/bookmark"
 import { BrowserTrack } from "../lightning/broswertrack"
-import { BrowserScript, BrowserScriptStore } from "../lightning/script/broswerScript"
 import { UserAppStoreSubscribe } from "../lightning/app/appStore"
+import { BrowserScript, BrowserScriptStore } from "../lightning/broswer"
 
 /// 用户
 model User {
@@ -38,6 +38,8 @@ model User {
     roles                 Role[]
     /// 用户的浏览器脚本
     BrowserScript         BrowserScript[]
+    /// 用户在商店创建的浏览器脚本
     BrowserScriptStore    BrowserScriptStore[]
 }
+
 

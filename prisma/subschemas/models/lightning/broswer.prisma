@@ -1,5 +1,6 @@
-import { User } from "../../user/user"
-import { ScriptStatus } from "../../../types/broswer.type"
+import { User } from "../user/user"
+import { ScriptStatus } from "../../types/broswer.type"
+import { Tag } from "../common/tag"
 
 /// 闪电：浏览器脚本
 model BrowserScript {
@@ -18,9 +19,9 @@ model BrowserScript {
 
 /// 闪电：浏览器脚本库
 model BrowserScriptStore {
-    browserScriptStoreID String   @id @default(auto()) @map("_id") @db.ObjectId
-    createdAt            DateTime @default(now())
-    updatedAt            DateTime @updatedAt
+    browserScriptStoreID String       @id @default(auto()) @map("_id") @db.ObjectId
+    createdAt            DateTime     @default(now())
+    updatedAt            DateTime     @updatedAt
     /// 脚本
     scriptContent        String
     /// 脚本解析后的内容
@@ -29,8 +30,10 @@ model BrowserScriptStore {
     viewCount            Int
     scriptStatus         ScriptStatus
     /// 上传者
-    uploader             User     @relation(fields: [uploaderUserID], references: [userID])
+    uploader             User         @relation(fields: [uploaderUserID], references: [userID])
     /// 上传者ID
-    uploaderUserID       String   @db.ObjectId
+    uploaderUserID       String       @db.ObjectId
+    /// 标签
+    tags                 Tag[]        @relation(fields: [tagIDs], references: [tagID])
+    tagIDs               String[]     @db.ObjectId
 }
-
