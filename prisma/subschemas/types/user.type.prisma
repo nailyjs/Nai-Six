@@ -5,6 +5,7 @@ enum ILoginType {
     Android
     Web
     IOS
+    Panel
 }
 
 /// 登录方式

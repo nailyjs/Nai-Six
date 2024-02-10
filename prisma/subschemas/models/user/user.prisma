@@ -1,5 +1,6 @@
 import { UserIdentifier } from "./identifier"
 import { Role } from "./role"
+import { UserData } from "./data"
 import { BrowserBookMark } from "../lightning/bookmark"
 import { BrowserTrack } from "../lightning/broswertrack"
 import { UserAppStoreSubscribe } from "../lightning/app/appStore"
@@ -11,7 +12,7 @@ model User {
     createdAt             DateTime                @default(now())
     updatedAt             DateTime                @updatedAt
     /// 用户的用户名
-    username              String                  @unique
+    username              String
     /// 用户的密码
     password              String?
     /// 用户的ip
@@ -35,11 +36,15 @@ model User {
     /// 用户的App Store订阅
     UserAppStoreSubscribe UserAppStoreSubscribe[]
     /// 用户的角色
-    roles                 Role[]
+    roles                 Role[]                  @relation(fields: [roleIDs], references: [roleID])
+    /// 用户的角色ID
+    roleIDs               String[]                @db.ObjectId
     /// 用户的浏览器脚本
     BrowserScript         BrowserScript[]
     /// 用户在商店创建的浏览器脚本
     BrowserScriptStore    BrowserScriptStore[]
+    /// 用户的数据
+    UserData              UserData[]
+
+    @@fulltext([username])
 }
-
-

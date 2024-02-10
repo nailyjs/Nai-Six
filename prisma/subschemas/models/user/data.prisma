@@ -1,0 +1,13 @@
+import { User } from "./user"
+
+model UserData {
+    userDataID String   @id @default(auto()) @map("_id") @db.ObjectId
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @updatedAt
+
+    userDataKey   String @unique
+    userDataValue String
+
+    user   User   @relation(fields: [userID], references: [userID])
+    userID String @db.ObjectId
+}

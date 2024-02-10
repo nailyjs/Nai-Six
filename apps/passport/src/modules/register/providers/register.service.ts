@@ -1,5 +1,6 @@
 import { ForbiddenException, Injectable } from "@nestjs/common";
 import { PrismaService } from "@nailyjs.nest.modules/prisma";
+import { Prisma } from "@prisma/client";
 
 @Injectable()
 export class RegisterService {
@@ -25,6 +26,22 @@ export class RegisterService {
         ip,
         saying: "这个人很懒，什么都没留下",
       },
+    });
+  }
+
+  public async registerByEmailPassword(email: string, username: string, ip: string) {
+    if (!username) username = await this.generateUsername();
+    const checkUsername = await this.prismaService.user.findFirst({ where: { username } });
+    const checkEmail = await this.prismaService.user.findFirst({ where: { email } });
+    if (checkEmail) throw new ForbiddenException(1049);
+    if (checkUsername) throw new ForbiddenException(1048);
+    return await this.prismaService.user.create({
+      data: {
+        username,
+        email,
+        ip,
+        saying: "这个人很懒，什么都没留下",
+      } as Prisma.XOR<Prisma.UserCreateInput, Prisma.UserUncheckedCreateInput>,
     });
   }
 }

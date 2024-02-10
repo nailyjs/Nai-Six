@@ -28,6 +28,7 @@ export default async () => {
               name: { required: true, type: () => String, description: "\u6807\u7B7E\u540D\u79F0" },
               description: { required: false, type: () => String, description: "\u6807\u7B7E\u63CF\u8FF0" },
             },
+            GetTagSearchQueryDTO: { keywords: { required: true, type: () => String, description: "\u5173\u952E\u8BCD" } },
           },
         ],
         [
@@ -46,7 +47,13 @@ export default async () => {
         [import("./app.controller"), { AppController: { getHello: { summary: "\u4E3B\u9875", type: Number } } }],
         [
           import("./modules/tag/controllers/tag.controller"),
-          { TagController: { getTags: { summary: "\u83B7\u53D6\u6807\u7B7E\u5217\u8868" }, createTag: { summary: "\u521B\u5EFA\u6807\u7B7E" } } },
+          {
+            TagController: {
+              getTags: { summary: "\u83B7\u53D6\u6807\u7B7E\u5217\u8868" },
+              createTag: { summary: "\u521B\u5EFA\u6807\u7B7E" },
+              searchTag: { summary: "\u641C\u7D22\u6807\u7B7E" },
+            },
+          },
         ],
       ],
     },

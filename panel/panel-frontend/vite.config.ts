@@ -3,6 +3,7 @@ import UnoCSS from "unocss/vite";
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
+import { presetUno } from "@unocss/preset-uno";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -12,13 +13,15 @@ export default defineConfig({
   plugins: [
     vue({
       script: {
-        babelParserPlugins: ["decorators"],
+        babelParserPlugins: ["decorators", "jsx"],
       },
     }),
     vueJsx({
       babelPlugins: [["@babel/plugin-proposal-decorators", { version: "2023-05" }]],
     }),
-    UnoCSS(),
+    UnoCSS({
+      presets: [presetUno()],
+    }),
   ],
   resolve: {
     alias: {

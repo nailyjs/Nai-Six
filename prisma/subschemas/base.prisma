@@ -11,6 +11,7 @@
 //
 //generator client {
 //    provider = "prisma-client-js"
+//    previewFeatures = ["fullTextIndex"]
 //}
 //datasource db {
 //    provider = "mongodb"

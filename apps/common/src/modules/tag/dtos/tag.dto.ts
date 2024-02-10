@@ -91,3 +91,15 @@ export class PostTagBodyDTO {
   @IsString()
   description?: string;
 }
+
+export class GetTagSearchQueryDTO extends GetTagQueryDTO {
+  /**
+   * 关键词
+   *
+   * @author Zero <gczgroup@qq.com>
+   * @date 2024/02/08
+   * @type {string}
+   * @memberof GetTagSearchQueryDTO
+   */
+  keywords: string;
+}

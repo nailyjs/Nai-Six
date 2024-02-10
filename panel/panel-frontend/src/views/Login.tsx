@@ -1,22 +1,41 @@
-import { NButton, NH1, NInput } from "naive-ui";
-import { Component, Vue } from "vue-facing-decorator";
+import { NStep, NSteps } from "naive-ui";
+import { Component, Setup, Vue } from "vue-facing-decorator";
+import LoginServerView from "./Login/Server";
+import I18nComponent from "@/components/i18n/i18n";
+import { LoginLoginView } from "./Login/Login";
+import { usePassportStore } from "@/stores/passport.store";
 
 @Component({
-  render() {
+  render(this: LoginView) {
     return (
-      <div id="naily_login">
-        <div class="flex flex-col h-lg justify-center items-center">
-          <div class="flex flex-col gap3 min-w-65">
-            <NH1 class="m0 p0">登录</NH1>
-            <NInput size="large" placeholder="请输入用户名" />
-            <NInput size="large" placeholder="请输入密码" />
-            <NButton size="large" block type="primary">
-              登录
-            </NButton>
+      <div id="naily_login" class="h-screen w-screen flex flex-col justify-center items-center">
+        <div class="flex flex-col gap3 justify-center items-center">
+          <div class="w-full flex flex-col gap3 justify-center items-center">
+            <NSteps current={this.step_current}>
+              <NStep title={this.$t("服务器")} description={this.$t("添加服务器以登录")} />
+              <NStep title={this.$t("登录")} description={this.$t("登录您的账户")} />
+            </NSteps>
+            {this.step_current === 1 ? (
+              <LoginServerView onNext={() => this.step_current++} />
+            ) : (
+              <LoginLoginView
+                onNext={(url) => {
+                  console.log(url);
+                }}
+              />
+            )}
           </div>
+          <I18nComponent />
         </div>
       </div>
     );
   },
 })
-export default class LoginView extends Vue {}
+export default class LoginView extends Vue {
+  @Setup(() => usePassportStore())
+  public readonly passportStore: ReturnType<typeof usePassportStore>;
+
+  public step_current = 1;
+
+  public async login() {}
+}

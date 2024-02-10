@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { applyDecorators, createParamDecorator, ExecutionContext, UseGuards } from "@nestjs/common";
+import { applyDecorators, createParamDecorator, ExecutionContext, SetMetadata, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 import { CommonAuthGuard, CommonAuthGuardOptional } from "../guards/common.guard";
 import { Request } from "express";
@@ -23,15 +23,34 @@ import { Request } from "express";
 /**
  * 授权装饰器
  *
- * @function
- * @description 凡是需要使用`@User`装饰器的地方都得使用本装饰器。
+ * @description 凡是需要使用`@User`装饰器的地方都得使用本装饰器。正常情况下，
+ * 可以添加`@Roles`装饰器进一步限制登录用户的角色。但是当`isOptional`参数为
+ * `true`时，无法使用角色装饰器`@Roles`。
  * @param {boolean} isOptional - 是否允许未登录的用户访问。默认为 false，即必须登录才能访问
  * @returns {ClassDecorator & MethodDecorator}
  * @author Zero <gczgroup@qq.com>
- * @since 2024
+ * @exports
+ * @since 2023
  */
-export function Auth(isOpotional: boolean = false): ClassDecorator & MethodDecorator {
-  return applyDecorators(ApiBearerAuth(), UseGuards(isOpotional ? CommonAuthGuardOptional : CommonAuthGuard));
+export function Auth(isOptional: boolean = false): ClassDecorator & MethodDecorator {
+  return applyDecorators(ApiBearerAuth(), UseGuards(isOptional ? CommonAuthGuardOptional : CommonAuthGuard));
+}
+
+export function Permissions(...permissions: string[]): ClassDecorator & MethodDecorator {
+  return SetMetadata("permissions", permissions);
+}
+
+/**
+ * 角色装饰器 用于标记控制器或方法必须需要的角色
+ *
+ * @author Zero <gczgroup@qq.com>
+ * @date 2024/02/10
+ * @export
+ * @param {...string[]} roles - 角色列表
+ * @return {(ClassDecorator & MethodDecorator)}
+ */
+export function Roles(...roles: string[]): ClassDecorator & MethodDecorator {
+  return SetMetadata("roles", roles);
 }
 
 /**

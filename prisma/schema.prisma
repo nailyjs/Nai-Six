@@ -1,7 +1,8 @@
-//🧩Don't Edit this file.✨Generated in Thu Feb 08 2024 15:31:51 GMT+0800 (中国标准时间)✨
+//🧩Don't Edit this file.✨Generated in Sat Feb 10 2024 22:02:23 GMT+0800 (中国标准时间)✨
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextIndex"]
 }
 
 datasource db {
@@ -23,6 +24,8 @@ model Tag {
   browserScriptStore    BrowserScriptStore[] @relation(fields: [browserScriptStoreIDs], references: [browserScriptStoreID])
   /// 链接的脚本ID
   browserScriptStoreIDs String[]             @db.ObjectId
+
+  @@fulltext([tagName, tagDescription])
 }
 
 /// 闪电：用户App Store订阅
@@ -109,6 +112,18 @@ model BrowserTrack {
   userID         String   @db.ObjectId
 }
 
+model UserData {
+  userDataID String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  userDataKey   String @unique
+  userDataValue String
+
+  user   User   @relation(fields: [userID], references: [userID])
+  userID String @db.ObjectId
+}
+
 /// 用户登录标识符
 model UserIdentifier {
   userIdentifierID String       @id @default(auto()) @map("_id") @db.ObjectId
@@ -134,44 +149,40 @@ model UserIdentifier {
 
 /// 权限库
 model Permission {
-  permissionID          String           @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt             DateTime         @default(now())
-  updatedAt             DateTime         @updatedAt
+  permissionID          String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
   /// 权限的名称
-  permissionName        String           @unique
+  permissionName        String   @unique
   /// 权限的描述
   permissionDescription String?
-  RolePermission        RolePermission[]
+  /// 权限是否公开
+  isPublic              Boolean
+  /// 角色
+  roles                 Role[]   @relation(fields: [roleIDs], references: [roleID])
+  /// 角色ID
+  roleIDs               String[] @db.ObjectId
 }
 
 /// 角色
 model Role {
-  roleID          String           @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt       DateTime         @default(now())
-  updatedAt       DateTime         @updatedAt
+  roleID          String       @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
   /// 角色的名称
-  roleName        String           @unique
+  roleName        String       @unique
   /// 角色的描述
   roleDescription String?
+  /// 角色是否公开
+  isPublic        Boolean
   /// 角色的权限
-  RolePermission  RolePermission[]
+  permissions     Permission[] @relation(fields: [permissionIDs], references: [permissionID])
+  /// 角色的权限ID
+  permissionIDs   String[]     @db.ObjectId
   /// 角色的用户
-  User            User?            @relation(fields: [userID], references: [userID])
+  users           User[]       @relation(fields: [userIDs], references: [userID])
   /// 角色的用户ID
-  userID          String?          @db.ObjectId
-}
-
-/// 角色拥有的权限列表
-model RolePermission {
-  rolePermissionID String     @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt        DateTime   @default(now())
-  updatedAt        DateTime   @updatedAt
-  /// 角色
-  role             Role       @relation(fields: [roleID], references: [roleID])
-  roleID           String     @db.ObjectId
-  /// 权限
-  permission       Permission @relation(fields: [permissionID], references: [permissionID])
-  permissionID     String     @db.ObjectId
+  userIDs         String[]     @db.ObjectId
 }
 
 /// 用户
@@ -180,7 +191,7 @@ model User {
   createdAt             DateTime                @default(now())
   updatedAt             DateTime                @updatedAt
   /// 用户的用户名
-  username              String                  @unique
+  username              String
   /// 用户的密码
   password              String?
   /// 用户的ip
@@ -204,11 +215,17 @@ model User {
   /// 用户的App Store订阅
   UserAppStoreSubscribe UserAppStoreSubscribe[]
   /// 用户的角色
-  roles                 Role[]
+  roles                 Role[]                  @relation(fields: [roleIDs], references: [roleID])
+  /// 用户的角色ID
+  roleIDs               String[]                @db.ObjectId
   /// 用户的浏览器脚本
   BrowserScript         BrowserScript[]
   /// 用户在商店创建的浏览器脚本
   BrowserScriptStore    BrowserScriptStore[]
+  /// 用户的数据
+  UserData              UserData[]
+
+  @@fulltext([username])
 }
 
 enum ScriptStatus {
@@ -224,6 +241,7 @@ enum ILoginType {
   Android
   Web
   IOS
+  Panel
 }
 
 /// 登录方式

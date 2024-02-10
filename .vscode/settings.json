@@ -1,6 +1,6 @@
 {
   "material-icon-theme.activeIconPack": "nest",
-  "unocss.root": ["panel/frontend"],
+  "unocss.root": ["panel/panel-frontend"],
   "material-icon-theme.files.associations": {
     "vitest.workspace.ts": "vitest",
     "*.repository.ts": "nest-service",
@@ -28,7 +28,8 @@
     "panel-frontend": "admin",
     "dtos": "controller",
     "subscribers": "class",
-    "subschemas": "prisma"
+    "subschemas": "prisma",
+    "role": "admin"
   },
   "prisma.fileWatcher": true
 }

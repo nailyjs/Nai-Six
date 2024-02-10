@@ -1,5 +1,5 @@
 import { Component, Setup, Vue } from "vue-facing-decorator";
-import { NConfigProvider, NMessageProvider, darkTheme, useOsTheme } from "naive-ui";
+import { NConfigProvider, NDialogProvider, NMessageProvider, darkTheme, useOsTheme } from "naive-ui";
 import { RouterView } from "vue-router";
 import { Suspense } from "vue";
 
@@ -8,9 +8,11 @@ import { Suspense } from "vue";
     return (
       <NConfigProvider theme={this.theme === "dark" ? darkTheme : null}>
         <NMessageProvider>
-          <Suspense>
-            <RouterView />
-          </Suspense>
+          <NDialogProvider>
+            <Suspense>
+              <RouterView />
+            </Suspense>
+          </NDialogProvider>
         </NMessageProvider>
       </NConfigProvider>
     );

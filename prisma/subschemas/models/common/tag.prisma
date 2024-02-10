@@ -14,4 +14,6 @@ model Tag {
     browserScriptStore    BrowserScriptStore[] @relation(fields: [browserScriptStoreIDs], references: [browserScriptStoreID])
     /// 链接的脚本ID
     browserScriptStoreIDs String[]             @db.ObjectId
+
+    @@fulltext([tagName, tagDescription])
 }

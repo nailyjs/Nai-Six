@@ -1,19 +1,23 @@
 import { User } from "./user"
-import { RolePermission } from "./rolePermission"
+import { Permission } from "./permission"
 
 /// 角色
 model Role {
-    roleID          String           @id @default(auto()) @map("_id") @db.ObjectId
-    createdAt       DateTime         @default(now())
-    updatedAt       DateTime         @updatedAt
+    roleID          String       @id @default(auto()) @map("_id") @db.ObjectId
+    createdAt       DateTime     @default(now())
+    updatedAt       DateTime     @updatedAt
     /// 角色的名称
-    roleName        String           @unique
+    roleName        String       @unique
     /// 角色的描述
     roleDescription String?
+    /// 角色是否公开
+    isPublic        Boolean
     /// 角色的权限
-    RolePermission  RolePermission[]
+    permissions     Permission[] @relation(fields: [permissionIDs], references: [permissionID])
+    /// 角色的权限ID
+    permissionIDs   String[]     @db.ObjectId
     /// 角色的用户
-    User            User?            @relation(fields: [userID], references: [userID])
+    users           User[]       @relation(fields: [userIDs], references: [userID])
     /// 角色的用户ID
-    userID          String?          @db.ObjectId
+    userIDs         String[]     @db.ObjectId
 }

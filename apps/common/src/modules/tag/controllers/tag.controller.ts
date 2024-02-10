@@ -1,7 +1,7 @@
 import { PrismaService } from "@nailyjs.nest.modules/prisma";
 import { BadRequestException, Body, Controller, Get, Post, Query, UseInterceptors } from "@nestjs/common";
 import { ApiResponse, ApiTags } from "@nestjs/swagger";
-import { GetTagQueryDTO, PostTagBodyDTO } from "../dtos/tag.dto";
+import { GetTagQueryDTO, GetTagSearchQueryDTO, PostTagBodyDTO } from "../dtos/tag.dto";
 import { UpdatedAtEnum, CreatedAtEnum, ViewEnum } from "../enums/tag.enum";
 import { ResInterceptor } from "cc.naily.six.shared";
 import { PostTagResDTO } from "../dtos/tag.res.dto";
@@ -59,6 +59,43 @@ export class TagController {
     if (hasTag) throw new BadRequestException(1070);
     return this.prismaService.tag.create({
       data: { tagName: body.name, tagDescription: body.description },
+    });
+  }
+
+  /**
+   * 搜索标签
+   *
+   * @author Zero <gczgroup@qq.com>
+   * @date 2024/02/08
+   * @param {GetTagSearchQueryDTO} query
+   * @memberof TagController
+   */
+  @Get("search")
+  @UseInterceptors(ResInterceptor)
+  public async searchTag(@Query() query: GetTagSearchQueryDTO) {
+    if (!query.take) query.take = 10;
+    if (!query.skip) query.skip = 0;
+    const keywords = query.keywords.split(" ");
+    return this.prismaService.tag.findMany({
+      take: parseInt(query.take as unknown as string),
+      skip: parseInt(query.skip as unknown as string),
+      where: {
+        AND: keywords.map((keyword) => {
+          return {
+            OR: [{ tagName: { contains: keyword } }, { tagDescription: { contains: keyword } }],
+          };
+        }),
+      },
+      orderBy: ((): Prisma.TagOrderByWithRelationInput[] => {
+        const order: Prisma.TagOrderByWithRelationInput[] = [];
+        if (query.orderUpdatedAt === UpdatedAtEnum.Latest) order.push({ updatedAt: "desc" });
+        if (query.orderUpdatedAt === UpdatedAtEnum.Earliest) order.push({ updatedAt: "asc" });
+        if (query.orderCreatedAt === CreatedAtEnum.Latest) order.push({ createdAt: "desc" });
+        if (query.orderCreatedAt === CreatedAtEnum.Earliest) order.push({ createdAt: "asc" });
+        if (query.orderViewCount === ViewEnum.More) order.push({ tagViewCount: "desc" });
+        if (query.orderViewCount === ViewEnum.Less) order.push({ tagViewCount: "asc" });
+        return order;
+      })(),
     });
   }
 }

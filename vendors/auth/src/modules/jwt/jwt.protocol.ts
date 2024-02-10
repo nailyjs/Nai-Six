@@ -1,7 +1,7 @@
 import { ILoginType, ILoginMethod } from "@prisma/client";
 
 export const LoginMethod: ILoginMethod[] = ["QrCode", "PhoneCode", "EmailCode", "UsernamePassword"];
-export const LoginType: ILoginType[] = ["WatchOS", "HarmonyOS_Wearable", "Android", "Web", "IOS"];
+export const LoginType: ILoginType[] = ["WatchOS", "HarmonyOS_Wearable", "Android", "Web", "IOS", "Panel"];
 
 export interface LoginIdentifier {
   loginType: ILoginType;

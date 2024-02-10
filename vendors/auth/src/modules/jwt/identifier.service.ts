@@ -20,16 +20,16 @@ export class CommonIdentifierService {
   private readonly Web: number;
   private readonly HarmonyOS_Wearable: number;
   private readonly IOS: number;
+  private readonly Panel: number;
 
   constructor(
     private readonly prismaService: PrismaService,
     configService: ConfigService,
   ) {
-    this.WatchOS = configService.getOrThrow<number>("passport.maxIdentifierCount.watchOS");
-    this.Android = configService.getOrThrow<number>("passport.maxIdentifierCount.android");
-    this.Web = configService.getOrThrow<number>("passport.maxIdentifierCount.web");
-    this.HarmonyOS_Wearable = configService.getOrThrow<number>("passport.maxIdentifierCount.harmonyOS_wearable");
-    this.IOS = configService.getOrThrow<number>("passport.maxIdentifierCount.ios");
+    const maxIdentifierCount = configService.getOrThrow<Record<ILoginType, number>>("passport.maxIdentifierCount");
+    for (const loginTypekey in maxIdentifierCount) {
+      this[loginTypekey] = maxIdentifierCount[loginTypekey];
+    }
   }
 
   public getMaxIdentifierCount(loginType: ILoginType): number {
@@ -62,10 +62,10 @@ export class CommonIdentifierService {
    * @author Zero <gczgroup@qq.com>
    * @date 2024/02/02
    * @param {JwtLoginPayload} jwtPayload
-   * @return {Promise<"OK">}
+   * @return {Promise<"ERROR" | "NOT_FOUND" | "OK">}
    * @memberof CommonIdentifierService
    */
-  public async checkIdentifier(jwtPayload: JwtLoginPayload) {
+  public async checkIdentifier(jwtPayload: JwtLoginPayload): Promise<"ERROR" | "NOT_FOUND" | "OK"> {
     const loginType = jwtPayload.loginType;
     const loginMethod = jwtPayload.loginMethod;
     const loginClient = jwtPayload.loginClient;
@@ -76,9 +76,7 @@ export class CommonIdentifierService {
     }
     const findIdentifier = await this.prismaService.userIdentifier.findFirst({
       where: {
-        user: {
-          userID: userID,
-        },
+        user: { userID },
         loginMethod,
         loginType,
         loginClient,
@@ -96,7 +94,6 @@ export class CommonIdentifierService {
    * @date 2024/02/02
    * @param {User} user
    * @param {ILoginPayload} loginPayload
-   * @return {*}
    * @memberof CommonIdentifierService
    */
   public async renewIdentifier(user: User, loginPayload: ILoginPayload) {
