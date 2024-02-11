@@ -1,13 +1,11 @@
-import { PrismaService } from "@nailyjs.nest.modules/prisma";
 import { Controller, Get, UseInterceptors } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
+import { MustPermission, NotPermission } from "cc.naily.six.auth";
 import { ResInterceptor } from "cc.naily.six.shared";
 
 @ApiTags("用户权限")
 @Controller("user/permission")
 export class PermissionController {
-  constructor(private readonly prismaService: PrismaService) {}
-
   /**
    * 获取权限列表
    *
@@ -18,8 +16,9 @@ export class PermissionController {
   @Get()
   @UseInterceptors(ResInterceptor)
   public async getPermissions() {
-    return this.prismaService.permission.findMany({
-      where: { isPublic: true },
-    });
+    return {
+      not: Object.keys(NotPermission),
+      must: Object.keys(MustPermission),
+    };
   }
 }

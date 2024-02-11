@@ -25,7 +25,6 @@ export class RoleController {
   @Auth()
   @UseInterceptors(ResInterceptor)
   public async getRoles(@User() user: JwtLoginPayload) {
-    console.log(user);
     return this.commonRoleService.getUserRoles(user.userID);
   }
 
@@ -40,7 +39,7 @@ export class RoleController {
   @UseInterceptors(ResInterceptor)
   public async getRolePermissions(@Query() { roleID }: GetUserRolePermissionQueryDTO) {
     return this.prismaService.role.findMany({
-      where: { roleID },
+      where: { roleID, isPublic: true },
     });
   }
 }

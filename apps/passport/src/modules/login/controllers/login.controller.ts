@@ -8,6 +8,7 @@ import { User as UserEntity } from "@prisma/client";
 import { PrismaService } from "@nailyjs.nest.modules/prisma";
 import { QrCodeService } from "../providers/qrcode.service";
 import { PostLoginQrcodeBodyDTO, PostLoginQrcodeConfirmBodyDTO } from "../dtos/qrcode/qrcode.dto";
+import { PostLoginEmailCodeBodyDTO } from "../dtos/email/email.dto";
 
 @ApiTags("登录")
 @Controller("login")
@@ -35,6 +36,28 @@ export class LoginController {
       loginClient: body.loginClient,
       loginType: body.loginType,
       loginMethod: "PhoneCode",
+      loginDeviceName: body.loginDeviceName,
+      loginIP: ip,
+    });
+  }
+
+  /**
+   * 邮箱验证码登录
+   *
+   * @author Zero <gczgroup@qq.com>
+   * @date 2024/02/11
+   * @param {PostLoginEmailCodeBodyDTO} body
+   * @param {string} ip
+   * @memberof LoginController
+   */
+  @Post("email/code")
+  @UseInterceptors(ResInterceptor)
+  public loginByEmailCode(@Body() body: PostLoginEmailCodeBodyDTO, @Ip() ip: string) {
+    return this.loginService.loginByEmailCode(body.email, body.code, {
+      identifier: body.identifier,
+      loginClient: body.loginClient,
+      loginType: body.loginType,
+      loginMethod: "EmailCode",
       loginDeviceName: body.loginDeviceName,
       loginIP: ip,
     });

@@ -19,6 +19,7 @@ import { applyDecorators, createParamDecorator, ExecutionContext, SetMetadata, U
 import { ApiBearerAuth } from "@nestjs/swagger";
 import { CommonAuthGuard, CommonAuthGuardOptional } from "../guards/common.guard";
 import { Request } from "express";
+import { IMustPermission, INotPermission } from "../constants";
 
 /**
  * 授权装饰器
@@ -36,21 +37,12 @@ export function Auth(isOptional: boolean = false): ClassDecorator & MethodDecora
   return applyDecorators(ApiBearerAuth(), UseGuards(isOptional ? CommonAuthGuardOptional : CommonAuthGuard));
 }
 
-export function Permissions(...permissions: string[]): ClassDecorator & MethodDecorator {
-  return SetMetadata("permissions", permissions);
+export function MustPermissions(...permissions: IMustPermission[]): ClassDecorator & MethodDecorator {
+  return SetMetadata("must_permissions", permissions);
 }
 
-/**
- * 角色装饰器 用于标记控制器或方法必须需要的角色
- *
- * @author Zero <gczgroup@qq.com>
- * @date 2024/02/10
- * @export
- * @param {...string[]} roles - 角色列表
- * @return {(ClassDecorator & MethodDecorator)}
- */
-export function Roles(...roles: string[]): ClassDecorator & MethodDecorator {
-  return SetMetadata("roles", roles);
+export function NotPermissions(...permissions: INotPermission[]): ClassDecorator & MethodDecorator {
+  return SetMetadata("not_permissions", permissions);
 }
 
 /**

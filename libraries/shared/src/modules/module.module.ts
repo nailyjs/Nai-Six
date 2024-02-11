@@ -15,12 +15,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { DynamicModule } from "@nestjs/common";
+import { DynamicModule, Injectable } from "@nestjs/common";
 import { CommonLogger } from "./logger";
 import { existsSync, readFileSync } from "fs";
 import { join } from "path";
 import { load } from "js-yaml";
 
+@Injectable()
 export abstract class NailyContext {
   private static _cache: Record<string | symbol, any>;
 
@@ -85,9 +86,10 @@ export abstract class NailyContext {
    * @return {DynamicModule}
    * @memberof BusinessModule
    */
-  public static register(): DynamicModule {
+  public static register(): DynamicModule | Promise<DynamicModule> {
     return {
       module: this as any,
+      global: true,
     };
   }
 }

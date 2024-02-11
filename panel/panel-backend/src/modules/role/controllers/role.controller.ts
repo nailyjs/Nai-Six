@@ -1,14 +1,44 @@
 import { PrismaService } from "@nailyjs.nest.modules/prisma";
-import { BadRequestException, Body, Controller, Delete, Patch, Post, Put, UseInterceptors } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Delete, Get, Patch, Post, Put, Query, UseInterceptors } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { ResInterceptor } from "cc.naily.six.shared";
-import { DeleteUserRoleBodyDTO, PatchUserRoleBodyDTO, PostUserRoleBodyDTO, PutUserRoleBodyDTO } from "../dtos/role.dto";
-import { Auth, Permissions, Roles } from "cc.naily.six.auth";
+import { DeleteUserRoleBodyDTO, GetUserRoleQueryDTO, PatchUserRoleBodyDTO, PostUserRoleBodyDTO, PutUserRoleBodyDTO } from "../dtos/role.dto";
+import { Auth, MustPermissions } from "cc.naily.six.auth";
+import { Prisma } from "@prisma/client";
+import { I18nService } from "nestjs-i18n";
+import { I18nTranslations } from "cc.naily.six.generated";
 
 @ApiTags("角色管理")
 @Controller("user/role")
 export class RoleController {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly i18nService: I18nService<I18nTranslations>,
+  ) {}
+
+  /**
+   * 获取全部的角色列表
+   *
+   * @author Zero <gczgroup@qq.com>
+   * @date 2024/02/11
+   * @memberof RoleController
+   */
+  @Get()
+  @Auth()
+  @MustPermissions("Must_Admin") // 必须有 Must_Admin 权限
+  @UseInterceptors(ResInterceptor)
+  public async getRoles(@Query() query: GetUserRoleQueryDTO) {
+    return this.prismaService.role.findMany({
+      orderBy: (() => {
+        const orderBy: Prisma.RoleOrderByWithRelationInput[] = [];
+        if (query.orderCreatedAt) orderBy.push({ createdAt: query.orderCreatedAt });
+        if (query.orderUpdatedAt) orderBy.push({ updatedAt: query.orderUpdatedAt });
+        return orderBy;
+      })(),
+      take: query.take,
+      skip: query.skip,
+    });
+  }
 
   /**
    * 创建角色
@@ -19,11 +49,10 @@ export class RoleController {
    */
   @Post()
   @Auth()
-  @Roles("naily_admin") // 必须是 naily_admin 角色
-  @Permissions("naily_admin") // 必须有 naily_admin 权限
+  @MustPermissions("Must_Admin") // 必须有 Must_Admin 权限
   @UseInterceptors(ResInterceptor)
   public async createRole(@Body() body: PostUserRoleBodyDTO) {
-    const haveRole = await this.prismaService.role.findUnique({
+    const haveRole = await this.prismaService.role.findFirst({
       where: { roleName: body.roleName },
     });
     if (haveRole) throw new BadRequestException(1075);
@@ -32,6 +61,7 @@ export class RoleController {
         roleName: body.roleName,
         roleDescription: body.roleDescription,
         isPublic: body.isPublic,
+        permissions: body.permissions,
       },
     });
   }
@@ -46,11 +76,10 @@ export class RoleController {
    */
   @Put()
   @Auth()
-  @Roles("naily_admin") // 必须是 naily_admin 角色
-  @Permissions("naily_admin") // 必须有 naily_admin 权限
+  @MustPermissions("Must_Admin") // 必须有 Must_Admin 权限
   @UseInterceptors(ResInterceptor)
   public async updateRole(@Body() body: PutUserRoleBodyDTO) {
-    const role = await this.prismaService.role.findUnique({
+    const role = await this.prismaService.role.findFirst({
       where: { roleID: body.roleID },
     });
     if (!role) throw new BadRequestException(1071);
@@ -59,6 +88,7 @@ export class RoleController {
         roleName: body.roleName,
         roleDescription: body.roleDescription,
         isPublic: body.isPublic,
+        permissions: body.permissions,
       },
       where: { roleID: body.roleID },
     });
@@ -72,6 +102,7 @@ export class RoleController {
    * @memberof RoleController
    */
   @Patch()
+  @MustPermissions("Must_Admin") // 必须有 Must_Admin 权限
   @UseInterceptors(ResInterceptor)
   public updateUserRole(@Body() { roleID, userID }: PatchUserRoleBodyDTO) {
     return this.prismaService.user.update({
@@ -95,8 +126,7 @@ export class RoleController {
    */
   @Auth()
   @Delete()
-  @Roles("naily_admin") // 必须是 naily_admin 角色
-  @Permissions("naily_admin") // 必须有 naily_admin 权限
+  @MustPermissions("Must_Admin") // 必须有 Must_Admin 权限
   @UseInterceptors(ResInterceptor)
   public async deleteRole(@Body() body: DeleteUserRoleBodyDTO) {
     const haveRole = await this.prismaService.role.findUnique({

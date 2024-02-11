@@ -7,13 +7,13 @@ export class CommonRoleService {
 
   public getRolePermissions(roleID: string) {
     return this.prismaService.role.findMany({
-      where: { roleID },
+      where: { roleID, isPublic: true },
     });
   }
 
   public getUserRoles(userID: string) {
     return this.prismaService.role.findMany({
-      where: { users: { every: { userID } } },
+      where: { users: { every: { userID } }, isPublic: true },
     });
   }
 }

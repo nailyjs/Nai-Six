@@ -15,3 +15,9 @@ enum ILoginMethod {
     EmailCode
     UsernamePassword
 }
+
+enum IReceiptStatus {
+    Pending
+    Success
+    Failed
+}

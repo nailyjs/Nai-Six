@@ -10,6 +10,7 @@ import { User } from "@prisma/client";
 import { I18nService } from "nestjs-i18n";
 import { I18nTranslations } from "cc.naily.six.generated";
 import { CommonLogger } from "cc.naily.six.shared";
+import { IMustPermission, INotPermission, IPermission } from "..";
 
 declare global {
   namespace Express {
@@ -46,41 +47,48 @@ export class CommonAuthGuard implements CanActivate {
       if (!ObjectId.isValid(payload.userID)) throw new ForbiddenException(1006);
       user = await this.prismaService.user.findUnique({
         where: { userID: payload.userID },
-        include: { roles: { include: { permissions: true } } },
+        include: { roles: true },
       });
       if (!user) throw new ForbiddenException(1006);
     } catch {
       throw new ForbiddenException(1006);
     }
 
-    // 检查角色装饰器
-    const roles = this.reflector.get<string[]>("roles", context.getHandler()) || [];
-    // 检查权限装饰器
-    const permissions = this.reflector.get<string[]>("permissions", context.getHandler()) || [];
-    this.commonLogger.debug(`roles: ${JSON.stringify(roles)}, permissions: ${JSON.stringify(permissions)}`);
-    if (roles.length || permissions.length) {
-      const findRoles = await this.prismaService.role.findMany({
-        where: { roleName: { in: roles } },
-        include: { permissions: true },
+    // 必须要有的权限
+    const mustPermissions = this.reflector.get<IMustPermission[]>("must_permissions", context.getHandler()) || [];
+    // 不能有的权限
+    const notPermissions = this.reflector.get<INotPermission[]>("not_permissions", context.getHandler()) || [];
+    // 用户的所有角色的权限
+    let userRolesPermissions: IPermission[] = [];
+    // 获取用户的所有角色的权限
+    for (const roleID of user.roleIDs) {
+      const role = await this.prismaService.role.findUnique({
+        where: { roleID },
       });
-      if (!findRoles)
+      if (!role) continue;
+      userRolesPermissions.push(...(role.permissions as IPermission[]));
+    }
+    // 去重
+    userRolesPermissions = [...new Set(userRolesPermissions)];
+    // 检查权限是否有
+    for (const permission of notPermissions) {
+      // 如果用户有权限
+      if (userRolesPermissions.includes(permission)) {
         throw new ForbiddenException({
-          code: 1076,
-          message: this.i18nService.t("global.errorCode.1076").replace("{}", roles.join(",")),
+          code: 1076, // 权限禁止
+          message: this.i18nService.t("global.errorCode.1076").replace("{}", `{${permission}}`),
         });
-      const findPermissions = await this.prismaService.permission.findMany({
-        where: {
-          permissionName: { in: permissions },
-          roles: {
-            some: { roleID: { in: findRoles.map((role) => role.roleID) } },
-          },
-        },
-      });
-      if (!findPermissions)
+      }
+    }
+    // 检查权限是否无
+    for (const permission of mustPermissions) {
+      // 如果用户没有权限
+      if (!userRolesPermissions.includes(permission)) {
         throw new ForbiddenException({
-          code: 1072,
-          message: this.i18nService.t("global.errorCode.1072").replace("{}", permissions.join(",")),
+          code: 1072, // 权限不足
+          message: this.i18nService.t("global.errorCode.1072").replace("{}", `{${permission}}`),
         });
+      }
     }
 
     request.user = user;

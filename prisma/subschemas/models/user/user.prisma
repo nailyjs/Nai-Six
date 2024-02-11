@@ -27,6 +27,8 @@ model User {
     phone                 String?
     /// 用户是否被删除
     isDeleted             Boolean?                @default(false)
+    /// 用户余额
+    balance               Float?
     /// 用户的登录标识符
     identifiers           UserIdentifier[]
     /// 用户的浏览器书签
@@ -45,6 +47,8 @@ model User {
     BrowserScriptStore    BrowserScriptStore[]
     /// 用户的数据
     UserData              UserData[]
+    /// 用户的支付收据
+    UserReceipt           UserReceipt[]
 
     @@fulltext([username])
 }

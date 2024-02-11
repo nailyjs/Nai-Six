@@ -22,6 +22,7 @@ export const English = {
   请输入正确的手机号: "Please enter the correct mobile phone number",
   请输入正确的邮箱: "Please enter the correct email",
   服务器: "Server",
-  添加服务器以登录: "Add a server",
+  添加服务器以登录: "Input server Info",
   登录您的账户: "Login account",
+  验证码发送成功: "Verification code sent successfully",
 };

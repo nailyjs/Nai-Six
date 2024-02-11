@@ -21,6 +21,7 @@ import { APP_GUARD, APP_PIPE } from "@nestjs/core";
 import { RegisterModule } from "./modules/register/register.module";
 import { UserModule } from "./modules/user/user.module";
 import { RoleModule } from "./modules/role/role.module";
+import { PayModule } from "./modules/pay/pay.module";
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { RoleModule } from "./modules/role/role.module";
     RegisterModule.register(),
     TransportModule.register(),
     UserModule.register(),
+    PayModule.register(),
     RoleModule.register(),
   ],
   controllers: [AppController],

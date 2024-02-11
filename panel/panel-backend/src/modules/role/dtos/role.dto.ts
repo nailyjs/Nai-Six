@@ -1,5 +1,26 @@
+import { ApiProperty } from "@nestjs/swagger";
+import { IsPermissionArray, MustPermissionArray, NotPermissionArray } from "cc.naily.six.auth";
 import { IsObjectId } from "cc.naily.six.shared";
-import { IsBoolean, IsNotEmpty, IsString } from "class-validator";
+import { IsArray, IsBoolean, IsIn, IsNotEmpty, IsNumberString, IsOptional, IsString } from "class-validator";
+
+export class GetUserRoleQueryDTO {
+  @IsIn(["asc", "desc"])
+  @IsOptional()
+  @IsString()
+  @ApiProperty({ description: "创建时间排序", enum: ["asc", "desc"] })
+  orderCreatedAt?: "asc" | "desc";
+  @IsIn(["asc", "desc"])
+  @IsOptional()
+  @IsString()
+  @ApiProperty({ description: "更新时间排序", enum: ["asc", "desc"] })
+  orderUpdatedAt?: "asc" | "desc";
+  @IsOptional()
+  @IsNumberString()
+  take?: number;
+  @IsOptional()
+  @IsNumberString()
+  skip?: number;
+}
 
 export class PostUserRoleBodyDTO {
   /**
@@ -35,6 +56,19 @@ export class PostUserRoleBodyDTO {
   @IsBoolean()
   @IsNotEmpty()
   isPublic: boolean;
+  /**
+   * 权限ID列表
+   *
+   * @author Zero <gczgroup@qq.com>
+   * @date 2024/02/11
+   * @type {string[]}
+   * @memberof PostUserRoleBodyDTO
+   */
+  @IsPermissionArray()
+  @IsArray()
+  @IsNotEmpty()
+  @ApiProperty({ description: "权限ID列表", enum: [...MustPermissionArray, ...NotPermissionArray], isArray: true })
+  permissions: string[];
 }
 
 export class PutUserRoleBodyDTO extends PostUserRoleBodyDTO {

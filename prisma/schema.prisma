@@ -1,4 +1,4 @@
-//🧩Don't Edit this file.✨Generated in Sat Feb 10 2024 22:02:23 GMT+0800 (中国标准时间)✨
+//🧩Don't Edit this file.✨Generated in Mon Feb 12 2024 00:11:37 GMT+0800 (中国标准时间)✨
 
 generator client {
   provider        = "prisma-client-js"
@@ -147,42 +147,45 @@ model UserIdentifier {
   userID           String       @db.ObjectId
 }
 
-/// 权限库
-model Permission {
-  permissionID          String   @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
-  /// 权限的名称
-  permissionName        String   @unique
-  /// 权限的描述
-  permissionDescription String?
-  /// 权限是否公开
-  isPublic              Boolean
-  /// 角色
-  roles                 Role[]   @relation(fields: [roleIDs], references: [roleID])
-  /// 角色ID
-  roleIDs               String[] @db.ObjectId
+model UserReceipt {
+  userReceiptID String         @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  // 订单ID
+  orderID       String
+  /// 订单金额 单位元 保留两位小数
+  amount        Float
+  /// 用户
+  user          User           @relation(fields: [userID], references: [userID])
+  /// 用户ID
+  userID        String         @db.ObjectId
+  /// 订单状态
+  receiptStatus IReceiptStatus
+  /// 订单类型
+  payType       String
+  /// 随机字符串 用于鉴定
+  nonceStr      String?
 }
 
 /// 角色
 model Role {
-  roleID          String       @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt       DateTime     @default(now())
-  updatedAt       DateTime     @updatedAt
+  roleID          String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
   /// 角色的名称
-  roleName        String       @unique
+  roleName        String   @unique
   /// 角色的描述
   roleDescription String?
   /// 角色是否公开
   isPublic        Boolean
   /// 角色的权限
-  permissions     Permission[] @relation(fields: [permissionIDs], references: [permissionID])
+  permissions     String[]
   /// 角色的权限ID
-  permissionIDs   String[]     @db.ObjectId
+  permissionIDs   String[] @db.ObjectId
   /// 角色的用户
-  users           User[]       @relation(fields: [userIDs], references: [userID])
+  users           User[]   @relation(fields: [userIDs], references: [userID])
   /// 角色的用户ID
-  userIDs         String[]     @db.ObjectId
+  userIDs         String[] @db.ObjectId
 }
 
 /// 用户
@@ -206,6 +209,8 @@ model User {
   phone                 String?
   /// 用户是否被删除
   isDeleted             Boolean?                @default(false)
+  /// 用户余额
+  balance               Float?
   /// 用户的登录标识符
   identifiers           UserIdentifier[]
   /// 用户的浏览器书签
@@ -224,6 +229,8 @@ model User {
   BrowserScriptStore    BrowserScriptStore[]
   /// 用户的数据
   UserData              UserData[]
+  /// 用户的支付收据
+  UserReceipt           UserReceipt[]
 
   @@fulltext([username])
 }
@@ -250,4 +257,10 @@ enum ILoginMethod {
   PhoneCode
   EmailCode
   UsernamePassword
+}
+
+enum IReceiptStatus {
+  Pending
+  Success
+  Failed
 }

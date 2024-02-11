@@ -1,5 +1,5 @@
 import { Controller, Get, Query, UseInterceptors } from "@nestjs/common";
-import { Auth, JwtLoginPayload, Permissions, Roles, User } from "cc.naily.six.auth";
+import { Auth, JwtLoginPayload, MustPermissions, User } from "cc.naily.six.auth";
 import { I18nTranslations } from "cc.naily.six.generated";
 import { ResInterceptor } from "cc.naily.six.shared";
 import { I18nService } from "nestjs-i18n";
@@ -26,9 +26,8 @@ export class AppController {
    * @memberof AppController
    */
   @Auth()
-  @Roles("naily_admin")
-  @Permissions("naily_admin")
   @Get("logging")
+  @MustPermissions("Must_Admin") // 必须有 Must_Admin 权限
   @UseInterceptors(ResInterceptor)
   getLogging(@User() user: JwtLoginPayload) {
     return user;

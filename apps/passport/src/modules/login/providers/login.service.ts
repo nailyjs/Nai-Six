@@ -4,12 +4,14 @@ import { User } from "@prisma/client";
 import { CommonIdentifierService, ILoginPayload, JwtLoginPayload } from "cc.naily.six.auth";
 import { PrismaService } from "@nailyjs.nest.modules/prisma";
 import { PhoneService } from "src/modules/transport/providers/phone.service";
+import { EmailService } from "src/modules/transport/providers/email.service";
 
 @Injectable()
 export class LoginService {
   constructor(
     private readonly identifierService: CommonIdentifierService,
     private readonly phoneService: PhoneService,
+    private readonly emailService: EmailService,
     private readonly prismaService: PrismaService,
     private readonly jwtService: JwtService,
   ) {}
@@ -38,6 +40,21 @@ export class LoginService {
     const access_token = this.getJwtToken(user, loginPayload);
     const isRight = await this.phoneService.checkCode(phone, code);
     if (!isRight) throw new NotFoundException(1040);
+    const identifier = await this.identifierService.renewIdentifier(user, loginPayload);
+    if (identifier === "ERROR") throw new BadRequestException(1039);
+    user.password = undefined;
+    return {
+      user,
+      identifier,
+      access_token,
+    };
+  }
+
+  public async loginByEmailCode(email: string, code: number, loginPayload: ILoginPayload) {
+    const user = await this.prismaService.user.findFirst({ where: { email } });
+    const access_token = this.getJwtToken(user, loginPayload);
+    const isRight = await this.emailService.checkCode(email, code);
+    if (!isRight) throw new NotFoundException(1011);
     const identifier = await this.identifierService.renewIdentifier(user, loginPayload);
     if (identifier === "ERROR") throw new BadRequestException(1039);
     user.password = undefined;

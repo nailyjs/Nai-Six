@@ -27,12 +27,12 @@ export class BroswerTrackController {
   public async getList(@Query() query: GetBrowserTrackListQueryDTO, @User() user: UserEntity): Promise<unknown> {
     if (!query.take) query.take = 10;
     if (!query.skip) query.skip = 0;
+    if (!query.orderCreatedAt) query.orderCreatedAt = "desc";
     return this.prismaService.browserTrack.findMany({
       take: parseInt(query.take as unknown as string),
       skip: parseInt(query.skip as unknown as string),
-      where: {
-        user: { userID: user.userID },
-      },
+      orderBy: { createdAt: query.orderCreatedAt },
+      where: { user: { userID: user.userID } },
     });
   }
 

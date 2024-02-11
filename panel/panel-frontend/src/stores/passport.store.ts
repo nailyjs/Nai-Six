@@ -5,6 +5,8 @@ interface State {
   backendAddress: string;
   loginType: 1 | 2;
   loginIdentifier: string;
+  transportCountDown: number;
+  jwtToken: string[];
 }
 
 export const usePassportStore = defineStore("cc_naily_panel_six_passport", {
@@ -14,6 +16,8 @@ export const usePassportStore = defineStore("cc_naily_panel_six_passport", {
       backendAddress: "",
       loginType: 1,
       loginIdentifier: "",
+      transportCountDown: 60,
+      jwtToken: [],
     };
   },
   actions: {},

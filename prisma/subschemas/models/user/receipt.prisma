@@ -1,0 +1,22 @@
+import { User } from "./user"
+import { IReceiptStatus } from "../../types/user.type"
+
+model UserReceipt {
+    userReceiptID String         @id @default(auto()) @map("_id") @db.ObjectId
+    createdAt     DateTime       @default(now())
+    updatedAt     DateTime       @updatedAt
+    // 订单ID
+    orderID       String
+    /// 订单金额 单位元 保留两位小数
+    amount        Float
+    /// 用户
+    user          User           @relation(fields: [userID], references: [userID])
+    /// 用户ID
+    userID        String         @db.ObjectId
+    /// 订单状态
+    receiptStatus IReceiptStatus
+    /// 订单类型
+    payType       String
+    /// 随机字符串 用于鉴定
+    nonceStr      String?
+}

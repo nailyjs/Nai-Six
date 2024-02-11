@@ -5,7 +5,7 @@ import { IsIn, IsInt, IsMobilePhone, IsNotEmpty, IsNumber, IsOptional, IsString,
 
 export class PostLoginPhoneCodeBodyDTO {
   /**
-   * 邮箱
+   * 中国大陆手机号
    *
    * @author Zero <gczgroup@qq.com>
    * @date 2024/01/24
