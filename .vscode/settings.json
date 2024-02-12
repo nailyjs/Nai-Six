@@ -29,7 +29,8 @@
     "dtos": "controller",
     "subscribers": "class",
     "subschemas": "prisma",
-    "role": "admin"
+    "role": "admin",
+    "subscribe": "cart"
   },
   "prisma.fileWatcher": true
 }
