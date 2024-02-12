@@ -22,7 +22,7 @@ export default async () => {
                 required: false,
                 type: () => String,
                 description:
-                  "\u767B\u5F55\u7684\u5BA2\u6237\u7AEF \u7528\u4E8E\u8BB0\u5F55\u8BBE\u5907/\u6D4F\u89C8\u5668\n\nWeb\u7AEF\u767B\u5F55\u65F6\uFF0C\u8BE5\u5B57\u6BB5\u53EF\u4EE5\u4E3A\u7A7A",
+                  "\u767B\u5F55\u7684\u5BA2\u6237\u7AEF \u7528\u4E8E\u8BB0\u5F55\u54EA\u4E2AAPP/\u54EA\u79CD\u6D4F\u89C8\u5668\uFF08\u6BD4\u5982\u8C37\u6B4C\u3001\u706B\u72D0\u6D4F\u89C8\u5668\uFF09\u7B49\n\nWeb\u7AEF\u767B\u5F55\u65F6\uFF0C\u8BE5\u5B57\u6BB5\u53EF\u4EE5\u4E3A\u7A7A",
               },
               loginDeviceName: {
                 required: false,
@@ -53,7 +53,7 @@ export default async () => {
                 required: false,
                 type: () => String,
                 description:
-                  "\u767B\u5F55\u7684\u5BA2\u6237\u7AEF \u7528\u4E8E\u8BB0\u5F55\u8BBE\u5907/\u6D4F\u89C8\u5668\n\nWeb\u7AEF\u767B\u5F55\u65F6\uFF0C\u8BE5\u5B57\u6BB5\u53EF\u4EE5\u4E3A\u7A7A",
+                  "\u767B\u5F55\u7684\u5BA2\u6237\u7AEF \u7528\u4E8E\u8BB0\u5F55\u54EA\u4E2AAPP/\u54EA\u79CD\u6D4F\u89C8\u5668\uFF08\u6BD4\u5982\u8C37\u6B4C\u3001\u706B\u72D0\u6D4F\u89C8\u5668\uFF09\u7B49\n\nWeb\u7AEF\u767B\u5F55\u65F6\uFF0C\u8BE5\u5B57\u6BB5\u53EF\u4EE5\u4E3A\u7A7A",
               },
               loginDeviceName: {
                 required: false,
@@ -84,7 +84,7 @@ export default async () => {
                 required: false,
                 type: () => String,
                 description:
-                  "\u767B\u5F55\u7684\u5BA2\u6237\u7AEF \u7528\u4E8E\u8BB0\u5F55\u8BBE\u5907/\u6D4F\u89C8\u5668\n\nWeb\u7AEF\u767B\u5F55\u65F6\uFF0C\u8BE5\u5B57\u6BB5\u53EF\u4EE5\u4E3A\u7A7A",
+                  "\u767B\u5F55\u7684\u5BA2\u6237\u7AEF \u7528\u4E8E\u8BB0\u5F55\u54EA\u4E2AAPP/\u54EA\u79CD\u6D4F\u89C8\u5668\uFF08\u6BD4\u5982\u8C37\u6B4C\u3001\u706B\u72D0\u6D4F\u89C8\u5668\uFF09\u7B49\n\nWeb\u7AEF\u767B\u5F55\u65F6\uFF0C\u8BE5\u5B57\u6BB5\u53EF\u4EE5\u4E3A\u7A7A",
               },
               loginDeviceName: {
                 required: false,
@@ -143,7 +143,7 @@ export default async () => {
                 required: false,
                 type: () => Object,
                 description: "\u6839\u636E\u6CE8\u518C\u65F6\u95F4\u6392\u5E8F",
-                default: "early",
+                default: "late",
               },
               take: { required: false, type: () => Number, description: "\u83B7\u53D6\u6570\u91CF" },
               skip: { required: false, type: () => Number, description: "\u8DF3\u8FC7\u6570\u91CF" },

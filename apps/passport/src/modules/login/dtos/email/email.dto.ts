@@ -45,7 +45,7 @@ export class PostLoginEmailCodeBodyDTO {
   @ApiProperty({ enum: LoginType })
   loginType: ILoginType;
   /**
-   * 登录的客户端 用于记录设备/浏览器
+   * 登录的客户端 用于记录哪个APP/哪种浏览器（比如谷歌、火狐浏览器）等
    *
    * Web端登录时，该字段可以为空
    *

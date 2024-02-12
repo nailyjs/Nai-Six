@@ -20,7 +20,7 @@ module.exports = {
   /** @type {import("pm2").StartOptions[]} */
   apps: [
     {
-      name: "ele-Passport",
+      name: "six-Passport",
       script: "./resources/dist/apps/passport/main.js",
       env: {
         NODE_ENV: "production",
@@ -34,7 +34,7 @@ module.exports = {
     //   },
     // },
     {
-      name: "ele-Common",
+      name: "six-Common",
       script: "./resources/dist/apps/common/main.js",
       env: {
         NODE_ENV: "production",

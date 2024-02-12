@@ -14,8 +14,7 @@ export class GetUserQueryDTO {
   @IsString()
   @IsOptional()
   @ApiProperty({ enum: ["early", "late"] })
-  orderRegisterTime?: "early" | "late" = "early";
-
+  orderRegisterTime?: "early" | "late" = "late";
   /**
    * 获取数量
    *

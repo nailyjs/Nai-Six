@@ -42,6 +42,7 @@ export class UserController {
   public async getUserList(@Query() query: GetUserQueryDTO) {
     if (!query.take) query.take = 10;
     if (!query.skip) query.skip = 0;
+    if (!query.orderRegisterTime) query.orderRegisterTime = "late";
     let users = await this.prismaService.user.findMany({
       take: query.take,
       skip: query.skip,
