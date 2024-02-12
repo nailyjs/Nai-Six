@@ -21,7 +21,7 @@ module.exports = {
   apps: [
     {
       name: "six-Passport",
-      script: "./resources/dist/apps/passport/main.js",
+      script: "./resources/dist/apps/passport/src/main.js",
       env: {
         NODE_ENV: "production",
       },
@@ -35,7 +35,7 @@ module.exports = {
     // },
     {
       name: "six-Common",
-      script: "./resources/dist/apps/common/main.js",
+      script: "./resources/dist/apps/common/src/main.js",
       env: {
         NODE_ENV: "production",
       },
