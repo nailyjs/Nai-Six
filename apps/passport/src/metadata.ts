@@ -133,7 +133,20 @@ export default async () => {
         ],
         [
           import("./modules/user/dtos/change/change.dto"),
-          { PutUserUsernameBodyDTO: { username: { required: true, type: () => String, description: "\u65B0\u7528\u6237\u540D" } } },
+          {
+            PutUserUsernameBodyDTO: { username: { required: true, type: () => String, description: "\u65B0\u7528\u6237\u540D" } },
+            PutUserPasswordBodyDTO: {
+              oldPassword: {
+                required: false,
+                type: () => String,
+                description:
+                  "\u65E7\u5BC6\u7801\uFF08\u5982\u679C\u6709\u65E7\u5BC6\u7801\uFF0C\u5FC5\u586B\uFF1B\u5982\u679C\u6CA1\u6709\uFF0C\u4E0D\u586B\uFF09",
+              },
+              verifyType: { required: true, type: () => Object, description: "\u9A8C\u8BC1\u7C7B\u522B `email` \u90AE\u7BB1 `phone` \u624B\u673A" },
+              verifyCode: { required: true, type: () => Number, description: "\u9A8C\u8BC1\u7801", maximum: 999999 },
+              newPassword: { required: true, type: () => String, description: "\u65B0\u5BC6\u7801" },
+            },
+          },
         ],
         [
           import("./modules/user/dtos/user/user.dto"),
@@ -290,7 +303,12 @@ export default async () => {
         ],
         [
           import("./modules/user/controllers/change.controller"),
-          { UserChangerController: { changeUsername: { summary: "\u4FEE\u6539\u7528\u6237\u540D", type: Object } } },
+          {
+            UserChangerController: {
+              changeUsername: { summary: "\u4FEE\u6539\u7528\u6237\u540D", type: Object },
+              changePassword: { summary: "\u5DF2\u767B\u5F55\u7528\u6237\u4FEE\u6539\u5BC6\u7801", type: Number },
+            },
+          },
         ],
         [
           import("./modules/user/controllers/user.controller"),

@@ -1,0 +1,13 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "npm",
+      "script": "build:passport",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "npm: build:passport",
+      "detail": "pnpm -F cc.naily.six.passport build"
+    }
+  ]
+}

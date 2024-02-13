@@ -44,10 +44,10 @@ export class CommonAuthGuard implements CanActivate {
       const payload: JwtLoginPayload = await this.jwtService.verifyAsync(token, {
         secret: this.configService.getOrThrow("global.jwt.secret"),
       });
+      this.commonLogger.debug("JWT payload: " + JSON.stringify(payload));
       if (!ObjectId.isValid(payload.userID)) throw new ForbiddenException(1006);
-      user = await this.prismaService.user.findUnique({
+      user = await this.prismaService.user.findFirst({
         where: { userID: payload.userID },
-        include: { roles: true },
       });
       if (!user) throw new ForbiddenException(1006);
     } catch {
@@ -60,6 +60,7 @@ export class CommonAuthGuard implements CanActivate {
     const notPermissions = this.reflector.get<INotPermission[]>("not_permissions", context.getHandler()) || [];
     // 用户的所有角色的权限
     let userRolesPermissions: IPermission[] = [];
+    if (!user.roleIDs) user.roleIDs = [];
     // 获取用户的所有角色的权限
     for (const roleID of user.roleIDs) {
       const role = await this.prismaService.role.findUnique({

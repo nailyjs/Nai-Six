@@ -1,5 +1,6 @@
 import { DynamicModule, Module } from "@nestjs/common";
 import { CommonRoleService } from ".";
+import { CommonPermissionService } from "./permission.service";
 
 @Module({})
 export class CommonRoleModule {
@@ -7,8 +8,8 @@ export class CommonRoleModule {
     return {
       module: CommonRoleModule,
       global: true,
-      providers: [CommonRoleService],
-      exports: [CommonRoleService],
+      providers: [CommonPermissionService, CommonRoleService],
+      exports: [CommonRoleService, CommonPermissionService],
     };
   }
 }

@@ -1,4 +1,4 @@
-//🧩Don't Edit this file.✨Generated in Mon Feb 12 2024 00:11:37 GMT+0800 (中国标准时间)✨
+//🧩Don't Edit this file.✨Generated in Tue Feb 13 2024 16:18:30 GMT+0800 (中国标准时间)✨
 
 generator client {
   provider        = "prisma-client-js"
@@ -180,6 +180,8 @@ model Role {
   isPublic        Boolean
   /// 角色的权限
   permissions     String[]
+  /// 角色是否注册即享有
+  isDefault       Boolean?
   /// 角色的权限ID
   permissionIDs   String[] @db.ObjectId
   /// 角色的用户

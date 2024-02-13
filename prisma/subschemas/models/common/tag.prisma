@@ -1,19 +1,19 @@
 import { BrowserScriptStore } from "../lightning/broswer"
 
 model Tag {
-    tagID                 String               @id @default(auto()) @map("_id") @db.ObjectId
-    createdAt             DateTime             @default(now())
-    updatedAt             DateTime             @updatedAt
-    /// 标签名
-    tagName               String               @unique
-    /// 标签描述
-    tagDescription        String?
-    /// 标签浏览量
-    tagViewCount          Int                  @default(0)
-    /// 链接的脚本
-    browserScriptStore    BrowserScriptStore[] @relation(fields: [browserScriptStoreIDs], references: [browserScriptStoreID])
-    /// 链接的脚本ID
-    browserScriptStoreIDs String[]             @db.ObjectId
+  tagID                 String               @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt             DateTime             @default(now())
+  updatedAt             DateTime             @updatedAt
+  /// 标签名
+  tagName               String               @unique
+  /// 标签描述
+  tagDescription        String?
+  /// 标签浏览量
+  tagViewCount          Int                  @default(0)
+  /// 链接的脚本
+  browserScriptStore    BrowserScriptStore[] @relation(fields: [browserScriptStoreIDs], references: [browserScriptStoreID])
+  /// 链接的脚本ID
+  browserScriptStoreIDs String[]             @db.ObjectId
 
-    @@fulltext([tagName, tagDescription])
+  @@fulltext([tagName, tagDescription])
 }

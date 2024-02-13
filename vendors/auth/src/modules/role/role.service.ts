@@ -16,4 +16,10 @@ export class CommonRoleService {
       where: { users: { every: { userID } }, isPublic: true },
     });
   }
+
+  public getUserPrivateRoles(userID: string) {
+    return this.prismaService.role.findMany({
+      where: { users: { every: { userID } }, isPublic: false },
+    });
+  }
 }

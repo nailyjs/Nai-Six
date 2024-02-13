@@ -1,23 +1,23 @@
 /// 登录设备类型
 enum ILoginType {
-    WatchOS
-    HarmonyOS_Wearable
-    Android
-    Web
-    IOS
-    Panel
+  WatchOS
+  HarmonyOS_Wearable
+  Android
+  Web
+  IOS
+  Panel
 }
 
 /// 登录方式
 enum ILoginMethod {
-    QrCode
-    PhoneCode
-    EmailCode
-    UsernamePassword
+  QrCode
+  PhoneCode
+  EmailCode
+  UsernamePassword
 }
 
 enum IReceiptStatus {
-    Pending
-    Success
-    Failed
+  Pending
+  Success
+  Failed
 }
