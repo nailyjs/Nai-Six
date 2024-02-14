@@ -5,11 +5,15 @@ import { Auth, User } from "cc.naily.six.auth";
 import { PrismaService } from "@nailyjs.nest.modules/prisma";
 import { ResInterceptor } from "cc.naily.six.shared";
 import { GetBrowserTrackListQueryDTO, PostBrowserTrackBodyDTO } from "../dtos/track/track.dto";
+import { BroswerTrackService } from "../providers/track.service";
 
 @ApiTags("浏览历史记录")
 @Controller("broswer/track")
 export class BroswerTrackController {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly broswerTrackService: BroswerTrackService,
+  ) {}
 
   /**
    * 获取浏览历史记录
@@ -43,14 +47,14 @@ export class BroswerTrackController {
    * @date 2024/02/02
    * @param {UserEntity} user
    * @param {PostBrowserTrackBodyDTO} body
-   * @return {*}
    * @memberof BroswerTrackController
    */
   @Post()
   @Auth()
   @UseInterceptors(ResInterceptor)
-  public create(@User() user: UserEntity, @Body() body: PostBrowserTrackBodyDTO) {
-    return this.prismaService.browserTrack.create({
+  public async create(@User() user: UserEntity, @Body() body: PostBrowserTrackBodyDTO) {
+    // 创建浏览历史记录
+    const newTrack = await this.prismaService.browserTrack.create({
       data: {
         webPageTitle: body.webPageTitle,
         webPageLink: body.webPageLink,
@@ -58,6 +62,10 @@ export class BroswerTrackController {
         user: { connect: { userID: user.userID } },
       },
     });
+    // 异步删除100条之后的记录，可以看到没有`await`关键字，所以不会阻塞当前的请求
+    this.broswerTrackService.deleteGreaterThanOneHundred(user.userID);
+    // 返回新的浏览历史记录
+    return newTrack;
   }
 
   /**
