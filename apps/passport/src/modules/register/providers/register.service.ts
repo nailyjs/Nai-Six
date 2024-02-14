@@ -7,9 +7,13 @@ export class RegisterService {
   constructor(private readonly prismaService: PrismaService) {}
 
   private async generateUsername(): Promise<string> {
+    // 生成一个随机用户名 用户名格式为 用户 + 8位随机数
     const username = `用户${Math.floor(Math.random() * (99999999 - 100000 + 1) + 1000000)}`;
+    // 检查用户名是否已经被注册
     const user = await this.prismaService.user.findFirst({ where: { username } });
+    // 如果用户名已经被注册 则重新生成一个用户名
     if (user) return await this.generateUsername();
+    // 如果用户名没有被注册 则返回这个用户名
     return username;
   }
 
