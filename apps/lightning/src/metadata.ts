@@ -4,8 +4,6 @@ export default async () => {
     ["./modules/broswer/dtos/mark/mark.dto"]: await import("./modules/broswer/dtos/mark/mark.dto"),
     ["./modules/script/enums/health.enum"]: await import("./modules/script/enums/health.enum"),
     ["./modules/script/dtos/user/parse.res.dto"]: await import("./modules/script/dtos/user/parse.res.dto"),
-    ["./modules/script/enums/store.enum"]: await import("./modules/script/enums/store.enum"),
-    ["./modules/script/providers/store.service"]: await import("./modules/script/providers/store.service"),
   };
   return {
     "@nestjs/swagger": {
@@ -37,6 +35,7 @@ export default async () => {
           import("./modules/broswer/dtos/track/track.dto"),
           {
             GetBrowserTrackListQueryDTO: {
+              orderCreatedAt: { required: false, type: () => Object, description: "\u521B\u5EFA\u65F6\u95F4\u6392\u5E8F", default: "desc" },
               take: { required: false, type: () => Number, description: "\u6BCF\u9875\u6570\u91CF", default: 10 },
               skip: { required: false, type: () => Number, description: "\u8DF3\u8FC7\u6570\u91CF", default: 0 },
             },
