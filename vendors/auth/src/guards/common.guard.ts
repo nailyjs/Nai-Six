@@ -9,7 +9,6 @@ import { Reflector } from "@nestjs/core";
 import { User } from "@prisma/client";
 import { I18nService } from "nestjs-i18n";
 import { I18nTranslations } from "cc.naily.six.generated";
-import { CommonLogger } from "cc.naily.six.shared";
 import { IMustPermission, INotPermission, IPermission } from "..";
 
 declare global {
@@ -27,11 +26,9 @@ export class CommonAuthGuard implements CanActivate {
     private readonly configService: ConfigService,
     private readonly prismaService: PrismaService,
     private readonly i18nService: I18nService<I18nTranslations>,
-    private readonly commonLogger: CommonLogger,
     private reflector: Reflector,
   ) {
     configService.getOrThrow("global.jwt.secret");
-    commonLogger.setContext(CommonAuthGuard.name);
   }
 
   public async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -44,7 +41,6 @@ export class CommonAuthGuard implements CanActivate {
       const payload: JwtLoginPayload = await this.jwtService.verifyAsync(token, {
         secret: this.configService.getOrThrow("global.jwt.secret"),
       });
-      this.commonLogger.debug("JWT payload: " + JSON.stringify(payload));
       if (!ObjectId.isValid(payload.userID)) throw new ForbiddenException(1006);
       user = await this.prismaService.user.findFirst({
         where: { userID: payload.userID },
