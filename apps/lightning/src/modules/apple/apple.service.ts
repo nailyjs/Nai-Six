@@ -18,9 +18,7 @@ export class AppleService {
       });
     }
     return this.prismaService.userAppStoreSubscribe.findMany({
-      where: {
-        user: { userID },
-      },
+      where: { userID },
     });
   }
 
