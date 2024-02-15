@@ -15,9 +15,7 @@ export class AppleController {
     private readonly appleService: AppleService,
     private readonly i18n: I18nService<I18nTranslations>,
     private readonly commonLogger: CommonLogger,
-  ) {
-    this.commonLogger.setContext(AppleController.name);
-  }
+  ) {}
 
   /**
    * 获取苹果订阅状态
@@ -103,7 +101,6 @@ export class AppleController {
   @Post("user/link")
   @UseInterceptors(ResInterceptor)
   public linkTransactionID(@User() user: UserEntity, @Query() { transactionId }: GetSubscribeAppleUserStatusDTO): Promise<unknown> {
-    this.commonLogger.log(`链接TransactionID到苹果订阅!!! ${transactionId} + ${user.userID}`);
     return this.appleService.linkTransactionID(user.userID, transactionId);
   }
 }

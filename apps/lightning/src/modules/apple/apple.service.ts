@@ -1,13 +1,14 @@
 import { Environment, Status } from "@apple/app-store-server-library";
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { PrismaService } from "@nailyjs.nest.modules/prisma";
-import { CommonAppStoreService } from "cc.naily.six.shared";
+import { CommonAppStoreService, CommonLogger } from "cc.naily.six.shared";
 
 @Injectable()
 export class AppleService {
   constructor(
     private readonly prismaService: PrismaService,
     private readonly commonAppStoreService: CommonAppStoreService,
+    private readonly commonLogger: CommonLogger,
   ) {}
 
   public getAllSubscriptionStatuses(userID: string, isSandBox: boolean) {
@@ -35,6 +36,7 @@ export class AppleService {
       throw new BadRequestException(1061);
     }
     // 如果没有，创建用户和transactionID的关联
+    this.commonLogger.log(`链接! linkTransactionID: ${userID} ${originalTransactionID}`);
     return this.prismaService.userAppStoreSubscribe.create({
       data: {
         user: { connect: { userID } },
