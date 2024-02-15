@@ -42,7 +42,6 @@ export class PostBrowserTrackBodyDTO {
   @IsString()
   @IsNotEmpty()
   webPageTitle: string;
-
   @IsString()
   @IsNotEmpty()
   webPageLink: string;

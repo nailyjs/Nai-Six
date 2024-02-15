@@ -15,6 +15,7 @@ export default async () => {
               take: { required: false, type: () => Number, description: "\u83B7\u53D6\u6761\u6570" },
               skip: { required: false, type: () => Number, description: "\u8DF3\u8FC7\u6761\u6570" },
             },
+            GetBroswerMarkV2QueryDTO: { version: { required: true, type: () => Number, description: "\u7248\u672C\u53F7" } },
             PostBrowserMarkBodyDTO: {
               list: {
                 required: true,
@@ -162,7 +163,14 @@ export default async () => {
         [import("./app.controller"), { AppController: { getHello: { type: Number } } }],
         [
           import("./modules/broswer/controllers/mark.controller"),
-          { BrowserMarkController: { getMarks: { summary: "\u83B7\u53D6\u4E66\u7B7E\u5217\u8868", type: Object }, createMark: { type: Object } } },
+          {
+            BrowserMarkController: {
+              getMarks: { summary: "\u83B7\u53D6\u4E66\u7B7E\u5217\u8868", type: Object },
+              getMarksV2: { type: Object },
+              createMark: { type: Object },
+              createMarkV2: { type: Object },
+            },
+          },
         ],
         [
           import("./modules/broswer/controllers/track.controller"),

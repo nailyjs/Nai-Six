@@ -25,6 +25,20 @@ export class GetBroswerMarkQueryDTO {
   skip?: number;
 }
 
+export class GetBroswerMarkV2QueryDTO extends GetBroswerMarkQueryDTO {
+  /**
+   * 版本号
+   *
+   * @author Zero <gczgroup@qq.com>
+   * @date 2024/02/15
+   * @type {number}
+   * @memberof GetBroswerMarkV2QueryDTO
+   */
+  @IsNumber()
+  @IsNotEmpty()
+  version: number;
+}
+
 export class PostBrowserMarkBodyDTO {
   /**
    * 列表

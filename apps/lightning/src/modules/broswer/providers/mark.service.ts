@@ -15,7 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { Injectable } from "@nestjs/common";
+import { CACHE_MANAGER, Cache } from "@nestjs/cache-manager";
+import { Inject, Injectable } from "@nestjs/common";
 import { CommonLogger } from "cc.naily.six.shared";
 
 interface IsUpdatedBookMark {
@@ -23,9 +24,9 @@ interface IsUpdatedBookMark {
 }
 
 @Injectable()
-export class BrowserMarkService {
+export class BrowserMarkLockService {
   constructor(private readonly commonLogger: CommonLogger) {
-    commonLogger.setContext(BrowserMarkService.name);
+    commonLogger.setContext(BrowserMarkLockService.name);
   }
 
   private isUpdating: IsUpdatedBookMark[] = [];
@@ -45,5 +46,24 @@ export class BrowserMarkService {
     const index = this.isUpdating.findIndex((item) => item.userID === userID);
     this.isUpdating.splice(index, 1);
     this.commonLogger.debug(`removeUpdating: ${userID}`);
+  }
+}
+
+@Injectable()
+export class BrowserMarkVersionService {
+  constructor(
+    @Inject(CACHE_MANAGER)
+    private readonly cacheManager: Cache,
+  ) {}
+
+  public async getVersion(userID: string): Promise<number> {
+    const version = await this.cacheManager.store.get<number>(`browser:mark:version:${userID}`);
+    return parseInt(version as unknown as string) || 1;
+  }
+
+  public async updateVersion(userID: string) {
+    const version = await this.getVersion(userID);
+    await this.cacheManager.store.set(`browser:mark:version:${userID}`, version + 1);
+    return version + 1;
   }
 }
