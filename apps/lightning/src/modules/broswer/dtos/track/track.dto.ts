@@ -1,4 +1,5 @@
-import { IsNotEmpty, IsNumberString, IsOptional, IsString } from "class-validator";
+import { ApiProperty } from "@nestjs/swagger";
+import { IsIn, IsNotEmpty, IsNumberString, IsOptional, IsString } from "class-validator";
 
 export class GetBrowserTrackListQueryDTO {
   /**
@@ -9,6 +10,10 @@ export class GetBrowserTrackListQueryDTO {
    * @type {('ASC' | 'DESC')}
    * @memberof GetBrowserTrackListQueryDTO
    */
+  @IsIn(["asc", "desc"])
+  @IsString()
+  @IsOptional()
+  @ApiProperty({ enum: ["asc", "desc"], default: "desc", description: "创建时间排序" })
   orderCreatedAt?: "asc" | "desc" = "desc";
   /**
    * 每页数量
