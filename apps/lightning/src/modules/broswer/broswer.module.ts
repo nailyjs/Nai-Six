@@ -14,8 +14,7 @@ export class BroswerModule extends NailyContext implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     // prettier-ignore
     consumer.apply(DisabledMiddleware)
-      .exclude("/broswer/mark/v2")
-      .exclude("/broswer/mark/all/v2")
+      .exclude("/broswer/mark/v2", "/broswer/mark/all/v2")
       .forRoutes(BrowserMarkController);
   }
 }
