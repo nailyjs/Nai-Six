@@ -56,6 +56,7 @@ export class BrowserMarkController {
   public async getMarksV2(@Query() query: GetBroswerMarkV2QueryDTO, @User() user: UserEntity) {
     if (!query.take) query.take = 10;
     if (!query.skip) query.skip = 0;
+    query.version = parseInt(query.version as unknown as string);
     const canFind = this.markService.canFind(user.userID);
     const serverVersion = await this.markVersionService.getVersion(user.userID);
     if (query.version === serverVersion) {
