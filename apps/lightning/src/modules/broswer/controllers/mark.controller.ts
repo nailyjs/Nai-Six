@@ -51,6 +51,7 @@ export class BrowserMarkController {
   }
 
   @Get("v2")
+  @Auth()
   @UseInterceptors(ResInterceptor)
   public async getMarksV2(@Query() query: GetBroswerMarkV2QueryDTO, @User() user: UserEntity) {
     if (!query.take) query.take = 10;

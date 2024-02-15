@@ -92,7 +92,6 @@ export class BroswerTrackController {
    * @author Zero <gczgroup@qq.com>
    * @date 2024/02/02
    * @param {UserEntity} user
-   * @return {*}
    * @memberof BroswerTrackController
    */
   @Auth()
