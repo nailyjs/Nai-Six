@@ -34,7 +34,7 @@ export class GetBroswerMarkV2QueryDTO extends GetBroswerMarkQueryDTO {
    * @type {number}
    * @memberof GetBroswerMarkV2QueryDTO
    */
-  @IsNumber()
+  @IsNumberString()
   @IsNotEmpty()
   version: number;
 }
