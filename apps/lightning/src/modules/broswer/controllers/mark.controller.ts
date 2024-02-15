@@ -62,6 +62,7 @@ export class BrowserMarkController {
     if (query.version === serverVersion) {
       return {
         code: 1000,
+        data: [],
         version: serverVersion,
         isListDefault: true,
       };
