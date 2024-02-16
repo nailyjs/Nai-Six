@@ -36,7 +36,7 @@ export class BroswerTrackController {
       take: parseInt(query.take as unknown as string),
       skip: parseInt(query.skip as unknown as string),
       orderBy: { createdAt: query.orderCreatedAt },
-      where: { user: { userID: user.userID } },
+      where: { userID: user.userID },
     });
   }
 
@@ -82,7 +82,7 @@ export class BroswerTrackController {
   @UseInterceptors(ResInterceptor)
   public async delete(@User() user: UserEntity, @Query("browserTrackID") browserTrackID: string) {
     return this.prismaService.browserTrack.delete({
-      where: { browserTrackID, user: { userID: user.userID } },
+      where: { browserTrackID, userID: user.userID },
     });
   }
 
@@ -99,7 +99,7 @@ export class BroswerTrackController {
   @UseInterceptors(ResInterceptor)
   public async deleteAll(@User() user: UserEntity) {
     return this.prismaService.browserTrack.deleteMany({
-      where: { user: { userID: user.userID } },
+      where: { userID: user.userID },
     });
   }
 }

@@ -16,7 +16,7 @@ export class BroswerTrackService {
   public async deleteGreaterThanOneHundred(userID: string) {
     // 找到100条之后所有的浏览记录
     const findAll = await this.prismaService.browserTrack.findMany({
-      where: { user: { userID } },
+      where: { userID },
       orderBy: { createdAt: "desc" },
       skip: 100,
     });
