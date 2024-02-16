@@ -12,7 +12,6 @@
 ![cc.naily.six.shop version](https://img.shields.io/github/package-json/v/nailyjs/Nai-Six?filename=apps%2Fshop%2Fpackage.json&label=cc.naily.six.shop)
 ![cc.naily.six.generated version](https://img.shields.io/github/package-json/v/nailyjs/Nai-Six?filename=libraries%2Fgenerated%2Fpackage.json&label=cc.naily.six.generated)
 ![cc.naily.six.shared version](https://img.shields.io/github/package-json/v/nailyjs/Nai-Six?filename=libraries%2Fshared%2Fpackage.json&label=cc.naily.six.shared)
-![cc.naily.six.swagger version](https://img.shields.io/github/package-json/v/nailyjs/Nai-Six?filename=libraries%2Fswagger%2Fpackage.json&label=cc.naily.six.swagger)
 ![cc.naily.six.auth version](https://img.shields.io/github/package-json/v/nailyjs/Nai-Six?filename=vendors%2Fauth%2Fpackage.json&label=cc.naily.six.auth)
 ![cc.naily.six.database version](https://img.shields.io/github/package-json/v/nailyjs/Nai-Six?filename=vendors%2Fauth%2Fpackage.json&label=cc.naily.six.database)
 
