@@ -8,14 +8,13 @@
 
 ---
 
-![cc.naily.element.passport version](https://img.shields.io/github/package-json/v/nailyjs/Nai-Six?filename=apps%2Fpassport%2Fpackage.json&label=cc.naily.element.passport)
-![cc.naily.element.shop version](https://img.shields.io/github/package-json/v/nailyjs/Nai-Six?filename=apps%2Fshop%2Fpackage.json&label=cc.naily.element.shop)
-![cc.naily.element.generated version](https://img.shields.io/github/package-json/v/nailyjs/Nai-Six?filename=libraries%2Fgenerated%2Fpackage.json&label=cc.naily.element.generated)
-![cc.naily.element.shared version](https://img.shields.io/github/package-json/v/nailyjs/Nai-Six?filename=libraries%2Fshared%2Fpackage.json&label=cc.naily.element.shared)
-![cc.naily.element.swagger version](https://img.shields.io/github/package-json/v/nailyjs/Nai-Six?filename=libraries%2Fswagger%2Fpackage.json&label=cc.naily.element.swagger)
-![cc.naily.element.validator version](https://img.shields.io/github/package-json/v/nailyjs/Nai-Six?filename=libraries%2Fswagger%2Fpackage.json&label=cc.naily.element.validator)
-![cc.naily.element.auth version](https://img.shields.io/github/package-json/v/nailyjs/Nai-Six?filename=vendors%2Fauth%2Fpackage.json&label=cc.naily.element.auth)
-![cc.naily.element.database version](https://img.shields.io/github/package-json/v/nailyjs/Nai-Six?filename=vendors%2Fauth%2Fpackage.json&label=cc.naily.element.database)
+![cc.naily.six.passport version](https://img.shields.io/github/package-json/v/nailyjs/Nai-Six?filename=apps%2Fpassport%2Fpackage.json&label=cc.naily.six.passport)
+![cc.naily.six.shop version](https://img.shields.io/github/package-json/v/nailyjs/Nai-Six?filename=apps%2Fshop%2Fpackage.json&label=cc.naily.six.shop)
+![cc.naily.six.generated version](https://img.shields.io/github/package-json/v/nailyjs/Nai-Six?filename=libraries%2Fgenerated%2Fpackage.json&label=cc.naily.six.generated)
+![cc.naily.six.shared version](https://img.shields.io/github/package-json/v/nailyjs/Nai-Six?filename=libraries%2Fshared%2Fpackage.json&label=cc.naily.six.shared)
+![cc.naily.six.swagger version](https://img.shields.io/github/package-json/v/nailyjs/Nai-Six?filename=libraries%2Fswagger%2Fpackage.json&label=cc.naily.six.swagger)
+![cc.naily.six.auth version](https://img.shields.io/github/package-json/v/nailyjs/Nai-Six?filename=vendors%2Fauth%2Fpackage.json&label=cc.naily.six.auth)
+![cc.naily.six.database version](https://img.shields.io/github/package-json/v/nailyjs/Nai-Six?filename=vendors%2Fauth%2Fpackage.json&label=cc.naily.six.database)
 
 ## Buff
 
