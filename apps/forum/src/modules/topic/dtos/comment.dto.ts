@@ -79,7 +79,7 @@ export class GetTopicCommentQueryDTO {
   @IsArray()
   @IsOptional()
   @ApiProperty({ type: [String], description: "筛选用户" })
-  filterUser?: string | string[];
+  filterUserID?: string | string[];
   /**
    * 限制数量
    *

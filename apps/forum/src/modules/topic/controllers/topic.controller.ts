@@ -1,7 +1,7 @@
 import { BadRequestException, Body, Controller, Delete, Get, Patch, Post, Put, Query, UseInterceptors } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { ResInterceptor } from "cc.naily.six.shared";
-import { GetTopicDetailQueryDTO, GetTopicQueryDTO, PostTopicBodyDTO, PutTopicBodyDTO } from "../dtos/topic.dto";
+import { GetTopicDetailQueryDTO, GetTopicQueryDTO, GetTopicSearchQueryDTO, PostTopicBodyDTO, PutTopicBodyDTO } from "../dtos/topic.dto";
 import { PrismaService } from "@nailyjs.nest.modules/prisma";
 import { ForumTopicStatus, Prisma } from "@prisma/client";
 import { Auth, JwtLoginPayload, User } from "cc.naily.six.auth";
@@ -26,6 +26,8 @@ export class TopicController {
   @Get()
   @UseInterceptors(ResInterceptor)
   public getTopics(@Query() query: GetTopicQueryDTO) {
+    if (!query.filterUserID) query.filterUserID = [];
+    if (!query.filterTagID) query.filterTagID = [];
     if (query.filterUserID && typeof query.filterUserID === "string") query.filterUserID = [query.filterUserID];
     if (query.filterTagID && typeof query.filterTagID === "string") query.filterTagID = [query.filterTagID];
     return this.prismaService.forumTopic.findMany({
@@ -185,5 +187,55 @@ export class TopicController {
   @UseInterceptors(ResInterceptor)
   public getTopicDetail(@Query() { topicID }: GetTopicDetailQueryDTO) {
     return this.prismaService.forumTopic.findUnique({ where: { topicID, status: ForumTopicStatus.Published } });
+  }
+
+  /**
+   * 搜索话题
+   *
+   * @author Zero <gczgroup@qq.com>
+   * @date 2024/02/17
+   * @param {GetTopicSearchQueryDTO} query
+   * @memberof TopicController
+   */
+  @Get("search")
+  @UseInterceptors(ResInterceptor)
+  public searchTopic(@Query() query: GetTopicSearchQueryDTO) {
+    if (!query.filterUserID) query.filterUserID = [];
+    if (!query.filterTagID) query.filterTagID = [];
+    if (query.filterUserID && typeof query.filterUserID === "string") query.filterUserID = [query.filterUserID];
+    if (query.filterTagID && typeof query.filterTagID === "string") query.filterTagID = [query.filterTagID];
+    return this.prismaService.forumTopic.findMany({
+      orderBy: ((): Prisma.ForumTopicOrderByWithRelationInput[] => {
+        const orderBy: Prisma.ForumTopicOrderByWithRelationInput[] = [];
+        if (query.orderCreatedAt) orderBy.push({ createdAt: query.orderCreatedAt });
+        if (query.orderUpdatedAt) orderBy.push({ updatedAt: query.orderUpdatedAt });
+        if (query.orderLikeCount) orderBy.push({ likes: { _count: query.orderLikeCount } });
+        if (query.orderViewCount) orderBy.push({ viewCount: query.orderViewCount });
+        if (query.orderDisplayCount) orderBy.push({ displayCount: query.orderDisplayCount });
+        return orderBy;
+      })(),
+      where: {
+        authorID: { in: query.filterUserID as string[] },
+        tagIDs: { hasSome: query.filterTagID as string[] },
+        status: ForumTopicStatus.Published,
+        topicName: { contains: query.keywords },
+        topicContent: { contains: query.keywords },
+      },
+      take: parseInt(query.take as unknown as string) || 10,
+      skip: parseInt(query.skip as unknown as string) || 0,
+      select: {
+        topicID: true,
+        createdAt: true,
+        updatedAt: true,
+        topicName: true,
+        topicDesc: true,
+        topicContent: false,
+        authorID: true,
+        status: true,
+        tagIDs: true,
+        viewCount: true,
+        displayCount: true,
+      },
+    });
   }
 }

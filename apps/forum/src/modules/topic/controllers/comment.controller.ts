@@ -25,7 +25,8 @@ export class TopicCommentController {
   @Get()
   @UseInterceptors(ResInterceptor)
   public getComments(@Query() query: GetTopicCommentQueryDTO) {
-    if (query.filterUser && typeof query.filterUser === "string") query.filterUser = [query.filterUser];
+    if (!query.filterUserID) query.filterUserID = [];
+    if (query.filterUserID && typeof query.filterUserID === "string") query.filterUserID = [query.filterUserID];
     return this.prismaService.forumTopicComment.findMany({
       orderBy: ((): Prisma.ForumTopicCommentOrderByWithRelationInput[] => {
         const orderBy: Prisma.ForumTopicCommentOrderByWithRelationInput[] = [];
@@ -35,7 +36,7 @@ export class TopicCommentController {
         return orderBy;
       })(),
       where: {
-        authorID: { in: query.filterUser as string[] },
+        authorID: { in: query.filterUserID as string[] },
         parentID: query.parentID,
         topicID: query.topicID,
       },

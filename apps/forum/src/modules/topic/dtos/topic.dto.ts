@@ -120,6 +120,20 @@ export class GetTopicQueryDTO {
   skip?: number;
 }
 
+export class GetTopicSearchQueryDTO extends GetTopicQueryDTO {
+  /**
+   * 关键词
+   *
+   * @author Zero <gczgroup@qq.com>
+   * @date 2024/02/17
+   * @type {string}
+   * @memberof GetTopicSearchQueryDTO
+   */
+  @IsString()
+  @IsNotEmpty()
+  keywords: string;
+}
+
 export class PostTopicBodyDTO {
   /**
    * 话题标题 (可选)
