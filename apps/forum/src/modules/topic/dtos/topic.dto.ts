@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsArrayObjectIdOrObjectId, IsArrayStringOrString, IsObjectId } from "cc.naily.six.shared";
-import { IsArray, IsIn, IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { IsArray, IsIn, IsNotEmpty, IsNumberString, IsOptional, IsString } from "class-validator";
 
 export class GetTopicQueryDTO {
   /**
@@ -94,6 +94,30 @@ export class GetTopicQueryDTO {
   @IsOptional()
   @ApiProperty({ type: [String], description: "筛选标签ID" })
   filterTagID?: string | string[];
+  /**
+   * 限制数量
+   *
+   * @author Zero <gczgroup@qq.com>
+   * @date 2024/02/17
+   * @type {number}
+   * @memberof GetTopicQueryDTO
+   */
+  @IsNumberString()
+  @IsString()
+  @IsOptional()
+  take?: number;
+  /**
+   * 跳过数量
+   *
+   * @author Zero <gczgroup@qq.com>
+   * @date 2024/02/17
+   * @type {number}
+   * @memberof GetTopicQueryDTO
+   */
+  @IsNumberString()
+  @IsString()
+  @IsOptional()
+  skip?: number;
 }
 
 export class PostTopicBodyDTO {

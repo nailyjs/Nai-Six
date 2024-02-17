@@ -43,6 +43,8 @@ export class TopicController {
         tagIDs: { hasSome: query.filterTagID as string[] },
         status: ForumTopicStatus.Published,
       },
+      take: parseInt(query.take as unknown as string) || 10,
+      skip: parseInt(query.skip as unknown as string) || 0,
       select: {
         topicID: true,
         createdAt: true,
