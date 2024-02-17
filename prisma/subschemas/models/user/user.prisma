@@ -8,6 +8,7 @@ import { BrowserScript, BrowserScriptStore } from "../lightning/broswer"
 import { ForumTopic } from "../forum/topic"
 import { UserReceipt } from "./receipt"
 import { ForumTopicComment } from "../forum/comment"
+import { ReXAppStore } from "../app/app"
 
 /// 用户
 model User {
@@ -58,6 +59,8 @@ model User {
   forumTopicComments    ForumTopicComment[]
   /// 用户的点赞
   likes                 Like[]
+  /// 用户的ReX App Store上传记录
+  AppStore              ReXAppStore[]
 
   @@fulltext([username])
 }

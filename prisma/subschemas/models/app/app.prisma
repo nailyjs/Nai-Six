@@ -1,0 +1,29 @@
+import { User } from "../user/user"
+
+model ReXAppStore {
+  productID    String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  /// app名称
+  productName  String
+  /// app描述
+  productDesc  String
+  /// app下载地址
+  downloadUrl  String
+  /// app下载次数
+  downloadNum  Int      @default(0)
+  /// app下载地址附加信息
+  downloadInfo String
+  /// app图标
+  iconUrl      String?
+  /// app版本
+  version      String?
+  /// app大小
+  size         String?
+  /// app作者
+  author       String?
+  /// app上传者
+  uploader     User     @relation(fields: [userID], references: [userID])
+  /// app上传者ID
+  userID       String   @db.ObjectId
+}
