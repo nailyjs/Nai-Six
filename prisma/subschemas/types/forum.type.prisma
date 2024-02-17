@@ -1,0 +1,5 @@
+enum ForumTopicStatus {
+  Pending
+  Draft
+  Published
+}

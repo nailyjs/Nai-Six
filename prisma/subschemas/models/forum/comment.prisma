@@ -1,0 +1,34 @@
+import { User } from "../user/user"
+import { Like } from "../common/like"
+import { ForumTopic } from "topic"
+
+model ForumTopicComment {
+  /// 评论ID
+  forumTopicCommentID String              @id @default(auto()) @map("_id") @db.ObjectId
+  /// 创建时间
+  createdAt           DateTime            @default(now())
+  /// 更新时间
+  updatedAt           DateTime            @updatedAt
+  /// 评论内容 支持markdown
+  content             String
+  /// topic作者
+  author              User                @relation(fields: [authorID], references: [userID])
+  /// 作者ID
+  authorID            String              @db.ObjectId
+  /// 点赞
+  likes               Like[]
+  /// 父评论
+  parent              ForumTopicComment?  @relation("ForumTopicCommentToForumTopicComment", fields: [parentID], references: [forumTopicCommentID], onDelete: NoAction, onUpdate: NoAction)
+  /// 父评论ID
+  parentID            String?             @db.ObjectId
+  /// 子评论
+  children            ForumTopicComment[] @relation("ForumTopicCommentToForumTopicComment")
+  /// 话题
+  topic               ForumTopic          @relation(fields: [topicID], references: [topicID])
+  /// 话题ID
+  topicID             String              @db.ObjectId
+  /// IP
+  ip                  String?
+
+  @@fulltext([content])
+}

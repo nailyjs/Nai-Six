@@ -5,6 +5,9 @@ import { BrowserBookMark } from "../lightning/bookmark"
 import { BrowserTrack } from "../lightning/broswertrack"
 import { UserAppStoreSubscribe } from "../lightning/app/appStore"
 import { BrowserScript, BrowserScriptStore } from "../lightning/broswer"
+import { ForumTopic } from "../forum/topic"
+import { UserReceipt } from "./receipt"
+import { ForumTopicComment } from "../forum/comment"
 
 /// 用户
 model User {
@@ -49,6 +52,12 @@ model User {
   UserData              UserData[]
   /// 用户的支付收据
   UserReceipt           UserReceipt[]
+  /// 用户的帖子
+  forumTopics           ForumTopic[]
+  /// 用户的帖子评论
+  forumTopicComments    ForumTopicComment[]
+  /// 用户的点赞
+  likes                 Like[]
 
   @@fulltext([username])
 }

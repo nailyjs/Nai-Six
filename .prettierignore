@@ -15,3 +15,5 @@ generated
 pnpm-lock.yaml
 yarn.lock
 package-lock.json
+
+metadata.ts

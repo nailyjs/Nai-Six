@@ -1,0 +1,21 @@
+import { User } from "../user/user"
+import { ForumTopic } from "../forum/topic"
+import { ForumTopicComment } from "../forum/comment"
+
+model Like {
+  likeID         String             @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+  /// 用户
+  user           User               @relation(fields: [userID], references: [userID])
+  /// 用户ID
+  userID         String             @db.ObjectId
+  /// 点赞的帖子
+  topic          ForumTopic?        @relation(fields: [topicID], references: [topicID])
+  /// 帖子ID
+  topicID        String?            @db.ObjectId
+  /// 点赞的评论
+  topicComment   ForumTopicComment? @relation(fields: [topicCommentID], references: [forumTopicCommentID])
+  /// 点赞的评论ID
+  topicCommentID String?            @db.ObjectId
+}

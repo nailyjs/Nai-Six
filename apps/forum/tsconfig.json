@@ -8,7 +8,7 @@
     "allowSyntheticDefaultImports": true,
     "target": "ES2021",
     "sourceMap": true,
-    "outDir": "../../resources/dist/apps/shop",
+    "outDir": "../../resources/dist/apps/forum",
     "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
