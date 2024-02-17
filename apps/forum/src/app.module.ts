@@ -16,6 +16,7 @@ import {
 import { CommonJwtModule, CommonRoleModule } from "cc.naily.six.auth";
 import { CommonPrismaModule } from "cc.naily.six.database";
 import { APP_GUARD, APP_PIPE } from "@nestjs/core";
+import { TopicModule } from "./modules/topic/topic.module";
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { APP_GUARD, APP_PIPE } from "@nestjs/core";
     CommonJwtModule.forRoot(),
     CommonErrorModule.forRoot(),
     CommonRoleModule.forRoot(),
+    TopicModule.register(),
   ],
   controllers: [AppController],
   providers: [

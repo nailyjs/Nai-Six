@@ -1,4 +1,4 @@
-//🧩Don't Edit this file.✨Generated in Tue Feb 13 2024 16:18:30 GMT+0800 (中国标准时间)✨
+//🧩Don't Edit this file.✨Generated in Sat Feb 17 2024 09:24:01 GMT+0800 (中国标准时间)✨
 
 generator client {
   provider        = "prisma-client-js"
@@ -24,8 +24,39 @@ model Tag {
   browserScriptStore    BrowserScriptStore[] @relation(fields: [browserScriptStoreIDs], references: [browserScriptStoreID])
   /// 链接的脚本ID
   browserScriptStoreIDs String[]             @db.ObjectId
+  /// 论坛话题
+  forumTopic            ForumTopic[]         @relation(fields: [forumTopicIDs], references: [topicID])
+  /// 论坛话题ID
+  forumTopicIDs         String[]             @db.ObjectId
 
   @@fulltext([tagName, tagDescription])
+}
+
+model ForumTopic {
+  /// 话题ID
+  topicID      String           @id @default(auto()) @map("_id") @db.ObjectId
+  /// 创建时间
+  createdAt    DateTime         @default(now())
+  /// 更新时间
+  updatedAt    DateTime         @updatedAt
+  /// 话题名称
+  topicName    String?
+  /// 话题描述
+  topicDesc    String?
+  /// 话题内容 支持markdown
+  topicContent String?
+  /// topic作者
+  author       User             @relation(fields: [authorID], references: [userID])
+  /// 作者ID
+  authorID     String           @db.ObjectId
+  /// 话题状态
+  status       ForumTopicStatus
+  /// 话题标签
+  tags         Tag[]            @relation(fields: [tagIDs], references: [tagID])
+  /// 标签ID
+  tagIDs       String[]         @db.ObjectId
+
+  @@fulltext([topicName, topicDesc, topicContent])
 }
 
 /// 闪电：用户App Store订阅
@@ -233,11 +264,19 @@ model User {
   UserData              UserData[]
   /// 用户的支付收据
   UserReceipt           UserReceipt[]
+  /// 用户的帖子
+  forumTopics           ForumTopic[]
 
   @@fulltext([username])
 }
 
 enum ScriptStatus {
+  Pending
+  Draft
+  Published
+}
+
+enum ForumTopicStatus {
   Pending
   Draft
   Published

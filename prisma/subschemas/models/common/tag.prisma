@@ -1,4 +1,5 @@
 import { BrowserScriptStore } from "../lightning/broswer"
+import { ForumTopic } from "../forum/forum"
 
 model Tag {
   tagID                 String               @id @default(auto()) @map("_id") @db.ObjectId
@@ -14,6 +15,10 @@ model Tag {
   browserScriptStore    BrowserScriptStore[] @relation(fields: [browserScriptStoreIDs], references: [browserScriptStoreID])
   /// 链接的脚本ID
   browserScriptStoreIDs String[]             @db.ObjectId
+  /// 论坛话题
+  forumTopic            ForumTopic[]         @relation(fields: [forumTopicIDs], references: [topicID])
+  /// 论坛话题ID
+  forumTopicIDs         String[]             @db.ObjectId
 
   @@fulltext([tagName, tagDescription])
 }
