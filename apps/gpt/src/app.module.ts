@@ -17,6 +17,7 @@ import {
 } from "cc.naily.six.shared";
 import { CommonJwtModule } from "cc.naily.six.auth";
 import { APP_GUARD, APP_PIPE } from "@nestjs/core";
+import { SubscribeModule } from "./modules/subscribe/subscribe.module";
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { APP_GUARD, APP_PIPE } from "@nestjs/core";
     CommonAppStoreModule.forRoot(),
     CommonErrorModule.forRoot(),
     CommonJwtModule.forRoot(),
+    SubscribeModule.register(),
   ],
   controllers: [AppController],
   providers: [

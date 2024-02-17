@@ -1,4 +1,4 @@
-//🧩Don't Edit this file.✨Generated in Sat Feb 17 2024 12:10:43 GMT+0800 (中国标准时间)✨
+//🧩Don't Edit this file.✨Generated in Sat Feb 17 2024 14:07:28 GMT+0800 (中国标准时间)✨
 
 generator client {
   provider        = "prisma-client-js"
@@ -8,6 +8,34 @@ generator client {
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
+}
+
+model ReXAppStore {
+  productID    String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  /// app名称
+  productName  String
+  /// app描述
+  productDesc  String
+  /// app下载地址
+  downloadUrl  String
+  /// app下载次数
+  downloadNum  Int      @default(0)
+  /// app下载地址附加信息
+  downloadInfo String
+  /// app图标
+  iconUrl      String?
+  /// app版本
+  version      String?
+  /// app大小
+  size         String?
+  /// app作者
+  author       String?
+  /// app上传者
+  uploader     User     @relation(fields: [userID], references: [userID])
+  /// app上传者ID
+  userID       String   @db.ObjectId
 }
 
 model Like {
@@ -114,6 +142,43 @@ model ForumTopic {
   ForumTopicComment ForumTopicComment[]
 
   @@fulltext([topicName, topicDesc, topicContent])
+}
+
+model GPTSubscribePackage {
+  /// 套餐ID
+  packageID    String         @id @default(auto()) @map("_id") @db.ObjectId
+  /// 创建时间
+  createdAt    DateTime       @default(now())
+  /// 更新时间
+  updatedAt    DateTime       @updatedAt
+  /// 套餐名称
+  name         String
+  /// 套餐描述
+  description  String
+  /// 套餐价格 RMB
+  price        Float
+  /// 套餐天数
+  days         Int
+  GPTSubscribe GPTSubscribe[]
+}
+
+model GPTSubscribe {
+  /// 评论ID
+  subscribeID String              @id @default(auto()) @map("_id") @db.ObjectId
+  /// 创建时间
+  createdAt   DateTime            @default(now())
+  /// 更新时间
+  updatedAt   DateTime            @updatedAt
+  /// 用户
+  user        User                @relation(fields: [userID], references: [userID])
+  /// 用户ID
+  userID      String              @db.ObjectId
+  /// 到期天数
+  days        Int
+  /// 套餐
+  package     GPTSubscribePackage @relation(fields: [packageID], references: [packageID])
+  /// 套餐ID
+  packageID   String              @db.ObjectId
 }
 
 /// 闪电：用户App Store订阅
@@ -327,6 +392,10 @@ model User {
   forumTopicComments    ForumTopicComment[]
   /// 用户的点赞
   likes                 Like[]
+  /// 用户的ReX App Store上传记录
+  AppStore              ReXAppStore[]
+  /// 用户的GPT订阅
+  GPTSubscribe          GPTSubscribe[]
 
   @@fulltext([username])
 }

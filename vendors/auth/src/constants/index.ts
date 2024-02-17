@@ -1,5 +1,6 @@
 export const MustPermission = {
   Must_Admin: Symbol("Must_Admin"),
+  Must_GPT_Admin: Symbol("Must_GPT_Admin"),
 };
 
 export const NotPermission = {
