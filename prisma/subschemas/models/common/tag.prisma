@@ -1,5 +1,5 @@
 import { BrowserScriptStore } from "../lightning/broswer"
-import { ForumTopic } from "../forum/forum"
+import { ForumTopic } from "../forum/topic"
 
 model Tag {
   tagID                 String               @id @default(auto()) @map("_id") @db.ObjectId

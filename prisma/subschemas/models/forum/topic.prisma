@@ -1,6 +1,7 @@
 import { User } from "../user/user"
 import { ForumTopicStatus } from "../../types/forum.type"
 import { Tag } from "../common/tag"
+import { Like } from "../common/like"
 
 model ForumTopic {
   /// 话题ID
@@ -25,6 +26,12 @@ model ForumTopic {
   tags         Tag[]            @relation(fields: [tagIDs], references: [tagID])
   /// 标签ID
   tagIDs       String[]         @db.ObjectId
+  /// 话题浏览量
+  viewCount    Int              @default(0)
+  /// 话题展现量
+  displayCount Int              @default(0)
+  /// 话题点赞
+  likes        Like[]
 
   @@fulltext([topicName, topicDesc, topicContent])
 }
