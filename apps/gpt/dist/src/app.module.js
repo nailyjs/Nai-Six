@@ -14,6 +14,7 @@ const _ccnailysixdatabase = require("cc.naily.six.database");
 const _ccnailysixshared = require("cc.naily.six.shared");
 const _ccnailysixauth = require("cc.naily.six.auth");
 const _core = require("@nestjs/core");
+const _subscribemodule = require("./modules/subscribe/subscribe.module");
 function _ts_decorate(decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -38,7 +39,8 @@ AppModule = _ts_decorate([
             _ccnailysixshared.CommonMailerModule.forRoot(),
             _ccnailysixshared.CommonAppStoreModule.forRoot(),
             _ccnailysixshared.CommonErrorModule.forRoot(),
-            _ccnailysixauth.CommonJwtModule.forRoot()
+            _ccnailysixauth.CommonJwtModule.forRoot(),
+            _subscribemodule.SubscribeModule.register()
         ],
         controllers: [
             _appcontroller.AppController

@@ -1,0 +1,38 @@
+import { User } from "../user/user"
+
+model GPTSubscribePackage {
+  /// 套餐ID
+  packageID    String         @id @default(auto()) @map("_id") @db.ObjectId
+  /// 创建时间
+  createdAt    DateTime       @default(now())
+  /// 更新时间
+  updatedAt    DateTime       @updatedAt
+  /// 套餐名称
+  name         String
+  /// 套餐描述
+  description  String
+  /// 套餐价格 RMB
+  price        Float
+  /// 套餐天数
+  days         Int
+  GPTSubscribe GPTSubscribe[]
+}
+
+model GPTSubscribe {
+  /// 评论ID
+  subscribeID String              @id @default(auto()) @map("_id") @db.ObjectId
+  /// 创建时间
+  createdAt   DateTime            @default(now())
+  /// 更新时间
+  updatedAt   DateTime            @updatedAt
+  /// 用户
+  user        User                @relation(fields: [userID], references: [userID])
+  /// 用户ID
+  userID      String              @db.ObjectId
+  /// 到期天数
+  days        Int
+  /// 套餐
+  package     GPTSubscribePackage @relation(fields: [packageID], references: [packageID])
+  /// 套餐ID
+  packageID   String              @db.ObjectId
+}
