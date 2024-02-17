@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { ILoginType } from "@prisma/client";
 import { LoginType } from "cc.naily.six.auth";
-import { IsIn, IsInt, IsMobilePhone, IsNotEmpty, IsNumber, IsOptional, IsString, Max, Min } from "class-validator";
+import { IsEmail, IsIn, IsInt, IsNotEmpty, IsNumber, IsOptional, IsString, Max, Min } from "class-validator";
 
 export class PostLoginEmailCodeBodyDTO {
   /**
@@ -12,7 +12,7 @@ export class PostLoginEmailCodeBodyDTO {
    * @type {string}
    * @memberof PostLoginEmailCodeBodyDTO
    */
-  @IsMobilePhone("zh-CN")
+  @IsEmail()
   @IsString()
   @IsNotEmpty()
   email: string;
