@@ -5,33 +5,35 @@ import { Like } from "../common/like"
 
 model ForumTopic {
   /// 话题ID
-  topicID      String           @id @default(auto()) @map("_id") @db.ObjectId
+  topicID           String              @id @default(auto()) @map("_id") @db.ObjectId
   /// 创建时间
-  createdAt    DateTime         @default(now())
+  createdAt         DateTime            @default(now())
   /// 更新时间
-  updatedAt    DateTime         @updatedAt
+  updatedAt         DateTime            @updatedAt
   /// 话题名称
-  topicName    String?
+  topicName         String?
   /// 话题描述
-  topicDesc    String?
+  topicDesc         String?
   /// 话题内容 支持markdown
-  topicContent String?
+  topicContent      String?
   /// topic作者
-  author       User             @relation(fields: [authorID], references: [userID])
+  author            User                @relation(fields: [authorID], references: [userID])
   /// 作者ID
-  authorID     String           @db.ObjectId
+  authorID          String              @db.ObjectId
   /// 话题状态
-  status       ForumTopicStatus
+  status            ForumTopicStatus
   /// 话题标签
-  tags         Tag[]            @relation(fields: [tagIDs], references: [tagID])
+  tags              Tag[]               @relation(fields: [tagIDs], references: [tagID])
   /// 标签ID
-  tagIDs       String[]         @db.ObjectId
+  tagIDs            String[]            @db.ObjectId
   /// 话题浏览量
-  viewCount    Int              @default(0)
+  viewCount         Int                 @default(0)
   /// 话题展现量
-  displayCount Int              @default(0)
+  displayCount      Int                 @default(0)
   /// 话题点赞
-  likes        Like[]
+  likes             Like[]
+  /// 话题评论
+  ForumTopicComment ForumTopicComment[]
 
   @@fulltext([topicName, topicDesc, topicContent])
 }

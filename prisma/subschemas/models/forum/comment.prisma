@@ -1,5 +1,6 @@
 import { User } from "../user/user"
 import { Like } from "../common/like"
+import { ForumTopic } from "topic"
 
 model ForumTopicComment {
   /// 评论ID
@@ -22,6 +23,12 @@ model ForumTopicComment {
   parentID            String?             @db.ObjectId
   /// 子评论
   children            ForumTopicComment[] @relation("ForumTopicCommentToForumTopicComment")
+  /// 话题
+  topic               ForumTopic          @relation(fields: [topicID], references: [topicID])
+  /// 话题ID
+  topicID             String              @db.ObjectId
+  /// IP
+  ip                  String?
 
   @@fulltext([content])
 }
