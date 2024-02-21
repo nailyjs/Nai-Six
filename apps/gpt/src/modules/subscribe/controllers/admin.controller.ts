@@ -1,6 +1,6 @@
 import { PrismaService } from "@nailyjs.nest.modules/prisma";
 import { Body, Controller, Delete, Post, UseInterceptors } from "@nestjs/common";
-import { ApiTags } from "@nestjs/swagger";
+import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { PostGPTSubscribeAdminBodyDTO, PostGPTSubscribeBodyDTO } from "../dtos/subscribe.dto";
 import { ResInterceptor } from "cc.naily.six.shared";
 import { Auth, MustPermissions } from "cc.naily.six.auth";
@@ -40,10 +40,11 @@ export class AdminSubscribeController {
    * @date 2024/02/17
    * @memberof AdminSubscribeController
    */
-  @Delete()
   @Auth()
+  @Delete()
   @UseInterceptors(ResInterceptor)
   @MustPermissions("Must_Admin", "Must_GPT_Admin")
+  @ApiOperation({ summary: "删除GPT订阅套餐" })
   public deleteSubscribePackage(@Body() { packageID }: PostGPTSubscribeBodyDTO) {
     return this.prismaService.gPTSubscribePackage.deleteMany({
       where: { packageID },

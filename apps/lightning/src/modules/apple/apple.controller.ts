@@ -53,7 +53,7 @@ export class AppleController {
   @ApiBody({ type: GetSubscribeAppleCheckBodyDTO })
   public async checkPay(@Body() body: GetSubscribeAppleCheckBodyDTO): Promise<unknown> {
     if (body.isSandbox === "true") return 1046;
-    if (body.transactionId && body.transactionId) {
+    if (body.transactionId && body.bundleId) {
       return {
         code: 1046,
         message: this.i18n.t("global.errorCode.1046"),

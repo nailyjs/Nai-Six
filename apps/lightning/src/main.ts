@@ -51,7 +51,10 @@ import { CommonLogger } from "cc.naily.six.shared";
     .setLicense("GPL-3.0", "https://www.gnu.org/licenses/gpl-3.0.html")
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup("docs", app, document);
+  SwaggerModule.setup("docs", app, document, {
+    jsonDocumentUrl: "docs/swagger.json",
+    yamlDocumentUrl: "docs/swagger.yml",
+  });
 
   await app.listen(port);
   return app;

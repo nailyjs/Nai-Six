@@ -9,6 +9,7 @@ import { ForumTopic } from "../forum/topic"
 import { UserReceipt } from "./receipt"
 import { ForumTopicComment } from "../forum/comment"
 import { ReXAppStore } from "../app/app"
+import { ShopSubscribe } from "../shop/subscribe"
 
 /// 用户
 model User {
@@ -61,8 +62,10 @@ model User {
   likes                 Like[]
   /// 用户的ReX App Store上传记录
   AppStore              ReXAppStore[]
-  /// 用户的GPT订阅
-  GPTSubscribe          GPTSubscribe[]
+  /// 用户的订阅
+  ShopSubscribe         ShopSubscribe[]
+  /// 用户创建的订阅
+  ShopSubscribePackage  ShopSubscribePackage[]
 
   @@fulltext([username])
 }

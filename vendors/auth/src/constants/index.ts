@@ -1,6 +1,9 @@
 export const MustPermission = {
   Must_Admin: Symbol("Must_Admin"),
   Must_GPT_Admin: Symbol("Must_GPT_Admin"),
+
+  // Shop
+  Must_Can_Create_Shop_Subscribe_Package: Symbol("Must_Can_Create_Shop_Subscribe_Package"),
 };
 
 export const NotPermission = {
