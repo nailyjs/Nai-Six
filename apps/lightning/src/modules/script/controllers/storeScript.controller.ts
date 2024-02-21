@@ -9,8 +9,8 @@ import { FileInterceptor } from "@nestjs/platform-express";
 import { ScriptFileService } from "../providers/file.service";
 
 @ApiTags("插件 商店")
-@Controller("broswer/plugin/store")
 @UseInterceptors(ResInterceptor)
+@Controller("broswer/plugin/store")
 export class StoreScriptController {
   constructor(
     private readonly scriptParserService: ScriptParserService,

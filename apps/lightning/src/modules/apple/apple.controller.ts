@@ -24,7 +24,7 @@ export class AppleController {
    * @date 2024/02/02
    * @param {UserEntity} user
    * @param {GetSubscribeAppleUserQueryDTO} { isSandbox }
-   * @return {*}  {Promise<unknown>}
+   * @return {Promise<unknown>}
    * @memberof AppleController
    */
   @Auth()

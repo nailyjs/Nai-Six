@@ -28,6 +28,7 @@
     "start:app": "pnpm -F cc.naily.six.app start:prod",
     "start:forum": "pnpm -F cc.naily.six.forum start:prod",
     "start:gpt": "pnpm -F cc.naily.six.gpt start:prod",
+    "preview": "pnpm -F cc.naily.six.panel.frontend preview",
     "format": "prettier --write ./",
     "lint": "eslint \"./**/*.ts\" --fix",
     "prepare": "husky install && pnpx prisma generate && pnpm build:shared && pnpm build",
