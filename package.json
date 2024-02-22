@@ -36,7 +36,6 @@
     "lint": "eslint \"./**/*.ts\" --fix",
     "prepare": "husky install && pnpx prisma generate && pnpm build:shared && pnpm build",
     "generate": "pnpx prisma generate",
-    "push": "cross-env DATABASE_URL=\"mongodb://root:Lion14789632!@182.61.28.142:27017/six\" pnpx prisma db push",
     "lint-staged": "lint-staged"
   },
   "author": "Zero <gczgroup@qq.com>",
