@@ -94,6 +94,13 @@ export type I18nTranslations = {
             "1086": string;
             "1087": string;
             "1088": string;
+            "1089": string;
+            "1090": string;
+            "1091": string;
+            "1092": string;
+            "1093": string;
+            "1094": string;
+            "1095": string;
             "40001005": string;
             "---": string;
             "----": string;

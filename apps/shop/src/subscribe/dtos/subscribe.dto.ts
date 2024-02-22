@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsArrayObjectIdOrObjectId, IsArrayStringOrString } from "cc.naily.six.shared";
-import { IsIn, IsNumberString, IsOptional, IsString } from "class-validator";
+import { IsArrayObjectIdOrObjectId, IsArrayStringOrString, IsObjectId } from "cc.naily.six.shared";
+import { IsIn, IsNotEmpty, IsNumberString, IsOptional, IsString } from "class-validator";
 
 export class GetSubscribeUserQueryDTO {
   /**
@@ -80,6 +80,19 @@ export class GetSubscribeUserQueryDTO {
   skip?: number;
 }
 
+export class GetSubscribeUserStatusQueryDTO {
+  /**
+   * 过滤订阅套餐ID
+   *
+   * @type {string}
+   * @memberof GetSubscribeUserStatusQueryDTO
+   */
+  @IsObjectId()
+  @IsString()
+  @IsNotEmpty()
+  subscribePackageID?: string;
+}
+
 export class PostSubscribeUserBodyDTO {
   /**
    * 套餐ID
@@ -87,7 +100,21 @@ export class PostSubscribeUserBodyDTO {
    * @type {string}
    * @memberof PostSubscribeBodyDTO
    */
+  @IsObjectId()
   @IsString()
   @ApiProperty()
   packageID: string;
+}
+
+export class PutSubscribeUserBodyDTO {
+  /**
+   * 订阅ID
+   *
+   * @type {string}
+   * @memberof PutSubscribeBodyDTO
+   */
+  @IsObjectId()
+  @IsString()
+  @IsNotEmpty()
+  subscribeID: string;
 }
