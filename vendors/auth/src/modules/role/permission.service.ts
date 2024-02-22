@@ -1,6 +1,6 @@
 import { Inject, Injectable, forwardRef } from "@nestjs/common";
 import { MustPermission, NotPermission } from "../../constants";
-import { CommonRoleService } from ".";
+import { CommonRoleService } from "./role.service";
 
 @Injectable()
 export class CommonPermissionService {
