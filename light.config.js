@@ -33,13 +33,13 @@ module.exports = {
         NODE_ENV: "production",
       },
     },
-    // {
-    //   name: "six-shop",
-    //   script: "./resources/dist/apps/shop/main.js",
-    //   env: {
-    //     NODE_ENV: "production",
-    //   },
-    // },
+    {
+      name: "six-shop",
+      script: "./resources/dist/apps/shop/src/main.js",
+      env: {
+        NODE_ENV: "production",
+      },
+    },
     {
       name: "six-Common",
       script: "./resources/dist/apps/common/src/main.js",
