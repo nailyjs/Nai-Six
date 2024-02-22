@@ -38,6 +38,17 @@ export class GetSubscribeAppleCheckBodyDTO {
   @IsNotEmpty()
   @ApiProperty({ type: "string", default: "false" })
   isSandbox?: "true" | "false" = "false";
+  /**
+   * 默认为空则使用默认key 传入则使用传入的key
+   *
+   * @author Zero <gczgroup@qq.com>
+   * @date 2024/02/22
+   * @type {string}
+   * @memberof GetSubscribeAppleCheckBodyDTO
+   */
+  @IsOptional()
+  @IsString()
+  p8Key?: string;
 }
 
 export class GetSubscribeAppleUserStatusDTO {

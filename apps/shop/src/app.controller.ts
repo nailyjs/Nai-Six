@@ -1,12 +1,19 @@
-import { Controller, Get } from "@nestjs/common";
-import { AppService } from "./app.service";
+import { Controller, Get, UseInterceptors } from "@nestjs/common";
+import { ResInterceptor } from "cc.naily.six.shared";
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
-
+  /**
+   * 主页
+   *
+   * @author Zero <gczgroup@qq.com>
+   * @date 2024/02/21
+   * @return {number}
+   * @memberof AppController
+   */
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @UseInterceptors(ResInterceptor)
+  getHello(): number {
+    return 1000;
   }
 }

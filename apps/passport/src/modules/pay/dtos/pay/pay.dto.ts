@@ -15,7 +15,10 @@ export class PostUserPayBodyDTO {
   @IsIn(PayTypeArray)
   @IsString()
   @IsNotEmpty()
-  @ApiProperty({ description: "支付类型 请看schema enum再取值", enum: PayTypeArray })
+  @ApiProperty({
+    description: "支付类型 请看schema enum再取值",
+    enum: PayTypeArray,
+  })
   payType: IPayType;
   /**
    * 金额 单位元，允许小数点后两位

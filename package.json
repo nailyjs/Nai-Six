@@ -10,6 +10,7 @@
     "dev:forum": "pnpm -F cc.naily.six.forum start:dev",
     "dev:app": "pnpm -F cc.naily.six.app start:dev",
     "dev:gpt": "pnpm -F cc.naily.six.gpt start:dev",
+    "dev:shop": "pnpm -F cc.naily.six.shop start:dev",
     "build": "tsx scripts/buildDeps.ts",
     "build:passport": "pnpm -F cc.naily.six.passport build",
     "build:light": "pnpm -F cc.naily.six.lightning build",

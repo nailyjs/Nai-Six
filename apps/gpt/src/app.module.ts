@@ -17,7 +17,7 @@ import {
 } from "cc.naily.six.shared";
 import { CommonJwtModule } from "cc.naily.six.auth";
 import { APP_GUARD, APP_PIPE } from "@nestjs/core";
-import { SubscribeModule } from "./modules/subscribe/subscribe.module";
+import { GPTModule } from "./modules/gpt/gpt.module";
 
 @Module({
   imports: [
@@ -32,7 +32,7 @@ import { SubscribeModule } from "./modules/subscribe/subscribe.module";
     CommonAppStoreModule.forRoot(),
     CommonErrorModule.forRoot(),
     CommonJwtModule.forRoot(),
-    SubscribeModule.register(),
+    GPTModule.register(),
   ],
   controllers: [AppController],
   providers: [

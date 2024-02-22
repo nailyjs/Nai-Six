@@ -1,12 +1,14 @@
-import { Body, Controller, Get, Post, Query, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Get, Post, Query, UseFilters, UseInterceptors } from "@nestjs/common";
 import { AppleService } from "./apple.service";
 import { Auth, User } from "cc.naily.six.auth";
-import { CommonLogger, ResInterceptor } from "cc.naily.six.shared";
+import { CommonAppStoreService, CommonLogger, ResInterceptor } from "cc.naily.six.shared";
 import { User as UserEntity } from "@prisma/client";
 import { GetSubscribeAppleCheckBodyDTO, GetSubscribeAppleUserQueryDTO, GetSubscribeAppleUserStatusDTO } from "./dtos/apple.dto";
 import { I18nService } from "nestjs-i18n";
 import { I18nTranslations } from "cc.naily.six.generated";
 import { ApiBody, ApiTags } from "@nestjs/swagger";
+import { Environment } from "@apple/app-store-server-library";
+import { CheckPayFilter } from "./errors/checkPay.filter";
 
 @ApiTags("苹果订阅")
 @Controller("subscribe/apple")
@@ -15,6 +17,7 @@ export class AppleController {
     private readonly appleService: AppleService,
     private readonly i18n: I18nService<I18nTranslations>,
     private readonly commonLogger: CommonLogger,
+    private readonly commonAppStoreService: CommonAppStoreService,
   ) {}
 
   /**
@@ -49,12 +52,21 @@ export class AppleController {
    * @memberof AppleController
    */
   @Post("check")
+  @UseFilters(CheckPayFilter)
   @UseInterceptors(ResInterceptor)
   @ApiBody({ type: GetSubscribeAppleCheckBodyDTO })
   public async checkPay(@Body() body: GetSubscribeAppleCheckBodyDTO): Promise<unknown> {
     if (body.isSandbox === "true") return 1046;
+    const { isMock } = this.commonAppStoreService.getConfiguration(body.p8Key, body.isSandbox ? Environment.SANDBOX : undefined);
+    if (body.transactionId && body.bundleId && isMock) {
+      return {
+        code: 1046,
+        message: this.i18n.t("global.errorCode.1046"),
+        data: {},
+      };
+    }
     try {
-      const data = await this.appleService.checkTransactionID(body.bundleId, body.transactionId, false);
+      const data = await this.appleService.checkTransactionID(body.bundleId, body.transactionId, false, body.p8Key);
       if (data.data.length === 0) {
         return {
           code: 1044,
