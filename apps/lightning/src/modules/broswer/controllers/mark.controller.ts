@@ -50,6 +50,15 @@ export class BrowserMarkController {
     });
   }
 
+  /**
+   * 获取书签列表 V2
+   *
+   * @author Zero <gczgroup@qq.com>
+   * @date 2024/02/21
+   * @param {GetBroswerMarkV2QueryDTO} query
+   * @param {UserEntity} user
+   * @memberof BrowserMarkController
+   */
   @Get("v2")
   @Auth()
   @UseInterceptors(ResInterceptor)
@@ -89,6 +98,15 @@ export class BrowserMarkController {
     };
   }
 
+  /**
+   * 创建书签
+   *
+   * @author Zero <gczgroup@qq.com>
+   * @date 2024/02/21
+   * @param {UserEntity} user
+   * @param {PostBrowserMarkBodyDTO} body
+   * @memberof BrowserMarkController
+   */
   @Auth()
   @Post("all")
   @UseInterceptors(ResInterceptor)
@@ -123,6 +141,15 @@ export class BrowserMarkController {
     }
   }
 
+  /**
+   * 创建书签 V2
+   *
+   * @author Zero <gczgroup@qq.com>
+   * @date 2024/02/21
+   * @param {UserEntity} user
+   * @param {PostBrowserMarkBodyDTO} body
+   * @memberof BrowserMarkController
+   */
   @Auth()
   @Post("all/v2")
   @UseInterceptors(ResInterceptor)

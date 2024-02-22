@@ -27,22 +27,32 @@ export class CommonAppStoreService {
     }
   }
 
-  getSigningKey() {
-    if (process.env.NODE_ENV && existsSync(join(process.env.PROJECT_ROOT, `public/${process.env.NODE_ENV}/apple_store.p8`))) {
-      return readFileSync(join(process.env.PROJECT_ROOT, `public/${process.env.NODE_ENV}/apple_store.p8`)).toString();
-    } else if (existsSync(join(process.env.PROJECT_ROOT, "public/apple_store.p8"))) {
-      return readFileSync(join(process.env.PROJECT_ROOT, "public/apple_store.p8")).toString();
-    } else {
-      throw new Error("apple_store.p8 not found");
+  public getSigningKey(p8Key: string = "") {
+    if (
+      process.env.NODE_ENV &&
+      existsSync(join(process.env.PROJECT_ROOT, `public/${process.env.NODE_ENV}/apple_store${p8Key ? `_${p8Key}` : ""}.p8`))
+    ) {
+      return readFileSync(join(process.env.PROJECT_ROOT, `public/${process.env.NODE_ENV}/apple_store${p8Key ? `_${p8Key}` : ""}.p8`)).toString();
+    } else if (existsSync(join(process.env.PROJECT_ROOT, `public/apple_store${p8Key ? `_${p8Key}` : ""}.p8`))) {
+      return readFileSync(join(process.env.PROJECT_ROOT, `public/apple_store${p8Key ? `_${p8Key}` : ""}.p8`)).toString();
     }
   }
 
-  createClient(bundleId: string, env?: Environment) {
-    const signingKey = this.getSigningKey();
-    const keyId = this.configService.getOrThrow<string>("global.apple.storekit.keyId");
-    const issuerId = this.configService.getOrThrow<string>("global.apple.storekit.issuerId");
-    const environment = env ? env : this.configService.getOrThrow<Environment>("global.apple.storekit.environment");
+  public getConfiguration(p8Key: string = "", env?: Environment) {
+    const signingKey = this.getSigningKey(p8Key);
+    const keyId = this.configService.getOrThrow<string>(`global.apple.${p8Key ? `storekitMultiple.${p8Key}` : "storekit"}.keyId`);
+    const issuerId = this.configService.getOrThrow<string>(`global.apple.${p8Key ? `storekitMultiple.${p8Key}` : "storekit"}.issuerId`);
+    const environment = env
+      ? env
+      : this.configService.getOrThrow<Environment>(`global.apple.${p8Key ? `storekitMultiple.${p8Key}` : "storekit"}.environment`);
+    let isMock = this.configService.get<boolean>(`global.apple.${p8Key ? `storekitMultiple.${p8Key}` : "storekit"}.isMock`);
+    if (isMock === undefined || isMock === null) isMock = false;
 
+    return { signingKey, keyId, issuerId, environment, isMock };
+  }
+
+  createClient(bundleId: string, env?: Environment, p8Key?: string) {
+    const { signingKey, keyId, issuerId, environment } = this.getConfiguration(p8Key, env);
     return new AppStoreServerAPIClient(signingKey, keyId, issuerId, bundleId, environment);
   }
 }

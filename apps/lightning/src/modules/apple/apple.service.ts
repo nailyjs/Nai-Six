@@ -43,9 +43,9 @@ export class AppleService {
     });
   }
 
-  public checkTransactionID(bundleId: string, transactionId: string, isSandbox: boolean = false) {
+  public checkTransactionID(bundleId: string, transactionId: string, isSandbox: boolean = false, p8Key?: string) {
     return this.commonAppStoreService
-      .createClient(bundleId, isSandbox ? Environment.SANDBOX : undefined)
+      .createClient(bundleId, isSandbox ? Environment.SANDBOX : undefined, p8Key)
       .getAllSubscriptionStatuses(transactionId, [Status.ACTIVE, Status.BILLING_GRACE_PERIOD]);
   }
 }

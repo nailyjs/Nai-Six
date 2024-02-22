@@ -1,4 +1,4 @@
-//🧩Don't Edit this file.✨Generated in Sat Feb 17 2024 14:07:28 GMT+0800 (中国标准时间)✨
+//🧩Don't Edit this file.✨Generated in Wed Feb 21 2024 16:14:33 GMT+0800 (中国标准时间)✨
 
 generator client {
   provider        = "prisma-client-js"
@@ -144,43 +144,6 @@ model ForumTopic {
   @@fulltext([topicName, topicDesc, topicContent])
 }
 
-model GPTSubscribePackage {
-  /// 套餐ID
-  packageID    String         @id @default(auto()) @map("_id") @db.ObjectId
-  /// 创建时间
-  createdAt    DateTime       @default(now())
-  /// 更新时间
-  updatedAt    DateTime       @updatedAt
-  /// 套餐名称
-  name         String
-  /// 套餐描述
-  description  String
-  /// 套餐价格 RMB
-  price        Float
-  /// 套餐天数
-  days         Int
-  GPTSubscribe GPTSubscribe[]
-}
-
-model GPTSubscribe {
-  /// 评论ID
-  subscribeID String              @id @default(auto()) @map("_id") @db.ObjectId
-  /// 创建时间
-  createdAt   DateTime            @default(now())
-  /// 更新时间
-  updatedAt   DateTime            @updatedAt
-  /// 用户
-  user        User                @relation(fields: [userID], references: [userID])
-  /// 用户ID
-  userID      String              @db.ObjectId
-  /// 到期天数
-  days        Int
-  /// 套餐
-  package     GPTSubscribePackage @relation(fields: [packageID], references: [packageID])
-  /// 套餐ID
-  packageID   String              @db.ObjectId
-}
-
 /// 闪电：用户App Store订阅
 model UserAppStoreSubscribe {
   userAppStoreSubscribeID String   @id @default(auto()) @map("_id") @db.ObjectId
@@ -263,6 +226,50 @@ model BrowserTrack {
   user           User     @relation(fields: [userID], references: [userID])
   /// 用户ID
   userID         String   @db.ObjectId
+}
+
+model ShopSubscribePackage {
+  /// 套餐ID
+  packageID    String          @id @default(auto()) @map("_id") @db.ObjectId
+  /// 创建时间
+  createdAt    DateTime        @default(now())
+  /// 更新时间
+  updatedAt    DateTime        @updatedAt
+  /// 套餐名称
+  name         String
+  /// 套餐描述
+  description  String
+  /// 套餐价格 RMB
+  price        Float
+  /// 套餐天数
+  days         Int
+  /// 套餐创建者
+  author       User            @relation(fields: [authorID], references: [userID])
+  /// 套餐创建者ID
+  authorID     String          @db.ObjectId
+  /// 套餐是否上架
+  isOnSale     Boolean         @default(true)
+  /// 套餐下的订阅
+  GPTSubscribe ShopSubscribe[]
+}
+
+model ShopSubscribe {
+  /// 评论ID
+  subscribeID String               @id @default(auto()) @map("_id") @db.ObjectId
+  /// 创建时间
+  createdAt   DateTime             @default(now())
+  /// 更新时间
+  updatedAt   DateTime             @updatedAt
+  /// 用户
+  user        User                 @relation(fields: [userID], references: [userID])
+  /// 用户ID
+  userID      String               @db.ObjectId
+  /// 到期天数
+  days        Int
+  /// 套餐
+  package     ShopSubscribePackage @relation(fields: [packageID], references: [packageID])
+  /// 套餐ID
+  packageID   String               @db.ObjectId
 }
 
 model UserData {
@@ -394,8 +401,10 @@ model User {
   likes                 Like[]
   /// 用户的ReX App Store上传记录
   AppStore              ReXAppStore[]
-  /// 用户的GPT订阅
-  GPTSubscribe          GPTSubscribe[]
+  /// 用户的订阅
+  ShopSubscribe         ShopSubscribe[]
+  /// 用户创建的订阅
+  ShopSubscribePackage  ShopSubscribePackage[]
 
   @@fulltext([username])
 }
