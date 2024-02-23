@@ -1,5 +1,5 @@
-import { type ServerStoreItem } from '@/stores/server.store'
-import { NButton, NDivider, NIcon, NLi, NText, useDialog, useMessage } from 'naive-ui'
+import { useServerStore, type ServerStoreItem } from '@/stores/server.store'
+import { NButton, NDivider, NIcon, NLi, NSelect, NText, useDialog, useMessage } from 'naive-ui'
 import { Component, Emit, Setup, TSX, Vue, Watch } from 'vue-facing-decorator'
 import { isURL } from 'class-validator'
 import { IconInput } from '@/components/IconInput.component'
@@ -91,6 +91,17 @@ interface Emits {
         >
           {{ default: DefaultDynamicInputSlot }}
         </DynamicInput>
+        <NSelect
+          size="small"
+          v-model:value={this.preCheckServerStoreActiveItemName}
+          placeholder="选择已有服务器以登录"
+          options={this.preCheckServerStoreItem.map((item) => {
+            return {
+              value: item.name,
+              label: item.name
+            }
+          })}
+        />
         <NButton block disabled={this.nextButtonDisabled} type="primary" onClick={this.next}>
           下一步
         </NButton>
@@ -135,10 +146,22 @@ export class ServerView extends TSX<{}, Emits>()(Vue) {
   public message: ReturnType<typeof useMessage>
   @Setup(() => useDialog())
   public dialog: ReturnType<typeof useDialog>
+  @Setup(() => useServerStore())
+  public serverStore: ReturnType<typeof useServerStore>
 
-  preCheckServerStoreItem: ServerPreCheckItem[] = []
-  nextButtonDisabled = true
-  isFinding = false
+  public preCheckServerStoreItem: ServerPreCheckItem[] = []
+  public preCheckServerStoreActiveItemName: string = ''
+  public nextButtonDisabled = true
+  public isFinding = false
+
+  created() {
+    for (const server in this.serverStore.servers) {
+      this.preCheckServerStoreItem.push({
+        ...this.serverStore.servers[server],
+        name: server
+      })
+    }
+  }
 
   @Intercept(new AutoCompleteFilter())
   public async autoComplete(v: string) {
@@ -183,6 +206,7 @@ export class ServerView extends TSX<{}, Emits>()(Vue) {
   }
 
   @Watch('preCheckServerStoreItem', { deep: true })
+  @Watch('preCheckServerStoreActiveItemName', { immediate: true })
   public onPreCheckServerStoreItemChange() {
     const checkRequired = this.preCheckServerStoreItem.some(
       (item) => !item.name || !item.passport || !item.backend || !item.common
@@ -199,11 +223,21 @@ export class ServerView extends TSX<{}, Emits>()(Vue) {
         (item.forum && !isURL(item.forum))
     )
     const isPassed =
-      checkRequired || checkSameName || checkIsUrl || this.preCheckServerStoreItem.length === 0
+      checkRequired ||
+      checkSameName ||
+      checkIsUrl ||
+      this.preCheckServerStoreItem.length === 0 ||
+      this.isFinding ||
+      this.preCheckServerStoreActiveItemName === ''
     this.nextButtonDisabled = isPassed
     return isPassed
   }
 
   @Emit('next')
-  public next() {}
+  public next() {
+    for (const server of this.preCheckServerStoreItem) {
+      this.serverStore.addServer(server.name, server)
+    }
+    this.serverStore.setActiveServer(this.preCheckServerStoreActiveItemName)
+  }
 }
