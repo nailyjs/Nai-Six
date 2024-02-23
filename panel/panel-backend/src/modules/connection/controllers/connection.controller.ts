@@ -1,52 +1,52 @@
-import { Controller, Post, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Post, UseInterceptors } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
-import { ResInterceptor } from "cc.naily.six.shared";
-import { ConnectionCheckerService } from "../providers/checker.service";
+import { NailyContext, ResInterceptor } from "cc.naily.six.shared";
+import { ConnectionCheckerService, ServiceConnection } from "../providers/checker.service";
+import { PostConnectionCheckCustomBodyDTO } from "../dtos/connection.dto";
 
-@ApiTags("连接")
+@ApiTags("服务发现")
 @Controller("connection")
-export class ConnectionController {
-  constructor(private readonly checkerService: ConnectionCheckerService) {}
+export class ConnectionController extends NailyContext {
+  constructor(private readonly checkerService: ConnectionCheckerService) {
+    super();
+  }
 
   /**
-   * 检查连接
+   * 检查默认连接
    *
    * @author Zero <gczgroup@qq.com>
    * @date 2024/02/23
    * @memberof ConnectionController
    */
-  @Post("check")
+  @Post("check/default")
   @UseInterceptors(ResInterceptor)
-  public async checkConnection() {
+  public async checkDefaultConnection() {
     return {
-      passport: {
-        status: await this.checkerService.checkStatus(this.checkerService.passport.host, this.checkerService.passport.port),
-        info: this.checkerService.passport,
-      },
-      common: {
-        status: await this.checkerService.checkStatus(this.checkerService.common.host, this.checkerService.common.port),
-        info: this.checkerService.common,
-      },
-      forum: {
-        status: await this.checkerService.checkStatus(this.checkerService.forum.host, this.checkerService.forum.port),
-        info: this.checkerService.forum,
-      },
-      shop: {
-        status: await this.checkerService.checkStatus(this.checkerService.shop.host, this.checkerService.shop.port),
-        info: this.checkerService.shop,
-      },
-      app: {
-        status: await this.checkerService.checkStatus(this.checkerService.app.host, this.checkerService.app.port),
-        info: this.checkerService.app,
-      },
-      gpt: {
-        status: await this.checkerService.checkStatus(this.checkerService.gpt.host, this.checkerService.gpt.port),
-        info: this.checkerService.gpt,
-      },
-      lightning: {
-        status: await this.checkerService.checkStatus(this.checkerService.lightning.host, this.checkerService.lightning.port),
-        info: this.checkerService.lightning,
-      },
+      services: await Promise.all(
+        this.checkerService.keys.map(async (key) => {
+          const service: ServiceConnection = ConnectionController.ymlConfigCache[key];
+          return {
+            name: key,
+            host: service.host,
+            port: service.port,
+            state: await this.checkerService.checkStatus(service.host, service.port),
+          };
+        }),
+      ),
     };
+  }
+
+  /**
+   * 检查自定义连接
+   *
+   * @author Zero <gczgroup@qq.com>
+   * @date 2024/02/24
+   * @param {PostConnectionCheckCustomBodyDTO} body
+   * @memberof ConnectionController
+   */
+  @Post("check/custom")
+  @UseInterceptors(ResInterceptor)
+  public checkCustomConnection(@Body() body: PostConnectionCheckCustomBodyDTO) {
+    return this.checkerService.checkStatus(body.host, body.port);
   }
 }

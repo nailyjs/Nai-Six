@@ -1,6 +1,6 @@
 import { Component, Prop, Setup, TSX, Vue } from 'vue-facing-decorator'
 import { NTabs, NTab, NButton, NIcon } from 'naive-ui'
-import { useWorkspaceStore } from '@/stores/workspace.store'
+import { TabType, useWorkspaceStore } from '@/stores/workspace.store'
 import { Settings } from '@vicons/carbon'
 import TabSettingView from './TabSetting.view'
 
@@ -20,7 +20,7 @@ interface Props {
           closable={true}
           placement="bottom"
           addable={true}
-          onAdd={() => this.workspaceStore.addNewTab('新工作台', 'workspace')}
+          onAdd={() => this.workspaceStore.addNewTab('新工作台', TabType.Workspace)}
           onClose={(name) => this.workspaceStore.removeTab(name)}
         >
           {{

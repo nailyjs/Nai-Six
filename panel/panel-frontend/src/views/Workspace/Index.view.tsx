@@ -9,11 +9,27 @@ import { DevelopingView } from '../SinglePage/Developing.view'
     return (
       <div>
         <div class="pl4 pr4 mt4">
-          {this.workspaceStore.getActiveTab().type === 'workspace' ? (
-            <WorkspaceContentIndexView />
-          ) : (
-            <DevelopingView class="mt20" />
-          )}
+          {this.workspaceStore.tabs.map((tab) => {
+            if (tab.type === 'workspace') {
+              return (
+                <div
+                  v-show={this.workspaceStore.activeTab === tab.name}
+                  class="fixed top-0 left-0 w-full h-full"
+                >
+                  <WorkspaceContentIndexView />
+                </div>
+              )
+            } else {
+              return (
+                <div
+                  v-show={this.workspaceStore.activeTab === tab.name}
+                  class="fixed top-0 left-0 w-full h-full"
+                >
+                  <DevelopingView />
+                </div>
+              )
+            }
+          })}
         </div>
         <WorkspaceTabView class="fixed w-full bottom-0 mt4" />
       </div>

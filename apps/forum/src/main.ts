@@ -22,7 +22,7 @@ import { AppModule } from "./app.module";
 import { ConfigService } from "@nestjs/config";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { join } from "path";
-import { CommonLogger } from "cc.naily.six.shared";
+import { CommonLogger, SetNailyAppInfo } from "cc.naily.six.shared";
 
 (async function bootstrap() {
   console.clear();
@@ -38,6 +38,7 @@ import { CommonLogger } from "cc.naily.six.shared";
   app.setBaseViewsDir(join(process.env.PROJECT_ROOT, "apps/forum/views"));
   app.useLogger(await app.resolve(CommonLogger));
   const configService = app.get(ConfigService);
+  app.use(SetNailyAppInfo({ name: "forum" }));
   const port = configService.getOrThrow("forum.port");
 
   // Swagger

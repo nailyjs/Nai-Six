@@ -1,26 +1,33 @@
 import { defineStore } from 'pinia'
 
+export const enum TabType {
+  Shop = 'shop',
+  Passport = 'passport',
+  Forum = 'forum',
+  Workspace = 'workspace'
+}
+
 namespace Tab {
   export interface TabBaseOptions {
     name: string
   }
   export interface TabShopOptions extends TabBaseOptions {
-    type: 'shop'
+    type: TabType.Shop
     activeMenu: string
   }
 
   export interface TabPassportOptions extends TabBaseOptions {
-    type: 'passport'
+    type: TabType.Passport
     activeMenu: string
   }
 
   export interface TabForumOptions extends TabBaseOptions {
-    type: 'forum'
+    type: TabType.Forum
     activeMenu: string
   }
 
   export interface TabWorkspaceOptions extends TabBaseOptions {
-    type: 'workspace'
+    type: TabType.Workspace
   }
 }
 
@@ -39,7 +46,7 @@ interface WorkspaceState {
 export const useWorkspaceStore = defineStore('naily_workspace', {
   state: (): WorkspaceState => {
     return {
-      tabs: [{ name: '工作台', type: 'workspace' }],
+      tabs: [{ name: '工作台', type: TabType.Workspace }],
       activeTab: '工作台'
     }
   },
