@@ -13,6 +13,7 @@ import {
   LoggerMiddleware,
   ThrottlerBehindProxyGuard,
   CommonErrorModule,
+  ConnectorMiddleware,
 } from "cc.naily.six.shared";
 import { CommonJwtModule } from "cc.naily.six.auth";
 import { APP_GUARD, APP_PIPE } from "@nestjs/core";
@@ -46,6 +47,6 @@ import { TagModule } from "./modules/tag/tag.module";
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LoggerMiddleware).forRoutes("*");
+    consumer.apply(LoggerMiddleware, ConnectorMiddleware).forRoutes("*");
   }
 }

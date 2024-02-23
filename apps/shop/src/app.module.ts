@@ -11,6 +11,7 @@ import {
   CommonTencentCloudModule,
   CommonThrottlerModule,
   CommonValidationPipe,
+  ConnectorMiddleware,
   LoggerMiddleware,
   ThrottlerBehindProxyGuard,
 } from "cc.naily.six.shared";
@@ -46,6 +47,6 @@ import { SubscribeModule } from "./subscribe/subscribe.module";
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LoggerMiddleware).forRoutes("*");
+    consumer.apply(LoggerMiddleware, ConnectorMiddleware).forRoutes("*");
   }
 }

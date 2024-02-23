@@ -17,6 +17,7 @@ import { CommonPrismaModule } from "cc.naily.six.database";
 import { CommonJwtModule, CommonRoleModule } from "cc.naily.six.auth";
 import { RoleModule } from "./modules/role/role.module";
 import { APP_GUARD, APP_PIPE } from "@nestjs/core";
+import { ConnectionModule } from "./modules/connection/connection.module";
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { APP_GUARD, APP_PIPE } from "@nestjs/core";
     CommonJwtModule.forRoot(),
     CommonErrorModule.forRoot(),
     CommonRoleModule.forRoot(),
+    ConnectionModule.register(),
     RoleModule.register(),
   ],
   controllers: [AppController],

@@ -17,6 +17,9 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
+  "dependencies": {
+    "@humanfs/node": "^0.12.0"
+  },
   "jest": {
     "moduleFileExtensions": [
       "js",

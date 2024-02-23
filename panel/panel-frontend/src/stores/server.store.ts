@@ -3,6 +3,9 @@ import { defineStore } from 'pinia'
 export interface ServerStoreItem {
   passport: string
   backend: string
+  common: string
+  shop?: string
+  forum?: string
 }
 
 interface ServerStoreState {

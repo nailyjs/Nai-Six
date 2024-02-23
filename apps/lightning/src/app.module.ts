@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
 import { AppController } from "./app.controller";
 import { CommonPrismaModule } from "cc.naily.six.database";
 import {
@@ -12,6 +12,8 @@ import {
   CommonTencentCloudModule,
   CommonThrottlerModule,
   CommonValidationPipe,
+  ConnectorMiddleware,
+  LoggerMiddleware,
   ThrottlerBehindProxyGuard,
 } from "cc.naily.six.shared";
 import { CommonJwtModule } from "cc.naily.six.auth";
@@ -49,4 +51,8 @@ import { ScriptModule } from "./modules/script/script.module";
     },
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware, ConnectorMiddleware).forRoutes("*");
+  }
+}

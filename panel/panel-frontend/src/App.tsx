@@ -1,15 +1,26 @@
 import { Component, Setup, Vue } from 'vue-facing-decorator'
-import { NConfigProvider, NMessageProvider, darkTheme, useOsTheme } from 'naive-ui'
 import { RouterView } from 'vue-router'
+import {
+  NConfigProvider,
+  NMessageProvider,
+  NScrollbar,
+  darkTheme,
+  useOsTheme,
+  zhCN
+} from 'naive-ui'
 
 @Component({
   render(this: AppComponent) {
     return (
-      <NConfigProvider theme={this.osTheme === 'dark' ? darkTheme : null}>
-        <NMessageProvider>
-          <RouterView />
-        </NMessageProvider>
-      </NConfigProvider>
+      <div>
+        <NConfigProvider theme={this.osTheme === 'dark' ? darkTheme : null} locale={zhCN}>
+          <NMessageProvider>
+            <NScrollbar class="h-screen">
+              <RouterView />
+            </NScrollbar>
+          </NMessageProvider>
+        </NConfigProvider>
+      </div>
     )
   }
 })

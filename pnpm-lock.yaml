@@ -616,13 +616,20 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
 
-  panel/panel-backend: {}
+  panel/panel-backend:
+    dependencies:
+      '@humanfs/node':
+        specifier: ^0.12.0
+        version: 0.12.0
 
   panel/panel-frontend:
     dependencies:
       '@babel/plugin-proposal-decorators':
         specifier: ^7.23.3
         version: 7.23.9(@babel/core@7.23.9)
+      '@vicons/carbon':
+        specifier: ^0.12.0
+        version: 0.12.0
       axios:
         specifier: ^1.6.1
         version: 1.6.7
@@ -2077,6 +2084,19 @@ packages:
       '@hapi/hoek': 9.3.0
     dev: false
 
+  /@humanfs/core@0.12.0:
+    resolution: {integrity: sha512-Vh4EoEItKuZLscUPP4td0X+zo2dlZ/XfjBqEF4UPPRfeXdhzGmpBr+77JfxLerlN/+cVTDMlK8/VKDbMAz1YKA==}
+    engines: {node: '>=18.18.0'}
+    dev: false
+
+  /@humanfs/node@0.12.0:
+    resolution: {integrity: sha512-Dj64XAVQwiMMh42QpbBR2A4zOgj2igA2ASlevO2BMFF9L5vrY5GFBLqvCo5tRmNfZLAmL1pXR7J2qFDxNqGZJw==}
+    engines: {node: '>=18.18.0'}
+    dependencies:
+      '@humanfs/core': 0.12.0
+      '@humanwhocodes/retry': 0.1.2
+    dev: false
+
   /@humanwhocodes/config-array@0.11.13:
     resolution: {integrity: sha512-JSBDMiDKSzQVngfRjOdFXgFfklaXI4K9nLF49Auh21lmBWRLIK3+xTErTWD4KU54pb6coM6ESE7Awz/FNU3zgQ==}
     engines: {node: '>=10.10.0'}
@@ -2096,6 +2116,11 @@ packages:
   /@humanwhocodes/object-schema@2.0.1:
     resolution: {integrity: sha512-dvuCeX5fC9dXgJn9t+X5atfmgQAzUOWqS1254Gh0m6i8wKd10ebXkfNKiRK+1GWi/yTvvLDHpoxLr0xxxeslWw==}
     dev: true
+
+  /@humanwhocodes/retry@0.1.2:
+    resolution: {integrity: sha512-JNWGHkYfWI0+YgRHOwkFKjOuelfypQtp0GSx0lsOP9jU1Tj4f8k0x4dcaJSEZTp61THZJ+f9PJRh1GzYlQqHOQ==}
+    engines: {node: '>=18.18'}
+    dev: false
 
   /@iconify/types@2.0.0:
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
@@ -4238,6 +4263,10 @@ packages:
       vite: 4.5.2(@types/node@20.10.1)
     transitivePeerDependencies:
       - rollup
+    dev: false
+
+  /@vicons/carbon@0.12.0:
+    resolution: {integrity: sha512-kCOgr/ZOhZzoiFLJ8pwxMa2TMxrkCUOA22qExPabus35F4+USqzcsxaPoYtqRd9ROOYiHrSqwapak/ywF0D9bg==}
     dev: false
 
   /@vitejs/plugin-vue-jsx@3.1.0(vite@4.5.2)(vue@3.4.15):

@@ -12,6 +12,7 @@ import {
   CommonTencentCloudModule,
   CommonThrottlerModule,
   CommonValidationPipe,
+  ConnectorMiddleware,
   LoggerMiddleware,
   ThrottlerBehindProxyGuard,
 } from "cc.naily.six.shared";
@@ -48,6 +49,6 @@ import { GPTModule } from "./modules/gpt/gpt.module";
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LoggerMiddleware).forRoutes("*");
+    consumer.apply(LoggerMiddleware, ConnectorMiddleware).forRoutes("*");
   }
 }

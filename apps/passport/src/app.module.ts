@@ -13,6 +13,7 @@ import {
   LoggerMiddleware,
   ThrottlerBehindProxyGuard,
   CommonErrorModule,
+  ConnectorMiddleware,
 } from "cc.naily.six.shared";
 import { CommonJwtModule, CommonRoleModule } from "cc.naily.six.auth";
 import { LoginModule } from "./modules/login/login.module";
@@ -57,6 +58,6 @@ import { PayModule } from "./modules/pay/pay.module";
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LoggerMiddleware).forRoutes("*");
+    consumer.apply(LoggerMiddleware, ConnectorMiddleware).forRoutes("*");
   }
 }
