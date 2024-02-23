@@ -1,5 +1,5 @@
 import { NIcon, NInput, NText } from 'naive-ui'
-import { Component, Model, Prop, TSX, Vue } from 'vue-facing-decorator'
+import { Component, Emit, Model, Prop, TSX, Vue } from 'vue-facing-decorator'
 import type { JSX } from 'vue/jsx-runtime'
 
 interface Props {
@@ -9,6 +9,11 @@ interface Props {
   label?: string
   fontSize?: string
   iconSize?: string
+  loading?: boolean
+}
+
+interface Emits {
+  change?: (value: string) => void
 }
 
 @Component({
@@ -21,19 +26,29 @@ interface Props {
               <NIcon size={this.iconSize} component={this.icon()} />
               <NText class={this.fontSize ? this.fontSize : 'font-size-3'}>{this.label}</NText>
             </div>
-            <NInput v-model:value={this.inputValue} placeholder={this.placeholder} />
+            <NInput
+              v-model:value={this.inputValue}
+              placeholder={this.placeholder}
+              onChange={this.onChange}
+              loading={this.loading}
+            />
           </div>
         ) : (
           <div class="flex items-center gap3">
             <NIcon size="large" component={this.icon()} />
-            <NInput v-model:value={this.inputValue} placeholder={this.placeholder} />
+            <NInput
+              v-model:value={this.inputValue}
+              placeholder={this.placeholder}
+              onChange={this.onChange}
+              loading={this.loading}
+            />
           </div>
         )}
       </div>
     )
   }
 })
-export class IconInput extends TSX<Props>()(Vue) implements Props {
+export class IconInput extends TSX<Props, Emits>()(Vue) implements Props {
   @Prop
   icon: () => JSX.Element
 
@@ -49,6 +64,14 @@ export class IconInput extends TSX<Props>()(Vue) implements Props {
   @Prop
   iconSize?: string
 
+  @Prop
+  loading?: boolean
+
   @Model({ name: 'value' })
   inputValue?: string
+
+  @Emit('change')
+  onChange(value: string) {
+    return value
+  }
 }
