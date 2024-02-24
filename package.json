@@ -114,7 +114,8 @@
     "tencentcloud-sdk-nodejs": "^4.0.792",
     "tsx": "^4.7.0",
     "unocss": "^0.58.4",
-    "winston": "^3.11.0"
+    "winston": "^3.11.0",
+    "zod": "^3.22.4"
   },
   "peerDependencies": {
     "cc.naily.six.auth": "workspace:*",

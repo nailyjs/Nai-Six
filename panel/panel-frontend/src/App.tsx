@@ -2,6 +2,7 @@ import { Component, Setup, Vue } from 'vue-facing-decorator'
 import { RouterView } from 'vue-router'
 import {
   NConfigProvider,
+  NDialogProvider,
   NMessageProvider,
   NScrollbar,
   darkTheme,
@@ -15,9 +16,11 @@ import {
       <div>
         <NConfigProvider theme={this.osTheme === 'dark' ? darkTheme : null} locale={zhCN}>
           <NMessageProvider>
-            <NScrollbar class="h-screen">
-              <RouterView />
-            </NScrollbar>
+            <NDialogProvider>
+              <NScrollbar class="h-screen">
+                <RouterView />
+              </NScrollbar>
+            </NDialogProvider>
           </NMessageProvider>
         </NConfigProvider>
       </div>
