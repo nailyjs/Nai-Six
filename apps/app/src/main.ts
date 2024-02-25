@@ -30,7 +30,12 @@ import { CommonLogger, SetNailyAppInfo } from "cc.naily.six.shared";
     snapshot: true,
     logger: new CommonLogger(),
     cors: {
-      origin: "*",
+      origin: (_origin, callback) => callback(null, true),
+      credentials: true,
+      allowedHeaders: ["Content-Type", "Authorization"],
+      methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+      preflightContinue: false,
+      optionsSuccessStatus: 204,
     },
   });
   app.set("trust proxy", true);

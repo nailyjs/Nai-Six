@@ -1,7 +1,7 @@
 import { Component, Vue } from 'vue-facing-decorator'
-import { ServerView } from './Server.view'
+import { ServerView } from './Server/Index.view'
 import { NStep, NSteps } from 'naive-ui'
-import { LoginView } from './Login.view'
+import { LoginView } from './Login/Login.view'
 
 @Component({
   render(this: LoginIndexView) {

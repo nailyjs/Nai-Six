@@ -1,5 +1,5 @@
 import type { VueInterceptor } from '@/decorators/intercept.decorator'
-import type { ServerView } from '../../Server.view'
+import type { ServerView } from '../Index.view'
 import { AxiosError } from 'axios'
 import { ZodError } from 'zod'
 

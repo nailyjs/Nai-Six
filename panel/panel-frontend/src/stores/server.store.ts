@@ -1,3 +1,5 @@
+import { setPassport } from '@/apis/base'
+import axios from 'axios'
 import { defineStore } from 'pinia'
 
 export interface ServerStoreItem {
@@ -6,6 +8,7 @@ export interface ServerStoreItem {
   common: string
   shop?: string
   forum?: string
+  access_token?: string
 }
 
 interface ServerStoreState {
@@ -27,6 +30,17 @@ export const useServerStore = defineStore('server-store', {
       } else return null
     },
     setActiveServer(name: string) {
+      if (!this.servers[name]) throw new Error('Server not found')
+      setPassport(
+        axios.create({
+          timeout: 10000,
+          baseURL: this.servers[name].passport,
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }),
+        name
+      )
       this.active = name
     },
     addServer(name: string, server: ServerStoreItem) {
@@ -40,6 +54,12 @@ export const useServerStore = defineStore('server-store', {
     },
     getServerList() {
       return Object.keys(this.servers)
+    },
+    setAccessToken(token: string) {
+      if (this.active && this.servers[this.active]) {
+        this.servers[this.active].access_token = token
+        window.localStorage.setItem(`access_token_${this.active}`, token)
+      }
     }
   },
   persist: true

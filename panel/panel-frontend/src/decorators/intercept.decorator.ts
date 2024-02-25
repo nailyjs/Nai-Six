@@ -81,9 +81,7 @@ export function Intercept(...filters: VueInterceptor[]) {
           }
         } finally {
           for (const filter of filters) {
-            if (filter.finally) {
-              await filter.finally.call(this)
-            }
+            if (filter.finally) await filter.finally.call(this)
           }
         }
       }

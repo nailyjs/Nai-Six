@@ -5,9 +5,9 @@ import { isURL } from 'class-validator'
 import { IconInput } from '@/components/IconInput.component'
 import { DynamicInput, type DefaultSlot } from '@/components/DynamicInput.component'
 import axios from 'axios'
-import { DefaultConnectionDataSchema } from './validator/Connection.validator'
+import { DefaultConnectionDataSchema } from '../validator/Connection.validator'
 import { Intercept } from '@/decorators/intercept.decorator'
-import { AutoCompleteFilter } from './Server/errors/Index.filter'
+import { AutoCompleteFilter } from './errors/Index.filter'
 import {
   NameSpace,
   User,
@@ -154,13 +154,14 @@ export class ServerView extends TSX<{}, Emits>()(Vue) {
   public nextButtonDisabled = true
   public isFinding = false
 
-  created() {
+  public created() {
     for (const server in this.serverStore.servers) {
       this.preCheckServerStoreItem.push({
         ...this.serverStore.servers[server],
         name: server
       })
     }
+    if (this.serverStore.active) this.preCheckServerStoreActiveItemName = this.serverStore.active
   }
 
   @Intercept(new AutoCompleteFilter())
@@ -194,10 +195,9 @@ export class ServerView extends TSX<{}, Emits>()(Vue) {
       positiveText: '添加',
       negativeText: '取消',
       onPositiveClick: () =>
-        activeServer.forEach((service) => {
-          const findIndex = this.preCheckServerStoreItem.findIndex((item) => item.backend === v)
+        activeServer.forEach((service, index) => {
           Reflect.set(
-            this.preCheckServerStoreItem[findIndex],
+            this.preCheckServerStoreItem[index],
             service.name,
             `${service.host}:${service.port}`
           )
@@ -235,9 +235,19 @@ export class ServerView extends TSX<{}, Emits>()(Vue) {
 
   @Emit('next')
   public next() {
-    for (const server of this.preCheckServerStoreItem) {
-      this.serverStore.addServer(server.name, server)
+    for (const storeServer in this.serverStore.servers) {
+      this.serverStore.removeServer(storeServer)
     }
+
+    this.preCheckServerStoreItem.forEach((item) => {
+      this.serverStore.addServer(item.name, {
+        passport: item.passport,
+        backend: item.backend,
+        common: item.common,
+        shop: item.shop,
+        forum: item.forum
+      })
+    })
     this.serverStore.setActiveServer(this.preCheckServerStoreActiveItemName)
   }
 }
