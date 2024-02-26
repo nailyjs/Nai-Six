@@ -17,9 +17,13 @@ export function setPassport(axios: AxiosInstance, serverName: string) {
       return config
     },
     (error) => {
-      console.error('请求拦截器错误')
+      console.error('请求拦截器拦截到错误!')
       console.error(error)
       return Promise.reject(error)
     }
   )
+}
+
+export function removePassport() {
+  window.usePassport = undefined as any
 }

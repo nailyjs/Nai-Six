@@ -52,6 +52,7 @@ export class UserController {
     });
     users = users.map((item) => {
       item.password = undefined;
+      item.balance = parseFloat((item.balance || 0).toFixed(2));
       return item;
     });
     return { users };

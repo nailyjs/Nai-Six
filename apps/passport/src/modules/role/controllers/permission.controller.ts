@@ -16,9 +16,16 @@ export class PermissionController {
   @Get()
   @UseInterceptors(ResInterceptor)
   public async getPermissions() {
+    const must = {};
+    for (const key in MustPermission) {
+      must[key] = MustPermission[key].description;
+    }
+    const not = {};
+    for (const key in NotPermission) {
+      not[key] = NotPermission[key].description;
+    }
     return {
-      not: Object.keys(NotPermission),
-      must: Object.keys(MustPermission),
+      permissions: { must, not },
     };
   }
 }

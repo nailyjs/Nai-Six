@@ -3,15 +3,17 @@ import { NTabs, NTab, NButton, NIcon } from 'naive-ui'
 import { TabType, useWorkspaceStore } from '@/stores/workspace.store'
 import { Settings } from '@vicons/carbon'
 import TabSettingView from './TabSetting.view'
+import type { StyleValue } from 'vue'
 
 interface Props {
   class?: string | Record<string, boolean>
+  style?: string | StyleValue
 }
 
 @Component({
   render(this: WorkspaceTabView) {
     return (
-      <div class={this.class}>
+      <div class={this.class} style={this.style}>
         <TabSettingView v-model:show={this.isShowModal} />
         <NTabs
           size="small"
@@ -51,6 +53,9 @@ export default class WorkspaceTabView extends TSX<Props>()(Vue) implements Props
 
   @Prop
   public class: string | Record<string, boolean>
+
+  @Prop
+  public style: string | StyleValue
 
   public isShowModal = false
 
