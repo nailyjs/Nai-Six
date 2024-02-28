@@ -25,7 +25,9 @@ export class RoleController {
   @Auth()
   @UseInterceptors(ResInterceptor)
   public async getRoles(@User() user: JwtLoginPayload) {
-    return this.commonRoleService.getUserRoles(user.userID);
+    return {
+      roles: await this.commonRoleService.getUserRoles(user.userID),
+    };
   }
 
   /**
@@ -38,8 +40,10 @@ export class RoleController {
   @Get("permission")
   @UseInterceptors(ResInterceptor)
   public async getRolePermissions(@Query() { roleID }: GetUserRolePermissionQueryDTO) {
-    return this.prismaService.role.findMany({
-      where: { roleID, isPublic: true },
-    });
+    return {
+      roleDetail: await this.prismaService.role.findUnique({
+        where: { roleID, isPublic: true },
+      }),
+    };
   }
 }

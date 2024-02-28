@@ -1,5 +1,29 @@
-import axios from 'axios'
+import { type AxiosInstance } from 'axios'
 
-export const useAxios = axios.create({
-  timeout: 10000
-})
+declare global {
+  interface Window {
+    usePassport: AxiosInstance
+  }
+  export const usePassport: AxiosInstance
+}
+
+export function setPassport(axios: AxiosInstance, serverName: string) {
+  window.usePassport = axios
+  window.usePassport.interceptors.request.use(
+    (config) => {
+      config.withCredentials = true
+      const token = window.localStorage.getItem(`access_token_${serverName}`)
+      if (token) config.headers.Authorization = `Bearer ${token}`
+      return config
+    },
+    (error) => {
+      console.error('请求拦截器拦截到错误!')
+      console.error(error)
+      return Promise.reject(error)
+    }
+  )
+}
+
+export function removePassport() {
+  window.usePassport = undefined as any
+}

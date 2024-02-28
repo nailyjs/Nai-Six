@@ -17,7 +17,7 @@ import {
         <NConfigProvider theme={this.osTheme === 'dark' ? darkTheme : null} locale={zhCN}>
           <NMessageProvider>
             <NDialogProvider>
-              <NScrollbar class="h-screen">
+              <NScrollbar xScrollable class="h-screen">
                 <RouterView />
               </NScrollbar>
             </NDialogProvider>

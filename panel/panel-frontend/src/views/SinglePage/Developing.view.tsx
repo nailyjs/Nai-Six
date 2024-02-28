@@ -1,4 +1,4 @@
-import { NInput, NResult } from 'naive-ui'
+import { NResult } from 'naive-ui'
 import { Component, Prop, TSX, Vue } from 'vue-facing-decorator'
 
 interface Props {
@@ -8,15 +8,14 @@ interface Props {
 @Component({
   render(this: DevelopingView) {
     return (
-      <>
+      <div>
         <NResult
           class={this.class}
           status="info"
           title="页面开发中"
           description="在这个年代，信息就是金钱，金钱就是信息"
         />
-        <NInput placeholder="Hello" />
-      </>
+      </div>
     )
   }
 })

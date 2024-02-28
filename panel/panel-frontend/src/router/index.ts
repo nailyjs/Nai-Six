@@ -11,7 +11,19 @@ const router = createRouter({
     {
       name: '工作台',
       path: '/workspace',
-      component: () => import('@/views/Workspace/Index.view')
+      component: () => import('@/views/Workspace/Index.view'),
+      children: [
+        {
+          name: '仪表盘 - 用户',
+          path: '/workspace/user/dashboard',
+          component: () => import('@/views/Workspace/views/User/views/Dashboard.view')
+        },
+        {
+          name: '列表 - 用户',
+          path: '/workspace/user/user-list',
+          component: () => import('@/views/Workspace/views/User/views/UserList.view')
+        }
+      ]
     }
   ]
 })

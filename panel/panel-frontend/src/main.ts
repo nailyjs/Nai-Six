@@ -1,5 +1,6 @@
 import 'uno.css'
 import './assets/main.less'
+import './apis/base'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
