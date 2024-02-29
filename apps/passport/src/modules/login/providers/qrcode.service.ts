@@ -5,16 +5,14 @@ import { randomUUID } from "crypto";
 
 @Injectable()
 export class QrCodeService {
-  constructor(
-    @Inject(CACHE_MANAGER)
-    private readonly cacheManager: Cache,
-  ) {}
+  @Inject(CACHE_MANAGER)
+  private readonly cacheManager: Cache;
 
   private generateQrCodeKey() {
     return randomUUID();
   }
 
-  private getQrCodeKey(key: string) {
+  private getQrCodeKey(key: string): `login:qrcode:${string}` {
     return `login:qrcode:${key}`;
   }
 
