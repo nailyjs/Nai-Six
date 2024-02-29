@@ -5,6 +5,14 @@ import { existsSync, readFileSync } from "fs";
 import { join } from "path";
 import { CommonLogger } from "../logger";
 
+interface Configuration {
+  signingKey: string;
+  keyId: string;
+  issuerId: string;
+  environment: Environment;
+  isMock?: boolean;
+}
+
 @Injectable()
 export class CommonAppStoreService {
   constructor(
@@ -38,7 +46,7 @@ export class CommonAppStoreService {
     }
   }
 
-  public getConfiguration(p8Key: string = "", env?: Environment) {
+  public getConfiguration(p8Key: string = "", env?: Environment): Configuration {
     const signingKey = this.getSigningKey(p8Key);
     const keyId = this.configService.getOrThrow<string>(`global.apple.${p8Key ? `storekitMultiple.${p8Key}` : "storekit"}.keyId`);
     const issuerId = this.configService.getOrThrow<string>(`global.apple.${p8Key ? `storekitMultiple.${p8Key}` : "storekit"}.issuerId`);
@@ -51,8 +59,14 @@ export class CommonAppStoreService {
     return { signingKey, keyId, issuerId, environment, isMock };
   }
 
+  private readonly clients: Map<Configuration, AppStoreServerAPIClient> = new Map();
+
   createClient(bundleId: string, env?: Environment, p8Key?: string) {
     const { signingKey, keyId, issuerId, environment } = this.getConfiguration(p8Key, env);
-    return new AppStoreServerAPIClient(signingKey, keyId, issuerId, bundleId, environment);
+    const config = { signingKey, keyId, issuerId, environment };
+    if (this.clients.has(config)) return this.clients.get(config);
+    const client = new AppStoreServerAPIClient(signingKey, keyId, issuerId, bundleId, environment);
+    this.clients.set(config, client);
+    return client;
   }
 }
