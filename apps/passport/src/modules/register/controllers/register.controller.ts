@@ -43,6 +43,15 @@ export class RegisterController {
     return { user };
   }
 
+  @Post("phone/code2")
+  @UseInterceptors(ResInterceptor)
+  public async registerByPhonePassword2(@Body() body: PostRegisterPhoneCodeBodyDTO, @Ip() ip: string) {
+    await this.phoneService.checkCode(body.phone, body.code);
+    const user = await this.registerService.registerByPhonePassword(body.phone, body.username, ip);
+    this.commonLogger.log(`用户注册成功 ${JSON.stringify(user)}`);
+    return { user };
+  }
+
   /**
    * 邮箱验证码注册
    *
