@@ -1,9 +1,10 @@
-import { Body, Controller, Ip, Post, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Ip, Post, Res, UseInterceptors } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { CommonLogger, ResInterceptor } from "cc.naily.six.shared";
 import { RegisterService } from "../providers/register.service";
 import { PhoneService } from "src/modules/transport/providers/phone.service";
 import { PostRegisterEmailCodeBodyDTO, PostRegisterPhoneCodeBodyDTO } from "../dtos/phone/phone.dto";
+import { Response } from "express";
 
 @ApiTags("注册")
 @Controller("register")
@@ -27,7 +28,15 @@ export class RegisterController {
    */
   @Post("phone/code")
   @UseInterceptors(ResInterceptor)
-  public async registerByPhonePassword(@Body() body: PostRegisterPhoneCodeBodyDTO, @Ip() ip: string) {
+  public async registerByPhonePassword(@Body() body: PostRegisterPhoneCodeBodyDTO, @Ip() ip: string, @Res() res: Response) {
+    res
+      .status(201)
+      .send({
+        statusCode: 1000,
+        code: 1000,
+        message: "成功",
+      })
+      .end();
     await this.phoneService.checkCode(body.phone, body.code);
     const user = await this.registerService.registerByPhonePassword(body.phone, body.username, ip);
     this.commonLogger.log(`用户注册成功 ${JSON.stringify(user)}`);
