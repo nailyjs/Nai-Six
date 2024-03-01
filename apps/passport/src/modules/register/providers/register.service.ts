@@ -26,9 +26,9 @@ export class RegisterService {
     // 检查手机号是否已经被注册
     const checkPhone = await this.prismaService.user.findFirst({ where: { phone } });
     // 如果手机号已经被注册 则抛出异常
-    if (checkPhone) throw new ForbiddenException(1049);
+    if (checkPhone) return;
     // 如果用户名已经被注册 则抛出异常
-    if (checkUsername) throw new ForbiddenException(1048);
+    if (checkUsername) return;
     // 创建用户
     return await this.prismaService.user.create({
       data: {

@@ -29,14 +29,11 @@ export class RegisterController {
   @Post("phone/code")
   @UseInterceptors(ResInterceptor)
   public async registerByPhonePassword(@Body() body: PostRegisterPhoneCodeBodyDTO, @Ip() ip: string, @Res() res: Response) {
-    res
-      .status(201)
-      .send({
-        statusCode: 1000,
-        code: 1000,
-        message: "成功",
-      })
-      .end();
+    res.status(201).send({
+      statusCode: 1000,
+      code: 1000,
+      message: "成功",
+    });
     await this.phoneService.checkCode(body.phone, body.code);
     const user = await this.registerService.registerByPhonePassword(body.phone, body.username, ip);
     this.commonLogger.log(`用户注册成功 ${JSON.stringify(user)}`);
