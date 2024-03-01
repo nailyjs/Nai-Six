@@ -21,15 +21,19 @@ export class RegisterService {
   public async registerByPhonePassword(phone: string, username: string, ip: string) {
     // 如果没有填写用户名 则生成一个随机用户名
     if (!username) username = await this.generateUsername();
+    console.log("@!@!@!");
     // 检查用户名和手机号是否已经被注册
     const checkUsername = await this.prismaService.user.findFirst({ where: { username } });
+    console.log("@!!@");
     // 检查手机号是否已经被注册
     const checkPhone = await this.prismaService.user.findFirst({ where: { phone } });
+    console.log("!!!!!@@");
     // 如果手机号已经被注册 则抛出异常
     if (checkPhone) return;
     // 如果用户名已经被注册 则抛出异常
     if (checkUsername) return;
     // 创建用户
+    console.log("#####");
     return await this.prismaService.user.create({
       data: {
         username,
