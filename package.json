@@ -36,7 +36,8 @@
     "lint": "eslint \"./**/*.ts\" --fix",
     "prepare": "husky install && pnpx prisma generate && pnpm build:shared && pnpm build",
     "generate": "pnpx prisma generate",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "0x": "0x"
   },
   "author": "Zero <gczgroup@qq.com>",
   "lint-staged": {
@@ -60,6 +61,7 @@
   },
   "packageManager": "pnpm@8.8.0",
   "dependencies": {
+    "0x": "^5.7.0",
     "@apple/app-store-server-library": "^1.0.1",
     "@nailyjs.nest.modules/app-store": "^1.0.5",
     "@nailyjs.nest.modules/prisma": "^1.3.6",

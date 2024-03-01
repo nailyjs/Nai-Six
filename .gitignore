@@ -28,3 +28,5 @@ vendors/database/src/migrations_v2
 .env.production
 
 resources/cache
+isolate-*
+0x-*
