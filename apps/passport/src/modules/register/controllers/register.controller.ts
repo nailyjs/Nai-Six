@@ -34,7 +34,9 @@ export class RegisterController {
       code: 1000,
       message: "成功",
     });
+    console.log("!!!!1");
     await this.phoneService.checkCode(body.phone, body.code);
+    console.log("@@@@@2");
     const user = await this.registerService.registerByPhonePassword(body.phone, body.username, ip);
     this.commonLogger.log(`用户注册成功 ${JSON.stringify(user)}`);
     return { user };
