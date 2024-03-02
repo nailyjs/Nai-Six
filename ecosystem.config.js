@@ -22,6 +22,7 @@ module.exports = {
     {
       name: "six-Passport",
       script: "./resources/dist/apps/passport/src/main.js",
+      exec_mode: "cluster",
       env: {
         NODE_ENV: "production",
       },
@@ -36,6 +37,7 @@ module.exports = {
     {
       name: "six-Common",
       script: "./resources/dist/apps/common/src/main.js",
+      exec_mode: "cluster",
       env: {
         NODE_ENV: "production",
       },
@@ -43,6 +45,7 @@ module.exports = {
     {
       name: "six-GPT",
       script: "./resources/dist/apps/gpt/src/main.js",
+      exec_mode: "cluster",
       env: {
         NODE_ENV: "production",
       },

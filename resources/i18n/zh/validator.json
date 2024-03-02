@@ -1,0 +1,19 @@
+{
+  "validatorErrorCode": {
+    "isMobilePhone": "手机号码格式不正确",
+    "isNotEmpty": "{property}参数不能为空",
+    "isEmail": "邮箱格式不正确",
+    "isLength": "{property}参数长度不正确",
+    "isInt": "{property}参数必须为整数",
+    "isIn": "{property}不在指定范围内。可选值:{values}",
+    "isIntString": "{property}参数必须为整数或纯整数字符串",
+    "isString": "{property}参数必须为字符串",
+    "isUrl": "{property}参数必须为URL",
+    "isBoolean": "{property}参数必须为布尔值",
+    "isBooleanString": "{property}参数必须为布尔值或字符串布尔值",
+    "max": "{property}参数不能大于{max}",
+    "min": "{property}参数不能小于{min}",
+    "maxPoint": "{property}参数小数位不能大于{maxPoint}",
+    "isIntStringOrIntStringArray": "{property}参数必须为整数 或 纯整数字符串 或 整数数组 或 纯整数字符串数组"
+  }
+}

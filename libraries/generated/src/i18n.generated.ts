@@ -124,5 +124,24 @@ export type I18nTranslations = {
             };
         };
     };
+    "validator": {
+        "validatorErrorCode": {
+            "isMobilePhone": string;
+            "isNotEmpty": string;
+            "isEmail": string;
+            "isLength": string;
+            "isInt": string;
+            "isIn": string;
+            "isIntString": string;
+            "isString": string;
+            "isUrl": string;
+            "isBoolean": string;
+            "isBooleanString": string;
+            "max": string;
+            "min": string;
+            "maxPoint": string;
+            "isIntStringOrIntStringArray": string;
+        };
+    };
 };
 export type I18nPath = Path<I18nTranslations>;
