@@ -30,7 +30,8 @@
     "subscribers": "class",
     "subschemas": "prisma",
     "role": "admin",
-    "subscribe": "cart"
+    "subscribe": "cart",
+    "interceptors": "controller"
   },
   "prisma.fileWatcher": true
 }

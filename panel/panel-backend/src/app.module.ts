@@ -18,6 +18,7 @@ import { CommonJwtModule, CommonRoleModule } from "cc.naily.six.auth";
 import { RoleModule } from "./modules/role/role.module";
 import { APP_GUARD, APP_PIPE } from "@nestjs/core";
 import { ConnectionModule } from "./modules/connection/connection.module";
+import { AnalyseModule } from "./modules/analyse/analyse.module";
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { ConnectionModule } from "./modules/connection/connection.module";
     CommonRoleModule.forRoot(),
     ConnectionModule.register(),
     RoleModule.register(),
+    AnalyseModule.register(),
   ],
   controllers: [AppController],
   providers: [
