@@ -30,3 +30,5 @@ vendors/database/src/migrations_v2
 resources/cache
 isolate-*
 0x-*
+
+newrelic_agent.log
