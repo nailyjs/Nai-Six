@@ -65,41 +65,37 @@ export class BrowserMarkController {
   public async getMarksV2(@Query() query: GetBroswerMarkV2QueryDTO, @User() user: UserEntity) {
     if (!query.take) query.take = 10;
     if (!query.skip) query.skip = 0;
-    return await new Promise<any>((res) => {
-      setTimeout(async () => {
-        query.version = parseInt(query.version as unknown as string);
-        const canFind = this.markService.canFind(user.userID);
-        const serverVersion = await this.markVersionService.getVersion(user.userID);
-        if (query.version === serverVersion) {
-          return {
-            code: 1000,
-            data: [],
-            version: serverVersion,
-            isListDefault: true,
-          };
-        }
-        if (!canFind) {
-          return await new Promise((resolve) => {
-            const timeout = setTimeout(() => {
-              resolve(this.getMarksV2(query, user));
-              clearTimeout(timeout);
-            }, 100);
-          });
-        }
-        return res({
-          code: 1000,
-          version: serverVersion,
-          isListDefault: false,
-          data: await this.prismaService.browserBookMark.findMany({
-            take: parseInt(query.take as unknown as string),
-            skip: parseInt(query.skip as unknown as string),
-            where: {
-              user: { userID: user.userID },
-            },
-          }),
-        });
-      }, 5000);
-    });
+    query.version = parseInt(query.version as unknown as string);
+    const canFind = this.markService.canFind(user.userID);
+    const serverVersion = await this.markVersionService.getVersion(user.userID);
+    if (query.version === serverVersion) {
+      return {
+        code: 1000,
+        data: [],
+        version: serverVersion,
+        isListDefault: true,
+      };
+    }
+    if (!canFind) {
+      return await new Promise((resolve) => {
+        const timeout = setTimeout(() => {
+          resolve(this.getMarks(query, user));
+          clearTimeout(timeout);
+        }, 100);
+      });
+    }
+    return {
+      code: 1000,
+      version: serverVersion,
+      isListDefault: false,
+      data: await this.prismaService.browserBookMark.findMany({
+        take: parseInt(query.take as unknown as string),
+        skip: parseInt(query.skip as unknown as string),
+        where: {
+          user: { userID: user.userID },
+        },
+      }),
+    };
   }
 
   /**
