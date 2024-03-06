@@ -3,16 +3,6 @@ import { BadRequestException, Injectable } from "@nestjs/common";
 import { PrismaService } from "@nailyjs.nest.modules/prisma";
 import { CommonAppStoreService, CommonLogger } from "cc.naily.six.shared";
 
-namespace Random {
-  function getRandomInt(max: number) {
-    return Math.floor(Math.random() * Math.floor(max));
-  }
-
-  export function randomOneOrZero(): number {
-    return getRandomInt(2);
-  }
-}
-
 @Injectable()
 export class AppleService {
   constructor(
@@ -27,8 +17,6 @@ export class AppleService {
         where: { originalTransactionID: "2000000514154247" },
       });
     }
-    const randomHash = Random.randomOneOrZero();
-    if (randomHash === 0) throw new BadRequestException(1054);
     return this.prismaService.userAppStoreSubscribe.findMany({
       where: { userID },
     });
