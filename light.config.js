@@ -24,6 +24,7 @@ module.exports = {
       script: "./resources/dist/apps/lightning/src/main.js",
       env: {
         NODE_ENV: "production",
+        NEW_RELIC_PROXY_URL: "http://127.0.0.1:7890",
       },
     },
     {
@@ -31,6 +32,7 @@ module.exports = {
       script: "./resources/dist/apps/passport/src/main.js",
       env: {
         NODE_ENV: "production",
+        NEW_RELIC_PROXY_URL: "http://127.0.0.1:7890",
       },
     },
     {
@@ -38,6 +40,7 @@ module.exports = {
       script: "./resources/dist/apps/shop/src/main.js",
       env: {
         NODE_ENV: "production",
+        NEW_RELIC_PROXY_URL: "http://127.0.0.1:7890",
       },
     },
     {
@@ -45,6 +48,7 @@ module.exports = {
       script: "./resources/dist/apps/common/src/main.js",
       env: {
         NODE_ENV: "production",
+        NEW_RELIC_PROXY_URL: "http://127.0.0.1:7890",
       },
     },
   ],
