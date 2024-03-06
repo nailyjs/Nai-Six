@@ -33,7 +33,10 @@ module.exports = {
       env: {
         NODE_ENV: "production",
         NEW_RELIC_PROXY_URL: "http://127.0.0.1:7890",
+        NEW_RELIC_APP_NAME: "Lightning-prod",
+        NEW_RELIC_LICENSE_KEY: "30c6e1159de302142061d99430fdf1dcFFFFNRAL",
       },
+      args: ["-r newrelic"],
     },
     {
       name: "six-shop",
