@@ -11,7 +11,7 @@
     "start": "nest start",
     "start:dev": "cross-env NODE_ENV=development nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "NEW_RELIC_APP_NAME=Lightning-prod NEW_RELIC_LICENSE_KEY=30c6e1159de302142061d99430fdf1dcFFFFNRAL cross-env NODE_ENV=production node -r newrelic ../../resources/dist/apps/lightning/src/main.js",
+    "start:prod": "cross-env NODE_ENV=production node -r newrelic ../../resources/dist/apps/lightning/src/main.js",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
