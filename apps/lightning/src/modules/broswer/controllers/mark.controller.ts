@@ -44,9 +44,7 @@ export class BrowserMarkController {
     return this.prismaService.browserBookMark.findMany({
       take: parseInt(query.take as unknown as string),
       skip: parseInt(query.skip as unknown as string),
-      where: {
-        user: { userID: user.userID },
-      },
+      where: { userID: user.userID },
     });
   }
 
@@ -92,7 +90,7 @@ export class BrowserMarkController {
         take: parseInt(query.take as unknown as string),
         skip: parseInt(query.skip as unknown as string),
         where: {
-          user: { userID: user.userID },
+          userID: user.userID,
         },
       }),
     };
