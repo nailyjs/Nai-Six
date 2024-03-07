@@ -19,4 +19,7 @@ model BrowserBookMark {
   user              User     @relation(fields: [userID], references: [userID])
   /// 用户ID
   userID            String   @db.ObjectId
+
+  /// 添加索引
+  @@index([userID])
 }

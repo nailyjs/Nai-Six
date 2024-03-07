@@ -1,4 +1,4 @@
-//🧩Don't Edit this file.✨Generated in Wed Feb 21 2024 16:14:33 GMT+0800 (中国标准时间)✨
+//🧩Don't Edit this file.✨Generated in Thu Mar 07 2024 23:25:32 GMT+0800 (中国标准时间)✨
 
 generator client {
   provider        = "prisma-client-js"
@@ -175,6 +175,9 @@ model BrowserBookMark {
   user              User     @relation(fields: [userID], references: [userID])
   /// 用户ID
   userID            String   @db.ObjectId
+
+  /// 添加索引
+  @@index([userID])
 }
 
 /// 闪电：浏览器脚本
