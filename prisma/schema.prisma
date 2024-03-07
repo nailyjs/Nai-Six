@@ -1,4 +1,4 @@
-//🧩Don't Edit this file.✨Generated in Thu Mar 07 2024 23:25:32 GMT+0800 (中国标准时间)✨
+//🧩Don't Edit this file.✨Generated in Thu Mar 07 2024 23:48:06 GMT+0800 (中国标准时间)✨
 
 generator client {
   provider        = "prisma-client-js"
@@ -154,6 +154,9 @@ model UserAppStoreSubscribe {
 
   user   User   @relation(fields: [userID], references: [userID])
   userID String @db.ObjectId
+
+  /// 添加索引
+  @@index([userID])
 }
 
 /// 闪电：浏览器书签
