@@ -113,7 +113,7 @@ export class UserChangerController {
   public async changeEmail(@User() user: UserEntity, @Body() body: PutUserEmailBodyDTO, @Ip() ip: string) {
     const checkEmail = await this.prismaService.user.findFirst({ where: { email: body.newEmail } });
     if (checkEmail) throw new BadRequestException(1097);
-    const checkCode = await this.changeService.verifyCode(body.verifyType, body.verifyCode, body.verifyType === "email" ? user.email : user.phone);
+    const checkCode = await this.changeService.verifyCode(body.verifyType, body.verifyCode, body.newEmail);
     if (body.verifyType === "email" && !checkCode) throw new BadRequestException(1011);
     if (body.verifyType === "phone" && !checkCode) throw new BadRequestException(1040);
     if (!checkCode) throw new BadRequestException(1011);
@@ -140,7 +140,7 @@ export class UserChangerController {
   public async changePhone(@Body() body: PutUserPhoneBodyDTO, @User() user: UserEntity) {
     const checkPhone = await this.prismaService.user.findFirst({ where: { phone: body.newPhone } });
     if (checkPhone) throw new BadRequestException(1097);
-    const checkCode = await this.changeService.verifyCode(body.verifyType, body.verifyCode, body.verifyType === "email" ? user.email : user.phone);
+    const checkCode = await this.changeService.verifyCode(body.verifyType, body.verifyCode, body.newPhone);
     if (body.verifyType === "email" && !checkCode) throw new BadRequestException(1011);
     if (body.verifyType === "phone" && !checkCode) throw new BadRequestException(1040);
     if (!checkCode) throw new BadRequestException(1011);
