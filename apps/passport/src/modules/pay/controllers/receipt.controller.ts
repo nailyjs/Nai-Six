@@ -24,4 +24,18 @@ export class ReceiptController {
   public async getReceipts(@Query() query: GetUserReceiptQueryDTO, @User() user: JwtLoginPayload) {
     return await this.userReceiptService.findReceiptByUserID(user.userID, query.orderCreatedAt, query.orderUpdatedAt, query.take, query.skip);
   }
+
+  /**
+   * 根据ID获取单个收据
+   *
+   * @param {string} receiptID
+   * @param {JwtLoginPayload} user
+   * @memberof ReceiptController
+   */
+  @Auth()
+  @Get("single")
+  @UseInterceptors(ResInterceptor)
+  public async getReceipt(@Query("receiptID") receiptID: string, @User() user: JwtLoginPayload) {
+    return await this.userReceiptService.getReceiptByID(receiptID, user.userID);
+  }
 }

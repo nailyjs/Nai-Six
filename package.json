@@ -23,6 +23,8 @@
     "build:shop": "pnpm -F cc.naily.six.shop build",
     "build:gpt": "pnpm -F cc.naily.six.gpt build",
     "build:frontend": "pnpm -F cc.naily.six.panel.frontend build",
+    "build:backend": "pnpm -F cc.naily.six.panel.backend build",
+    "start:backend": "pnpm -F cc.naily.six.panel.backend start:prod",
     "start:frontend": "pnpm -F cc.naily.six.panel.frontend preview",
     "start:passport": "pnpm -F cc.naily.six.passport start:prod",
     "start:light": "pnpm -F cc.naily.six.lightning start:prod",

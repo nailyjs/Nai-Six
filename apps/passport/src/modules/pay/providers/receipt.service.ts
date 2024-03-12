@@ -20,6 +20,10 @@ export class UserReceiptService {
     return this.prismaService.userReceipt.findFirst({ where: { orderID, nonceStr } });
   }
 
+  public getReceiptByID(userReceiptID: string, userID: string) {
+    return this.prismaService.userReceipt.findFirst({ where: { userReceiptID, userID } });
+  }
+
   public async findReceiptByUserID(userID: string, orderCreatedAt: CreatedAtEnum, orderUpdatedAt: UpdatedAtEnum, take: number, skip: number) {
     const data = await this.prismaService.userReceipt.findMany({
       where: { userID },

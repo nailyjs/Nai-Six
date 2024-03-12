@@ -86,7 +86,7 @@ export class PackageController {
   @Auth()
   @Delete()
   @UseInterceptors(ResInterceptor)
-  @MustPermissions("Must_Can_Create_Shop_Subscribe_Package", "Must_Admin")
+  // @MustPermissions("Must_Can_Create_Shop_Subscribe_Package", "Must_Admin")
   @ApiOperation({ summary: "下架订阅套餐", description: "必须有`Must_Can_Create_Shop_Subscribe_Package`或`Must_Admin`权限的用户才可以删除" })
   public async deleteSubscribePackage(@Body() body) {
     const packageInfo = await this.prismaService.shopSubscribePackage.findUnique({
