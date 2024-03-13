@@ -65,7 +65,10 @@ export class SubscribeController {
   @UseInterceptors(ResInterceptor)
   @ApiOkResponse({ description: "获取成功", type: GetSubscribeUserStatusQueryResDTO })
   public async getUserSubscribeStatusBySubscribeID(@User() user: JwtLoginPayload, @Query() query: GetSubscribeUserStatusQueryDTO) {
-    const [subscribes, remainDays] = await this.subscribeService.getUserSubscribeStatus(user.userID, query.subscribePackageID);
+    const [subscribes, remainDays] = await this.subscribeService.getUserSubscribeStatus(
+      user.userID,
+      typeof query.subscribePackageID === "string" ? [query.subscribePackageID] : query.subscribePackageID,
+    );
     return { subscribes, remainDays };
   }
 
@@ -87,7 +90,7 @@ export class SubscribeController {
   })
   public async createSubscribe(@User() user: JwtLoginPayload, @Body() body: PostSubscribeUserBodyDTO) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [_subscribes, days] = await this.subscribeService.getUserSubscribeStatus(user.userID, body.packageID);
+    const [_subscribes, days] = await this.subscribeService.getUserSubscribeStatus(user.userID, [body.packageID]);
     if (days > 0) throw new BadRequestException(1090);
     return this.subscribeService.createSubscribeOrder(body.packageID, user.userID);
   }

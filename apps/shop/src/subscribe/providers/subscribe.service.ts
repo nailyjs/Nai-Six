@@ -95,11 +95,13 @@ export class SubscribeService {
    * @return {Promise<[ShopSubscribe[], number]>}
    * @memberof SubscribeService
    */
-  public async getUserSubscribeStatus(userID: string, subscribePackageID: string): Promise<[ShopSubscribe[], number]> {
+  public async getUserSubscribeStatus(userID: string, subscribePackageID: string[]): Promise<[ShopSubscribe[], number]> {
     let subscribes = await this.prismaService.shopSubscribe.findMany({
       where: {
         userID: userID,
-        packageID: subscribePackageID,
+        packageID: {
+          in: subscribePackageID,
+        },
       },
     });
     // 过滤掉过期的订阅

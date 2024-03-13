@@ -87,10 +87,9 @@ export class GetSubscribeUserStatusQueryDTO {
    * @type {string}
    * @memberof GetSubscribeUserStatusQueryDTO
    */
-  @IsObjectId()
-  @IsString()
+  @IsArrayObjectIdOrObjectId()
   @IsNotEmpty()
-  subscribePackageID?: string;
+  subscribePackageID?: string[] | string;
 }
 
 export class PostSubscribeUserBodyDTO {
