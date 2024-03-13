@@ -57,10 +57,19 @@ export class SubscribeService {
 
   public async createSubscribeOrder(packageID: string, userID: string) {
     const packageInfo = await this.prismaService.shopSubscribePackage.findUnique({
-      where: { packageID: packageID },
+      where: { packageID },
     });
     if (!packageInfo) throw new BadRequestException(1084);
     if (!packageInfo.isOnSale) throw new BadRequestException(1086);
+    const userInstance = await this.prismaService.user.findFirst({
+      where: { userID },
+    });
+    const reduced = BalanceUtil.reduceBalance(userInstance.balance, packageInfo.price);
+    if (reduced === "NOT_ENOUGH") throw new BadRequestException(1031);
+    await this.prismaService.user.update({
+      data: { balance: reduced },
+      where: { userID },
+    });
     return this.prismaService.shopSubscribe.create({
       data: {
         days: packageInfo.days,
