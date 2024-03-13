@@ -146,6 +146,10 @@ export class SubscribeService {
   }
 
   public async cancelSubscribeOrder(subscribeID: string, userID: string) {
+    const isExist = await this.prismaService.shopSubscribe.findFirst({
+      where: { subscribeID, userID },
+    });
+    if (!isExist) throw new BadRequestException(1053);
     return this.prismaService.shopSubscribe.delete({
       where: { subscribeID, userID },
     });
