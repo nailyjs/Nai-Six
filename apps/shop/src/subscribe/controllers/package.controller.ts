@@ -47,6 +47,24 @@ export class PackageController {
   }
 
   /**
+   * 根据ID获取单个订阅套餐
+   *
+   * @author Zero <gczgroup@qq.com>
+   * @date 2024/03/13
+   * @param {string} packageID
+   * @memberof PackageController
+   */
+  @Get("single")
+  @UseInterceptors(ResInterceptor)
+  public async getSubscribePackage(@Query("packageID") packageID: string) {
+    const data = await this.prismaService.shopSubscribePackage.findUnique({
+      where: { packageID },
+    });
+    if (!data) throw new BadRequestException(1084);
+    return data;
+  }
+
+  /**
    * 创建订阅套餐
    *
    * @author Zero <gczgroup@qq.com>
