@@ -123,8 +123,8 @@ export class SubscribeController {
    * @param {PutSubscribeUserBodyDTO} body
    * @memberof SubscribeController
    */
-  @Delete()
   @Auth()
+  @Delete()
   @UseInterceptors(ResInterceptor)
   public async cancelSubscribe(@User() user: JwtLoginPayload, @Body() body: PutSubscribeUserBodyDTO) {
     return this.subscribeService.cancelSubscribeOrder(body.subscribeID, user.userID);

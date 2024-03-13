@@ -17,7 +17,7 @@ export class BalanceUtil {
    */
   public static reduceBalance(balance: number, reduce: number) {
     const result = balance - reduce;
-    if (result <= 0) return "NOT_ENOUGH";
+    if (result < 0) return "NOT_ENOUGH";
     return parseFloat(result.toFixed(2));
   }
 
