@@ -45,3 +45,29 @@ export class PostUserPayBodyDTO {
   @IsObject()
   extraOptions?: Record<string, any>;
 }
+
+export class PayXunhupayQueryDTO {
+  /**
+   * 支付类型 请看schema enum再取值
+   *
+   * @author Zero <gczgroup@qq.com>
+   * @date 2024/02/11
+   * @type {IPayType}
+   * @memberof PayXunhupayQueryDTO
+   */
+  @IsIn(PayTypeArray)
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty({
+    description: "支付类型 请看schema enum再取值",
+    enum: PayTypeArray,
+  })
+  payType: IPayType;
+  /**
+   * 订单号
+   *
+   * @type {string}
+   * @memberof PayXunhupayQueryDTO
+   */
+  orderID: string;
+}

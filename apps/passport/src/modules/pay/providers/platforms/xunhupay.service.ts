@@ -16,7 +16,7 @@ export class XunhupayService implements PayServiceImpl {
     private readonly prismaService: PrismaService,
   ) {}
 
-  private wxPaySign(params: XunhupayBody, key: string): string {
+  public wxPaySign(params: any, key: string): string {
     const paramsArr = Object.keys(params);
     paramsArr.sort();
     const stringArr = [];

@@ -1,13 +1,17 @@
-import { BadRequestException, Body, Controller, Post, UseInterceptors } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Inject, Post, UseInterceptors } from "@nestjs/common";
 import { ApiCreatedResponse, ApiTags } from "@nestjs/swagger";
 import { ResInterceptor } from "cc.naily.six.shared";
-import { PostUserPayBodyDTO } from "../dtos/pay/pay.dto";
+import { PayXunhupayQueryDTO, PostUserPayBodyDTO } from "../dtos/pay/pay.dto";
 import { Auth, JwtLoginPayload, User } from "cc.naily.six.auth";
 import { PayService } from "../providers/pay.service";
 import { XunhupayService } from "../providers/platforms/xunhupay.service";
 import { XunhupayNotify } from "../interfaces/xunhupay.interface";
 import { PrismaService } from "@nailyjs.nest.modules/prisma";
 import { PostUserPay201ResDTO } from "../dtos/pay/pay.res.dto";
+import axios from "axios";
+import { ConfigService } from "@nestjs/config";
+import { CACHE_MANAGER } from "@nestjs/cache-manager";
+import { Cache } from "cache-manager";
 
 @ApiTags("余额")
 @Controller("user/pay")
@@ -16,6 +20,9 @@ export class PayController {
     private readonly payService: PayService,
     private readonly xunhupayService: XunhupayService,
     private readonly prismaService: PrismaService,
+    private readonly configService: ConfigService,
+    @Inject(CACHE_MANAGER)
+    private readonly cacheManager: Cache,
   ) {}
 
   /**
@@ -44,7 +51,7 @@ export class PayController {
   }
 
   /**
-   * 迅虎支付回调接口
+   * 虎皮椒：回调接口
    *
    * @author Zero <gczgroup@qq.com>
    * @date 2024/02/11
@@ -55,5 +62,33 @@ export class PayController {
   @UseInterceptors(ResInterceptor)
   public notify(@Body() body: XunhupayNotify) {
     return this.xunhupayService.notify(body);
+  }
+
+  /**
+   * 虎皮椒：查询订单
+   *
+   * @author Zero <gczgroup@qq.com>
+   * @date 2024/03/13
+   * @param {PayXunhupayQueryDTO} body
+   * @memberof PayController
+   */
+  @Post("xunhupay/query")
+  @UseInterceptors(ResInterceptor)
+  public async query(@Body() body: PayXunhupayQueryDTO) {
+    this.payService.isEnabledOrThrow(body.payType);
+    const requestBody = {
+      appid: this.configService.getOrThrow(`global.pay.${body.payType}.appid`),
+      out_trade_order: body.orderID,
+      time: Date.now(),
+      nonce_str: new Date().getTime() + "-" + Math.random().toString().substring(2, 10),
+    };
+    const hash = this.xunhupayService.wxPaySign(requestBody, this.configService.getOrThrow(`global.pay.${body.payType}.appsecret`));
+    requestBody["hash"] = hash;
+    const { data } = await axios({
+      url: "https://api.xunhupay.com/payment/query.html",
+      method: "POST",
+      data: requestBody,
+    });
+    return { remoteData: data };
   }
 }
