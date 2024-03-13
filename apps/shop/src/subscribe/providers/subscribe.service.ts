@@ -66,7 +66,12 @@ export class SubscribeService {
     });
     const reduced = BalanceUtil.reduceBalance(userInstance.balance, packageInfo.price);
     if (reduced === "NOT_ENOUGH") throw new BadRequestException(1031);
-    this.prismaService.shopSubscribe.create({
+    
+    await this.prismaService.user.update({
+      data: { balance: reduced },
+      where: { userID },
+    });
+    return this.prismaService.shopSubscribe.create({
       data: {
         days: packageInfo.days,
         package: {
@@ -76,10 +81,6 @@ export class SubscribeService {
           connect: { userID },
         },
       },
-    });
-    return await this.prismaService.user.update({
-      data: { balance: reduced },
-      where: { userID },
     });
   }
 
