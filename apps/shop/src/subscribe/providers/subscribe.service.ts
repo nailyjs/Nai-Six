@@ -35,6 +35,15 @@ export class SubscribeService {
     });
     // 如果订单不存在则抛出异常
     if (!lastOrder) throw new BadRequestException(1092);
+    const data = await this.prismaService.shopSubscribe.update({
+      where: { userID, packageID, subscribeID },
+      data: {
+        days: packageInfo.days,
+        user: { connect: { userID } },
+        package: { connect: { packageID } },
+        updatedAt: new Date(),
+      },
+    });
     // 如果存在, 则查找并更新用户余额
     const isSuccess = await this.balanceUtil.reduceUserBalance(userID, packageInfo.price);
     // 如果扣款失败则抛出系统异常
@@ -44,15 +53,7 @@ export class SubscribeService {
     // 如果用户不存在则抛出异常
     if (isSuccess === "USER_NOT_FOUND") throw new BadRequestException(1007);
     // 更新订单数据
-    return this.prismaService.shopSubscribe.update({
-      where: { userID, packageID, subscribeID },
-      data: {
-        days: packageInfo.days,
-        user: { connect: { userID } },
-        package: { connect: { packageID } },
-        updatedAt: new Date(),
-      },
-    });
+    return data;
   }
 
   public async createSubscribeOrder(packageID: string, userID: string) {
@@ -66,11 +67,7 @@ export class SubscribeService {
     });
     const reduced = BalanceUtil.reduceBalance(userInstance.balance, packageInfo.price);
     if (reduced === "NOT_ENOUGH") throw new BadRequestException(1031);
-    await this.prismaService.user.update({
-      data: { balance: reduced },
-      where: { userID },
-    });
-    return this.prismaService.shopSubscribe.create({
+    const data = await this.prismaService.shopSubscribe.create({
       data: {
         days: packageInfo.days,
         package: {
@@ -81,6 +78,11 @@ export class SubscribeService {
         },
       },
     });
+    await this.prismaService.user.update({
+      data: { balance: reduced },
+      where: { userID },
+    });
+    return data;
   }
 
   /**
