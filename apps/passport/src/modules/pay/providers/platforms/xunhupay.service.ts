@@ -43,6 +43,11 @@ export class XunhupayService implements PayServiceImpl {
     if (body.status !== "OD") return;
     const receipt = await this.userReceiptService.getReceipt(body.trade_order_id, body.attach);
     if (!receipt) return;
+    const databaseReceipt = await this.prismaService.userReceipt.findFirst({
+      where: { userReceiptID: receipt.userReceiptID },
+    });
+    if (!databaseReceipt) return;
+    if (databaseReceipt.receiptStatus !== IReceiptStatus.Pending) return "success";
     await this.userReceiptService.setReceiptStatus(receipt.userReceiptID, IReceiptStatus.Success);
     const user = await this.prismaService.user.findFirst({ where: { userID: receipt.userID } });
     if (!user) return;
