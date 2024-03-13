@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsArrayObjectIdOrObjectId, IsArrayStringOrString, MaxPoint } from "cc.naily.six.shared";
-import { IsBooleanString, IsIn, IsNumber, IsNumberString, IsOptional, IsString } from "class-validator";
+import { IsBooleanString, IsIn, IsNotEmpty, IsNumber, IsNumberString, IsOptional, IsString } from "class-validator";
 
 export class GetSubscribePackageQueryDTO {
   /**
@@ -107,6 +107,7 @@ export class PostSubscribePackageBodyDTO {
    * @memberof PostSubscribePackageBodyDTO
    */
   @IsString()
+  @IsNotEmpty()
   @ApiProperty()
   name: string;
   /**
@@ -115,8 +116,8 @@ export class PostSubscribePackageBodyDTO {
    * @type {number}
    * @memberof PostSubscribePackageBodyDTO
    */
-  @MaxPoint(2)
   @IsNumber()
+  @IsNotEmpty()
   @ApiProperty()
   days: number;
   /**
@@ -127,6 +128,7 @@ export class PostSubscribePackageBodyDTO {
    */
   @MaxPoint(2)
   @IsNumber()
+  @IsNotEmpty()
   @ApiProperty()
   price: number;
   /**
@@ -136,6 +138,7 @@ export class PostSubscribePackageBodyDTO {
    * @memberof PostSubscribePackageBodyDTO
    */
   @IsString()
+  @IsNotEmpty()
   @ApiProperty()
   description?: string;
 }

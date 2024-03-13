@@ -146,9 +146,6 @@ export class SubscribeService {
   }
 
   public async cancelSubscribeOrder(subscribeID: string, userID: string) {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [_, remainDays] = await this.getUserSubscribeStatusBySubscribeID(userID, subscribeID);
-    if (remainDays > 0) throw new BadRequestException(1093);
     return this.prismaService.shopSubscribe.delete({
       where: { subscribeID, userID },
     });
