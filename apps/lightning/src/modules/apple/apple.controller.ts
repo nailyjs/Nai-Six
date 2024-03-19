@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query, UseFilters, UseGuards, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Get, Post, Query, UseFilters, UseInterceptors } from "@nestjs/common";
 import { AppleService } from "./apple.service";
 import { Auth, User } from "cc.naily.six.auth";
 import { CommonAppStoreService, CommonLogger, ResInterceptor } from "cc.naily.six.shared";
@@ -9,7 +9,6 @@ import { I18nTranslations } from "cc.naily.six.generated";
 import { ApiBody, ApiTags } from "@nestjs/swagger";
 import { Environment } from "@apple/app-store-server-library";
 import { CheckPayFilter } from "./errors/checkPay.filter";
-import { RandomFailOneGuard } from "./guards/randomFailOne.guard";
 
 @ApiTags("苹果订阅")
 @Controller("subscribe/apple")
@@ -34,7 +33,7 @@ export class AppleController {
   @Auth()
   @Get("user")
   @UseInterceptors(ResInterceptor)
-  @UseGuards(RandomFailOneGuard)
+  // @UseGuards(RandomFailOneGuard)
   public getUserStatus(@User() user: UserEntity, @Query() { isSandbox }: GetSubscribeAppleUserQueryDTO): Promise<unknown> {
     let isSandboxLower: boolean;
     if (typeof isSandbox === "string") {
