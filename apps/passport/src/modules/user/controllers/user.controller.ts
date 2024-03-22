@@ -27,6 +27,9 @@ export class UserController {
       user: await this.prismaService.user.findUnique({
         where: { userID: user.userID },
       }),
+      info: {
+        registerDays: Math.floor((new Date().getTime() - user.createdAt.getTime()) / 1000 / 60 / 60 / 24),
+      },
     };
   }
 
