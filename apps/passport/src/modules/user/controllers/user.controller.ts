@@ -28,7 +28,7 @@ export class UserController {
         where: { userID: user.userID },
       }),
       info: {
-        registerDays: Math.floor((new Date().getTime() - user.createdAt.getTime()) / 1000 / 60 / 60 / 24),
+        registerDays: Math.ceil((new Date().getTime() - user.createdAt.getTime()) / 1000 / 60 / 60 / 24),
       },
     };
   }
