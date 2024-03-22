@@ -23,7 +23,7 @@ export class UserController {
   @Get("logging")
   @UseInterceptors(ResInterceptor)
   public async getUser(@User() user: UserEntity) {
-    return {
+    const response = {
       user: await this.prismaService.user.findUnique({
         where: { userID: user.userID },
       }),
@@ -31,6 +31,8 @@ export class UserController {
         registerDays: Math.ceil((new Date().getTime() - user.createdAt.getTime()) / 1000 / 60 / 60 / 24),
       },
     };
+    if (response.user.balance) response.user.balance = parseFloat(response.user.balance.toFixed(2));
+    return response;
   }
 
   /**
