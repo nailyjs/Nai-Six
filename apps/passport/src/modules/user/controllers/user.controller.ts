@@ -31,7 +31,7 @@ export class UserController {
         registerDays: Math.ceil((new Date().getTime() - user.createdAt.getTime()) / 1000 / 60 / 60 / 24),
       },
     };
-    if (response.user.balance) response.user.balance = parseFloat(response.user.balance.toFixed(2));
+    if (response.user.balance === null) response.user.balance = parseFloat(response.user.balance.toFixed(2));
     return response;
   }
 
