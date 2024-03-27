@@ -115,7 +115,7 @@ export class SubscribeService {
       days += subscribeItem.updatedAt.getTime() + subscribeItem.days * 24 * 60 * 60 * 1000 - new Date().getTime();
     }
     // 转换为天数 1天 = 24 * 60 * 60 * 1000毫秒
-    days = Math.floor(days / (24 * 60 * 60 * 1000));
+    days = Math.ceil(days / (24 * 60 * 60 * 1000));
     // 如果剩余天数小于0则返回0
     if (days < 0) days = 0;
     return [subscribes, days];
