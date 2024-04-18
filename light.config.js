@@ -41,7 +41,7 @@ module.exports = {
     },
     {
       name: "six-shop",
-      script: "./resources/dist/apps/shop/src/main.js",
+      script: "./resources/dist/apps/shop/main.js",
       env: {
         NODE_ENV: "production",
         NEW_RELIC_PROXY_URL: "http://127.0.0.1:7890",
@@ -49,7 +49,7 @@ module.exports = {
     },
     {
       name: "six-Common",
-      script: "./resources/dist/apps/common/src/main.js",
+      script: "./resources/dist/apps/common/main.js",
       env: {
         NODE_ENV: "production",
         NEW_RELIC_PROXY_URL: "http://127.0.0.1:7890",

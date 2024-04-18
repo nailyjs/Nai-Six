@@ -50,8 +50,8 @@ export class UserController {
     if (!query.skip) query.skip = 0;
     if (!query.orderRegisterTime) query.orderRegisterTime = "late";
     let users = await this.prismaService.user.findMany({
-      take: query.take,
-      skip: query.skip,
+      take: parseInt(query.take as unknown as string),
+      skip: parseInt(query.skip as unknown as string),
       orderBy: {
         createdAt: query.orderRegisterTime === "early" ? "asc" : "desc",
       },
