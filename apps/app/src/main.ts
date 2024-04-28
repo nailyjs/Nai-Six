@@ -45,6 +45,7 @@ import { CommonLogger, SetNailyAppInfo } from "cc.naily.six.shared";
   app.use(SetNailyAppInfo({ name: "app" }));
   const configService = app.get(ConfigService);
   const port = configService.getOrThrow("app.port");
+  const enableSwagger = configService.get<boolean>("global.swagger") ?? true;
 
   // Swagger
   // await SwaggerModule.loadPluginMetadata(metadata);
@@ -57,7 +58,7 @@ import { CommonLogger, SetNailyAppInfo } from "cc.naily.six.shared";
     .setLicense("GPL-3.0", "https://www.gnu.org/licenses/gpl-3.0.html")
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup("docs", app, document);
+  if (enableSwagger) SwaggerModule.setup("docs", app, document);
 
   await app.listen(port);
   return app;
