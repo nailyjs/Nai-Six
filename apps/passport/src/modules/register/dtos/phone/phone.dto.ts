@@ -34,8 +34,8 @@ export class PostRegisterPhoneCodeBodyDTO {
    * @type {number}
    * @memberof PostRegisterPhoneCodeBodyDTO
    */
-  @Max(999999)
-  @IsInt()
+  @Max(999999, { message: "验证码必须是6位数字" })
+  @IsInt({ message: "验证码必须是数字" })
   @IsNumber()
   @IsNotEmpty()
   code: number;
@@ -73,7 +73,7 @@ export class PostRegisterEmailCodeBodyDTO {
    * @type {number}
    * @memberof PostRegisterEmailCodeBodyDTO
    */
-  @Max(999999)
+  @Max(999999, { message: "验证码必须是6位数字" })
   @IsInt()
   @IsNumber()
   @IsNotEmpty()
