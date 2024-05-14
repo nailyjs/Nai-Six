@@ -1,4 +1,5 @@
-import { IsEmail, IsInt, IsMobilePhone, IsNotEmpty, IsNumber, IsOptional, IsString, Max } from "class-validator";
+import { IsCode } from "cc.naily.six.shared";
+import { IsEmail, IsInt, IsMobilePhone, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 
 export class PostRegisterPhoneCodeBodyDTO {
   /**
@@ -34,7 +35,7 @@ export class PostRegisterPhoneCodeBodyDTO {
    * @type {number}
    * @memberof PostRegisterPhoneCodeBodyDTO
    */
-  @Max(999999, { message: "验证码必须是6位数字" })
+  @IsCode()
   @IsInt({ message: "验证码必须是数字" })
   @IsNumber()
   @IsNotEmpty()
@@ -73,7 +74,7 @@ export class PostRegisterEmailCodeBodyDTO {
    * @type {number}
    * @memberof PostRegisterEmailCodeBodyDTO
    */
-  @Max(999999, { message: "验证码必须是6位数字" })
+  @IsCode()
   @IsInt()
   @IsNumber()
   @IsNotEmpty()
