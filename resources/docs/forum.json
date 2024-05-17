@@ -1,0 +1,295 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/": {
+      "get": {
+        "operationId": "AppController_getHello",
+        "parameters": [],
+        "responses": { "200": { "description": "", "content": { "application/json": { "schema": { "type": "number" } } } } }
+      }
+    },
+    "/topic": {
+      "get": {
+        "operationId": "TopicController_getTopics",
+        "summary": "获取话题列表",
+        "parameters": [
+          {
+            "name": "orderCreatedAt",
+            "required": false,
+            "in": "query",
+            "description": "创建时间排序",
+            "schema": { "enum": ["asc", "desc"], "type": "string" }
+          },
+          {
+            "name": "orderUpdatedAt",
+            "required": false,
+            "in": "query",
+            "description": "更新时间排序",
+            "schema": { "enum": ["asc", "desc"], "type": "string" }
+          },
+          {
+            "name": "orderLikeCount",
+            "required": false,
+            "in": "query",
+            "description": "点赞数排序",
+            "schema": { "enum": ["asc", "desc"], "type": "string" }
+          },
+          {
+            "name": "orderViewCount",
+            "required": false,
+            "in": "query",
+            "description": "浏览数排序",
+            "schema": { "enum": ["asc", "desc"], "type": "string" }
+          },
+          {
+            "name": "orderDisplayCount",
+            "required": false,
+            "in": "query",
+            "description": "浏览数排序",
+            "schema": { "enum": ["asc", "desc"], "type": "string" }
+          },
+          {
+            "name": "filterUserID",
+            "required": false,
+            "in": "query",
+            "description": "筛选用户ID",
+            "schema": { "type": "array", "items": { "type": "string" } }
+          },
+          {
+            "name": "filterTagID",
+            "required": false,
+            "in": "query",
+            "description": "筛选标签ID",
+            "schema": { "type": "array", "items": { "type": "string" } }
+          },
+          { "name": "take", "required": false, "in": "query", "description": "限制数量", "schema": { "type": "number" } },
+          { "name": "skip", "required": false, "in": "query", "description": "跳过数量", "schema": { "type": "number" } }
+        ],
+        "responses": { "200": { "description": "" } },
+        "tags": ["话题"]
+      },
+      "post": {
+        "operationId": "TopicController_createTopic",
+        "summary": "创建话题草稿",
+        "parameters": [],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PostTopicBodyDTO" } } } },
+        "responses": { "201": { "description": "" } },
+        "tags": ["话题"],
+        "security": [{ "bearer": [] }]
+      },
+      "put": {
+        "operationId": "TopicController_updateTopic",
+        "summary": "修改话题 会将话题状态改为草稿",
+        "parameters": [],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PutTopicBodyDTO" } } } },
+        "responses": { "200": { "description": "" } },
+        "tags": ["话题"],
+        "security": [{ "bearer": [] }]
+      },
+      "patch": {
+        "operationId": "TopicController_publishTopic",
+        "summary": "发布话题 会将话题状态改为待审核",
+        "parameters": [],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PutTopicBodyDTO" } } } },
+        "responses": { "200": { "description": "" } },
+        "tags": ["话题"],
+        "security": [{ "bearer": [] }]
+      },
+      "delete": {
+        "operationId": "TopicController_deleteTopic",
+        "summary": "删除话题",
+        "parameters": [],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PutTopicBodyDTO" } } } },
+        "responses": { "200": { "description": "" } },
+        "tags": ["话题"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/topic/detail": {
+      "get": {
+        "operationId": "TopicController_getTopicDetail",
+        "summary": "根据ID获取话题详情",
+        "parameters": [{ "name": "topicID", "required": true, "in": "query", "description": "话题ID", "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "" } },
+        "tags": ["话题"]
+      }
+    },
+    "/topic/search": {
+      "get": {
+        "operationId": "TopicController_searchTopic",
+        "summary": "搜索话题",
+        "parameters": [
+          {
+            "name": "orderCreatedAt",
+            "required": false,
+            "in": "query",
+            "description": "创建时间排序",
+            "schema": { "enum": ["asc", "desc"], "type": "string" }
+          },
+          {
+            "name": "orderUpdatedAt",
+            "required": false,
+            "in": "query",
+            "description": "更新时间排序",
+            "schema": { "enum": ["asc", "desc"], "type": "string" }
+          },
+          {
+            "name": "orderLikeCount",
+            "required": false,
+            "in": "query",
+            "description": "点赞数排序",
+            "schema": { "enum": ["asc", "desc"], "type": "string" }
+          },
+          {
+            "name": "orderViewCount",
+            "required": false,
+            "in": "query",
+            "description": "浏览数排序",
+            "schema": { "enum": ["asc", "desc"], "type": "string" }
+          },
+          {
+            "name": "orderDisplayCount",
+            "required": false,
+            "in": "query",
+            "description": "浏览数排序",
+            "schema": { "enum": ["asc", "desc"], "type": "string" }
+          },
+          {
+            "name": "filterUserID",
+            "required": false,
+            "in": "query",
+            "description": "筛选用户ID",
+            "schema": { "type": "array", "items": { "type": "string" } }
+          },
+          {
+            "name": "filterTagID",
+            "required": false,
+            "in": "query",
+            "description": "筛选标签ID",
+            "schema": { "type": "array", "items": { "type": "string" } }
+          },
+          { "name": "take", "required": false, "in": "query", "description": "限制数量", "schema": { "type": "number" } },
+          { "name": "skip", "required": false, "in": "query", "description": "跳过数量", "schema": { "type": "number" } },
+          { "name": "keywords", "required": true, "in": "query", "description": "关键词", "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "" } },
+        "tags": ["话题"]
+      }
+    },
+    "/topic/comment": {
+      "get": {
+        "operationId": "TopicCommentController_getComments",
+        "summary": "获取话题评论",
+        "parameters": [
+          {
+            "name": "orderLikes",
+            "required": false,
+            "in": "query",
+            "description": "创建时间排序",
+            "schema": { "enum": ["asc", "desc"], "type": "string" }
+          },
+          {
+            "name": "orderCreatedAt",
+            "required": false,
+            "in": "query",
+            "description": "创建时间排序",
+            "schema": { "enum": ["asc", "desc"], "type": "string" }
+          },
+          {
+            "name": "orderUpdatedAt",
+            "required": false,
+            "in": "query",
+            "description": "创建时间排序",
+            "schema": { "enum": ["asc", "desc"], "type": "string" }
+          },
+          {
+            "name": "filterUserID",
+            "required": false,
+            "in": "query",
+            "description": "筛选用户",
+            "schema": { "type": "array", "items": { "type": "string" } }
+          },
+          { "name": "topicID", "required": true, "in": "query", "description": "话题ID", "schema": { "type": "string" } },
+          { "name": "parentID", "required": false, "in": "query", "description": "通过父评论ID查询该评论的子评论", "schema": { "type": "string" } },
+          { "name": "take", "required": false, "in": "query", "description": "限制数量", "schema": { "type": "number" } },
+          { "name": "skip", "required": false, "in": "query", "description": "跳过数量", "schema": { "type": "number" } }
+        ],
+        "responses": { "200": { "description": "" } },
+        "tags": ["话题评论"]
+      },
+      "post": {
+        "operationId": "TopicCommentController_createComment",
+        "summary": "创建话题评论",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PostTopicCommentBodyDTO" } } }
+        },
+        "responses": { "201": { "description": "" } },
+        "tags": ["话题评论"],
+        "security": [{ "bearer": [] }]
+      },
+      "delete": {
+        "operationId": "TopicCommentController_deleteComment",
+        "summary": "删除话题评论",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DeleteTopicCommentBodyDTO" } } }
+        },
+        "responses": { "200": { "description": "" } },
+        "tags": ["话题评论"],
+        "security": [{ "bearer": [] }]
+      }
+    }
+  },
+  "info": {
+    "title": "Forum",
+    "description": "",
+    "version": "1.0",
+    "contact": { "name": "Zero", "url": "https://naily.cc", "email": "1203970284@qq.com" },
+    "license": { "name": "GPL-3.0", "url": "https://www.gnu.org/licenses/gpl-3.0.html" }
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "securitySchemes": { "bearer": { "scheme": "bearer", "bearerFormat": "JWT", "type": "http" } },
+    "schemas": {
+      "PostTopicBodyDTO": {
+        "type": "object",
+        "properties": {
+          "topicName": { "type": "string", "description": "话题标题 (可选)" },
+          "topicContent": { "type": "string", "description": "话题内容 (markdown) (可选)" },
+          "topicDesc": { "type": "string", "description": "话题描述 (可选) (会自动提取内容前 50 字符作为描述)" },
+          "tags": { "description": "话题标签 必须是已存在的标签ID", "type": "array", "items": { "type": "string" } }
+        },
+        "required": ["tags"]
+      },
+      "PutTopicBodyDTO": {
+        "type": "object",
+        "properties": {
+          "topicName": { "type": "string", "description": "话题标题 (可选)" },
+          "topicContent": { "type": "string", "description": "话题内容 (markdown) (可选)" },
+          "topicDesc": { "type": "string", "description": "话题描述 (可选) (会自动提取内容前 50 字符作为描述)" },
+          "tags": { "description": "话题标签 必须是已存在的标签ID", "type": "array", "items": { "type": "string" } },
+          "topicID": { "type": "string", "description": "话题ID" }
+        },
+        "required": ["tags", "topicID"]
+      },
+      "PostTopicCommentBodyDTO": {
+        "type": "object",
+        "properties": {
+          "topicID": { "type": "string", "description": "话题ID" },
+          "parentID": { "type": "string", "description": "父评论ID 如果有则为该父评论的子评论" },
+          "content": { "type": "string", "description": "评论内容" }
+        },
+        "required": ["topicID", "content"]
+      },
+      "DeleteTopicCommentBodyDTO": {
+        "type": "object",
+        "properties": { "commentID": { "type": "string", "description": "评论ID" } },
+        "required": ["commentID"]
+      }
+    }
+  }
+}

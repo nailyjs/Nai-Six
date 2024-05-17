@@ -1,0 +1,14 @@
+{
+  "openapi": "3.0.0",
+  "paths": { "/": { "get": { "operationId": "AppController_getHello", "parameters": [], "responses": { "200": { "description": "" } } } } },
+  "info": {
+    "title": "Forum",
+    "description": "",
+    "version": "1.0",
+    "contact": { "name": "Zero", "url": "https://naily.cc", "email": "1203970284@qq.com" },
+    "license": { "name": "GPL-3.0", "url": "https://www.gnu.org/licenses/gpl-3.0.html" }
+  },
+  "tags": [],
+  "servers": [],
+  "components": { "securitySchemes": { "bearer": { "scheme": "bearer", "bearerFormat": "JWT", "type": "http" } }, "schemas": {} }
+}

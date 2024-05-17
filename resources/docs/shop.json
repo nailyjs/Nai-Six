@@ -1,0 +1,254 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/": {
+      "get": {
+        "operationId": "AppController_getHello",
+        "summary": "主页",
+        "parameters": [],
+        "responses": { "200": { "description": "", "content": { "application/json": { "schema": { "type": "number" } } } } }
+      }
+    },
+    "/subscribe/user": {
+      "get": {
+        "operationId": "SubscribeController_getUserSubscribeStatus",
+        "summary": "获取用户订阅订单列表",
+        "parameters": [
+          {
+            "name": "orderCreatedAt",
+            "required": false,
+            "in": "query",
+            "description": "排序创建时间",
+            "schema": { "enum": ["asc", "desc"], "type": "string" }
+          },
+          {
+            "name": "orderUpdatedAt",
+            "required": false,
+            "in": "query",
+            "description": "排序更新时间",
+            "schema": { "enum": ["asc", "desc"], "type": "string" }
+          },
+          {
+            "name": "orderDay",
+            "required": false,
+            "in": "query",
+            "description": "排序订阅剩余天数",
+            "schema": { "enum": ["asc", "desc"], "type": "string" }
+          },
+          {
+            "name": "filterSubscribePackageID",
+            "required": false,
+            "in": "query",
+            "description": "过滤订阅套餐ID",
+            "schema": { "type": "array", "items": { "type": "string" } }
+          },
+          { "name": "take", "required": false, "in": "query", "description": "获取数量", "schema": { "type": "number" } },
+          { "name": "skip", "required": false, "in": "query", "description": "跳过数量", "schema": { "type": "number" } }
+        ],
+        "responses": { "200": { "description": "" } },
+        "tags": ["用户订阅"],
+        "security": [{ "bearer": [] }]
+      },
+      "post": {
+        "operationId": "SubscribeController_createSubscribe",
+        "summary": "创建订阅订单",
+        "description": "本接口会从余额中扣款; 如果余额不足, 则会报错。\n\n因此调用前需要：\n\n- 确保用户已登录且余额充足：调用`Passport`内的`Logging`接口，如果余额不足，需要先充值（或者前端做到连贯的操作，就不需要跳充值页面就行）\n- 确保用户已经订阅：调用`Subscribe`内的`/subscribe/user/status`接口，如果剩余0天，则可以继续下一步；如果剩余天数不为0，则不能调用本接口，得调用`/subscribe/user/renew`接口进行续费。\n",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PostSubscribeUserBodyDTO" } } }
+        },
+        "responses": { "201": { "description": "" } },
+        "tags": ["用户订阅"],
+        "security": [{ "bearer": [] }]
+      },
+      "put": {
+        "operationId": "SubscribeController_renewSubscribe",
+        "summary": "续费订阅",
+        "description": "参考错误码\n\n除了管道验证错误码外，在400 Bad Request响应中，还可能包含以下错误码：\n\n- `1084`: 套餐不存在\n- `1086`: 套餐未上架\n- `1092`: 没有找到该订阅\n- `1031`: 余额不足 请您充值后再购买此订阅制商品\n- `1007`: 没有找到该用户\n- `1091`: 套餐未到期 您无需续费\n",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PutSubscribeUserBodyDTO" } } }
+        },
+        "responses": { "200": { "description": "" } },
+        "tags": ["用户订阅"],
+        "security": [{ "bearer": [] }]
+      },
+      "delete": {
+        "operationId": "SubscribeController_cancelSubscribe",
+        "summary": "取消订阅",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PutSubscribeUserBodyDTO" } } }
+        },
+        "responses": { "200": { "description": "" } },
+        "tags": ["用户订阅"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/subscribe/user/status": {
+      "get": {
+        "operationId": "SubscribeController_getUserSubscribeStatusBySubscribeID",
+        "summary": "获取用户订阅状态",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "获取成功",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/GetSubscribeUserStatusQueryResDTO" } } }
+          }
+        },
+        "tags": ["用户订阅"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/subscribe/package": {
+      "get": {
+        "operationId": "PackageController_getSubscribePackages",
+        "summary": "获取订阅套餐列表",
+        "parameters": [
+          {
+            "name": "orderCreatedAt",
+            "required": false,
+            "in": "query",
+            "description": "排序创建时间",
+            "schema": { "enum": ["asc", "desc"], "type": "string" }
+          },
+          {
+            "name": "orderUpdatedAt",
+            "required": false,
+            "in": "query",
+            "description": "排序更新时间",
+            "schema": { "enum": ["asc", "desc"], "type": "string" }
+          },
+          {
+            "name": "orderDay",
+            "required": false,
+            "in": "query",
+            "description": "排序订阅天数",
+            "schema": { "enum": ["asc", "desc"], "type": "string" }
+          },
+          {
+            "name": "orderPrice",
+            "required": false,
+            "in": "query",
+            "description": "排序价格",
+            "schema": { "enum": ["asc", "desc"], "type": "string" }
+          },
+          {
+            "name": "filterAuthorUserID",
+            "required": false,
+            "in": "query",
+            "description": "过滤作者用户ID",
+            "schema": { "type": "array", "items": { "type": "string" } }
+          },
+          { "name": "filterIsOnSale", "required": false, "in": "query", "description": "过滤是否在售", "schema": { "type": "boolean" } },
+          { "name": "take", "required": false, "in": "query", "description": "获取数量", "schema": { "type": "number" } },
+          { "name": "skip", "required": false, "in": "query", "description": "跳过数量", "schema": { "type": "number" } }
+        ],
+        "responses": { "200": { "description": "" } },
+        "tags": ["订阅套餐"]
+      },
+      "post": {
+        "operationId": "PackageController_createSubscribePackage",
+        "summary": "创建订阅套餐",
+        "description": "必须有`Must_Can_Create_Shop_Subscribe_Package`或`Must_Admin`权限的用户才可以创建",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PostSubscribePackageBodyDTO" } } }
+        },
+        "responses": { "201": { "description": "" } },
+        "tags": ["订阅套餐"],
+        "security": [{ "bearer": [] }]
+      },
+      "delete": {
+        "operationId": "PackageController_deleteSubscribePackage",
+        "summary": "下架订阅套餐",
+        "description": "必须有`Must_Can_Create_Shop_Subscribe_Package`或`Must_Admin`权限的用户才可以删除",
+        "parameters": [],
+        "responses": { "200": { "description": "" } },
+        "tags": ["订阅套餐"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/subscribe/package/single": {
+      "get": {
+        "operationId": "PackageController_getSubscribePackage",
+        "summary": "根据ID获取单个订阅套餐",
+        "parameters": [{ "name": "packageID", "required": true, "in": "query", "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "" } },
+        "tags": ["订阅套餐"]
+      }
+    }
+  },
+  "info": {
+    "title": "Shop",
+    "description": "",
+    "version": "1.0",
+    "contact": { "name": "Zero", "url": "https://naily.cc", "email": "1203970284@qq.com" },
+    "license": { "name": "GPL-3.0", "url": "https://www.gnu.org/licenses/gpl-3.0.html" }
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "securitySchemes": { "bearer": { "scheme": "bearer", "bearerFormat": "JWT", "type": "http" } },
+    "schemas": {
+      "GetSubscribeUserStatusDataSubscribesQueryResDTO": {
+        "type": "object",
+        "properties": {
+          "subscribeID": { "type": "string", "description": "订阅订单ID" },
+          "createdAt": { "format": "date-time", "type": "string", "description": "订阅订单创建时间" },
+          "updatedAt": { "format": "date-time", "type": "string", "description": "订阅订单更新时间" },
+          "userID": { "type": "string", "description": "用户ID" },
+          "days": { "type": "number", "description": "剩余天数" },
+          "packageID": { "type": "string", "description": "订阅套餐ID" }
+        },
+        "required": ["subscribeID", "createdAt", "updatedAt", "userID", "days", "packageID"]
+      },
+      "GetSubscribeUserStatusDataQueryResDTO": {
+        "type": "object",
+        "properties": {
+          "remainDays": { "type": "number", "description": "全部订阅订单总的剩余天数 判断是否过期只需要判断这个字段为0即可" },
+          "subscribes": {
+            "description": "返回的是`未过期的`订阅订单列表",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/GetSubscribeUserStatusDataSubscribesQueryResDTO" }
+          }
+        },
+        "required": ["remainDays", "subscribes"]
+      },
+      "GetSubscribeUserStatusQueryResDTO": {
+        "type": "object",
+        "properties": {
+          "data": { "$ref": "#/components/schemas/GetSubscribeUserStatusDataQueryResDTO" },
+          "statusCode": { "type": "number", "description": "状态码", "default": 200 },
+          "message": { "type": "string", "description": "消息", "default": "成功" },
+          "timestamp": { "format": "date-time", "type": "string", "description": "时间戳" }
+        },
+        "required": ["data", "statusCode", "message", "timestamp"]
+      },
+      "PostSubscribeUserBodyDTO": {
+        "type": "object",
+        "properties": { "packageID": { "type": "string", "description": "套餐ID" } },
+        "required": ["packageID"]
+      },
+      "PutSubscribeUserBodyDTO": {
+        "type": "object",
+        "properties": { "subscribeID": { "type": "string", "description": "订阅ID" } },
+        "required": ["subscribeID"]
+      },
+      "PostSubscribePackageBodyDTO": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "description": "套餐名称" },
+          "days": { "type": "number", "description": "套餐天数" },
+          "price": { "type": "number", "description": "套餐价格 允许小数后两位" },
+          "description": { "type": "string", "description": "作者用户ID" }
+        },
+        "required": ["name", "days", "price"]
+      }
+    }
+  }
+}

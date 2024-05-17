@@ -1,0 +1,582 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/": {
+      "get": {
+        "operationId": "AppController_getHello",
+        "summary": "主页",
+        "parameters": [],
+        "responses": { "200": { "description": "", "content": { "application/json": { "schema": { "type": "number" } } } } }
+      }
+    },
+    "/login/phone/code": {
+      "post": {
+        "operationId": "LoginController_loginByPhoneCode",
+        "summary": "手机号验证码登录",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PostLoginPhoneCodeBodyDTO" } } }
+        },
+        "responses": { "201": { "description": "" } },
+        "tags": ["登录"]
+      }
+    },
+    "/login/email/code": {
+      "post": {
+        "operationId": "LoginController_loginByEmailCode",
+        "summary": "邮箱验证码登录",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PostLoginEmailCodeBodyDTO" } } }
+        },
+        "responses": { "201": { "description": "" } },
+        "tags": ["登录"]
+      }
+    },
+    "/login/qrcode/confirm": {
+      "post": {
+        "operationId": "LoginController_confirmQrCode",
+        "summary": "二维码登录：确认登录",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PostLoginQrcodeConfirmBodyDTO" } } }
+        },
+        "responses": { "201": { "description": "", "content": { "application/json": { "schema": { "type": "number" } } } } },
+        "tags": ["登录"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/login/qrcode/refresh": {
+      "post": {
+        "operationId": "LoginController_refreshQrCode",
+        "summary": "二维码登录：检查二维码状态并登录",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PostLoginQrcodeBodyDTO" } } }
+        },
+        "responses": { "201": { "description": "" } },
+        "tags": ["登录"]
+      }
+    },
+    "/logout": {
+      "post": {
+        "operationId": "LogoutController_logout",
+        "summary": "登出",
+        "parameters": [],
+        "responses": { "201": { "description": "", "content": { "application/json": { "schema": { "type": "number" } } } } },
+        "tags": ["登出"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/register/phone/code": {
+      "post": {
+        "operationId": "RegisterController_registerByPhonePassword",
+        "summary": "手机号验证码注册",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PostRegisterPhoneCodeBodyDTO" } } }
+        },
+        "responses": { "201": { "description": "" } },
+        "tags": ["注册"]
+      }
+    },
+    "/register/email/code": {
+      "post": {
+        "operationId": "RegisterController_registerByEmailPassword",
+        "summary": "邮箱验证码注册",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PostRegisterEmailCodeBodyDTO" } } }
+        },
+        "responses": { "201": { "description": "" } },
+        "tags": ["注册"]
+      }
+    },
+    "/transport/email": {
+      "post": {
+        "operationId": "TransportController_email",
+        "summary": "发送邮箱验证码",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PostTransportEmailBodyDTO" } } }
+        },
+        "responses": { "201": { "description": "", "content": { "application/json": { "schema": { "type": "object" } } } } },
+        "tags": ["传输"]
+      }
+    },
+    "/transport/sms": {
+      "post": {
+        "operationId": "TransportController_phone",
+        "summary": "发送手机验证码",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PostTransportPhoneBodyDTO" } } }
+        },
+        "responses": { "201": { "description": "", "content": { "application/json": { "schema": { "type": "object" } } } } },
+        "tags": ["传输"]
+      }
+    },
+    "/transport/qrcode": {
+      "get": {
+        "operationId": "QrCodeController_getQrCode",
+        "summary": "二维码登录：获取二维码",
+        "parameters": [],
+        "responses": { "200": { "description": "" } },
+        "tags": ["传输"]
+      }
+    },
+    "/user/logging": {
+      "get": {
+        "operationId": "UserController_getUser",
+        "summary": "获取已登录用户信息",
+        "parameters": [],
+        "responses": { "200": { "description": "" } },
+        "tags": ["用户"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/user": {
+      "get": {
+        "operationId": "UserController_getUserList",
+        "summary": "获取用户列表",
+        "parameters": [
+          {
+            "name": "orderRegisterTime",
+            "required": false,
+            "in": "query",
+            "description": "根据注册时间排序",
+            "schema": { "default": "late", "enum": ["early", "late"], "type": "string" }
+          },
+          { "name": "take", "required": false, "in": "query", "description": "获取数量", "schema": { "type": "number" } },
+          { "name": "skip", "required": false, "in": "query", "description": "跳过数量", "schema": { "type": "number" } }
+        ],
+        "responses": { "200": { "description": "" } },
+        "tags": ["用户"]
+      },
+      "delete": {
+        "operationId": "UserController_deleteUser",
+        "summary": "注销账号",
+        "parameters": [],
+        "responses": { "200": { "description": "" } },
+        "tags": ["用户"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/user/username": {
+      "put": {
+        "operationId": "UserChangerController_changeUsername",
+        "summary": "修改用户名",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PutUserUsernameBodyDTO" } } }
+        },
+        "responses": { "200": { "description": "", "content": { "application/json": { "schema": { "type": "object" } } } } },
+        "tags": ["用户"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/user/password": {
+      "put": {
+        "operationId": "UserChangerController_changePassword",
+        "summary": "已登录用户修改密码",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PutUserPasswordBodyDTO" } } }
+        },
+        "responses": {
+          "200": { "description": "修改成功返回`1000`" },
+          "400": { "description": "错误码：`1007`,`1077`,`1011`,`1040`,请参照i18n码表" }
+        },
+        "tags": ["用户"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/user/saying": {
+      "put": {
+        "operationId": "UserChangerController_changeSaying",
+        "summary": "修改个性签名",
+        "parameters": [],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PutUserSayingBodyDTO" } } } },
+        "responses": { "200": { "description": "", "content": { "application/json": { "schema": { "type": "number" } } } } },
+        "tags": ["用户"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/user/email": {
+      "put": {
+        "operationId": "UserChangerController_changeEmail",
+        "summary": "修改邮箱",
+        "parameters": [],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PutUserEmailBodyDTO" } } } },
+        "responses": { "200": { "description": "", "content": { "application/json": { "schema": { "type": "number" } } } } },
+        "tags": ["用户"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/user/phone": {
+      "put": {
+        "operationId": "UserChangerController_changePhone",
+        "summary": "修改手机",
+        "parameters": [],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PutUserPhoneBodyDTO" } } } },
+        "responses": { "200": { "description": "", "content": { "application/json": { "schema": { "type": "number" } } } } },
+        "tags": ["用户"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/user/data": {
+      "get": {
+        "operationId": "UserDataController_getUserDataByKey",
+        "summary": "获取用户数据",
+        "parameters": [{ "name": "key", "required": true, "in": "query", "description": "获取用户数据的键", "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "" } },
+        "tags": ["用户数据"],
+        "security": [{ "bearer": [] }]
+      },
+      "post": {
+        "operationId": "UserDataController_setUserDataByKey",
+        "summary": "设置/更新用户数据",
+        "parameters": [],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PostUserDataBodyDTO" } } } },
+        "responses": { "201": { "description": "" } },
+        "tags": ["用户数据"],
+        "security": [{ "bearer": [] }]
+      },
+      "delete": {
+        "operationId": "UserDataController_deleteUserDataByKey",
+        "summary": "删除用户数据",
+        "parameters": [{ "name": "key", "required": true, "in": "query", "description": "获取用户数据的键", "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "" } },
+        "tags": ["用户数据"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/user/pay": {
+      "post": {
+        "operationId": "PayController_pay",
+        "summary": "充值",
+        "parameters": [],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PostUserPayBodyDTO" } } } },
+        "responses": {
+          "201": { "description": "", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PostUserPay201ResDTO" } } } }
+        },
+        "tags": ["余额"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/user/pay/xunhupay/notify": {
+      "post": {
+        "operationId": "PayController_notify",
+        "summary": "虎皮椒：回调接口",
+        "parameters": [],
+        "responses": { "201": { "description": "", "content": { "application/json": { "schema": { "type": "string" } } } } },
+        "tags": ["余额"]
+      }
+    },
+    "/user/pay/xunhupay/query": {
+      "post": {
+        "operationId": "PayController_query",
+        "summary": "虎皮椒：查询订单",
+        "parameters": [],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PayXunhupayQueryDTO" } } } },
+        "responses": { "201": { "description": "" } },
+        "tags": ["余额"]
+      }
+    },
+    "/user/receipt": {
+      "get": {
+        "operationId": "ReceiptController_getReceipts",
+        "summary": "获取已登录用户的收据列表",
+        "parameters": [
+          {
+            "name": "orderCreatedAt",
+            "required": false,
+            "in": "query",
+            "description": "根据订单排序时间排序",
+            "schema": { "enum": ["latestCreatedAt", "earliestCreatedAt"], "type": "string" }
+          },
+          {
+            "name": "orderUpdatedAt",
+            "required": false,
+            "in": "query",
+            "description": "根据订单更新时间排序",
+            "schema": { "enum": ["latestUpdatedAt", "earliestUpdatedAt"], "type": "string" }
+          },
+          { "name": "take", "required": false, "in": "query", "description": "获取数量", "schema": { "type": "number" } },
+          { "name": "skip", "required": false, "in": "query", "description": "跳过数量", "schema": { "type": "number" } }
+        ],
+        "responses": { "200": { "description": "" } },
+        "tags": ["收据"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/user/receipt/single": {
+      "get": {
+        "operationId": "ReceiptController_getReceipt",
+        "summary": "根据ID获取单个收据",
+        "parameters": [{ "name": "receiptID", "required": true, "in": "query", "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "" } },
+        "tags": ["收据"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/user/role": {
+      "get": {
+        "operationId": "RoleController_getRoles",
+        "summary": "获取用户角色",
+        "parameters": [],
+        "responses": { "200": { "description": "" } },
+        "tags": ["用户角色"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/user/role/permission": {
+      "get": {
+        "operationId": "RoleController_getRolePermissions",
+        "summary": "获取角色详情",
+        "parameters": [{ "name": "roleID", "required": true, "in": "query", "description": "角色ID", "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "" } },
+        "tags": ["用户角色"]
+      }
+    },
+    "/user/permission": {
+      "get": {
+        "operationId": "PermissionController_getPermissions",
+        "summary": "获取权限列表",
+        "parameters": [],
+        "responses": { "200": { "description": "" } },
+        "tags": ["用户权限"]
+      }
+    }
+  },
+  "info": {
+    "title": "Passport",
+    "description": "",
+    "version": "1.0",
+    "contact": { "name": "Zero", "url": "https://naily.cc", "email": "1203970284@qq.com" },
+    "license": { "name": "GPL-3.0", "url": "https://www.gnu.org/licenses/gpl-3.0.html" }
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "securitySchemes": { "bearer": { "scheme": "bearer", "bearerFormat": "JWT", "type": "http" } },
+    "schemas": {
+      "PostLoginPhoneCodeBodyDTO": {
+        "type": "object",
+        "properties": {
+          "loginType": {
+            "type": "string",
+            "description": "登录设备类型 `请看schema的enum正确传值`",
+            "enum": ["WatchOS", "HarmonyOS_Wearable", "Android", "Web", "IOS", "Panel"]
+          },
+          "phone": { "type": "string", "description": "中国大陆手机号" },
+          "code": { "type": "number", "description": "验证码" },
+          "loginClient": {
+            "type": "string",
+            "description": "登录的客户端 用于记录哪个APP/哪种浏览器（比如谷歌、火狐浏览器）等\n\nWeb端登录时，该字段可以为空"
+          },
+          "loginDeviceName": { "type": "string", "description": "登录的设备名\n\nWeb端登录时，该字段可以为空" },
+          "identifier": { "type": "string", "description": "设备唯一标识符\n\nWeb端登录时，该字段可以为空" }
+        },
+        "required": ["loginType", "phone", "code"]
+      },
+      "PostLoginEmailCodeBodyDTO": {
+        "type": "object",
+        "properties": {
+          "loginType": {
+            "type": "string",
+            "description": "登录设备类型 `请看schema的enum正确传值`",
+            "enum": ["WatchOS", "HarmonyOS_Wearable", "Android", "Web", "IOS", "Panel"]
+          },
+          "email": { "type": "string", "description": "邮箱" },
+          "code": { "type": "number", "description": "验证码", "minimum": 100000, "maximum": 999999 },
+          "loginClient": {
+            "type": "string",
+            "description": "登录的客户端 用于记录哪个APP/哪种浏览器（比如谷歌、火狐浏览器）等\n\nWeb端登录时，该字段可以为空"
+          },
+          "loginDeviceName": { "type": "string", "description": "登录的设备名\n\nWeb端登录时，该字段可以为空" },
+          "identifier": { "type": "string", "description": "设备唯一标识符\n\nWeb端登录时，该字段可以为空" }
+        },
+        "required": ["loginType", "email", "code"]
+      },
+      "PostLoginQrcodeConfirmBodyDTO": {
+        "type": "object",
+        "properties": { "key": { "type": "string", "description": "二维码key" } },
+        "required": ["key"]
+      },
+      "PostLoginQrcodeBodyDTO": {
+        "type": "object",
+        "properties": {
+          "loginType": {
+            "type": "string",
+            "description": "登录设备类型 `请看schema的enum正确传值`",
+            "enum": ["WatchOS", "HarmonyOS_Wearable", "Android", "Web", "IOS", "Panel"]
+          },
+          "key": { "type": "string", "description": "二维码key" },
+          "loginClient": {
+            "type": "string",
+            "description": "登录的客户端 用于记录哪个APP/哪种浏览器（比如谷歌、火狐浏览器）等\n\nWeb端登录时，该字段可以为空"
+          },
+          "loginDeviceName": { "type": "string", "description": "登录的设备名\n\nWeb端登录时，该字段可以为空" },
+          "identifier": { "type": "string", "description": "设备唯一标识符\n\nWeb端登录时，该字段可以为空" }
+        },
+        "required": ["loginType", "key"]
+      },
+      "PostRegisterPhoneCodeBodyDTO": {
+        "type": "object",
+        "properties": {
+          "phone": { "type": "string", "description": "手机号 中国大陆" },
+          "username": { "type": "string", "description": "用户名 可选 为空时自动生成" },
+          "code": { "type": "number", "description": "验证码" }
+        },
+        "required": ["phone", "code"]
+      },
+      "PostRegisterEmailCodeBodyDTO": {
+        "type": "object",
+        "properties": {
+          "email": { "type": "string", "description": "电子邮件地址" },
+          "username": { "type": "string", "description": "用户名 可选 为空时自动生成" },
+          "code": { "type": "number", "description": "验证码" }
+        },
+        "required": ["email", "code"]
+      },
+      "PostTransportEmailBodyDTO": {
+        "type": "object",
+        "properties": { "email": { "type": "string", "description": "邮箱" } },
+        "required": ["email"]
+      },
+      "PostTransportPhoneBodyDTO": {
+        "type": "object",
+        "properties": { "phone": { "type": "string", "description": "手机号" } },
+        "required": ["phone"]
+      },
+      "PutUserUsernameBodyDTO": {
+        "type": "object",
+        "properties": { "username": { "type": "string", "description": "新用户名" } },
+        "required": ["username"]
+      },
+      "PutUserPasswordBodyDTO": {
+        "type": "object",
+        "properties": {
+          "verifyType": { "type": "string", "description": "验证类别 `email` 邮箱 `phone` 手机", "enum": ["email", "phone"] },
+          "oldPassword": { "type": "string", "description": "旧密码（如果有旧密码，必填；如果没有，不填）" },
+          "verifyCode": { "type": "number", "description": "验证码" },
+          "newPassword": { "type": "string", "description": "新密码" }
+        },
+        "required": ["verifyType", "verifyCode", "newPassword"]
+      },
+      "PutUserSayingBodyDTO": {
+        "type": "object",
+        "properties": { "saying": { "type": "string", "description": "个性签名" } },
+        "required": ["saying"]
+      },
+      "PutUserEmailBodyDTO": {
+        "type": "object",
+        "properties": {
+          "verifyType": { "type": "string", "description": "验证类别 `email` 邮箱 `phone` 手机", "enum": ["email", "phone"] },
+          "newEmail": { "type": "string", "description": "新邮箱" },
+          "verifyCode": { "type": "number", "description": "验证码" }
+        },
+        "required": ["verifyType", "newEmail", "verifyCode"]
+      },
+      "PutUserPhoneBodyDTO": {
+        "type": "object",
+        "properties": {
+          "verifyType": { "type": "string", "description": "验证类别 `email` 邮箱 `phone` 手机", "enum": ["email", "phone"] },
+          "newPhone": { "type": "string", "description": "新手机号" },
+          "verifyCode": { "type": "number", "description": "验证码" }
+        },
+        "required": ["verifyType", "newPhone", "verifyCode"]
+      },
+      "PostUserDataBodyDTO": {
+        "type": "object",
+        "properties": {
+          "key": { "type": "string", "description": "设置用户数据的键" },
+          "value": { "type": "string", "description": "设置用户数据的值" }
+        },
+        "required": ["key", "value"]
+      },
+      "PostUserPayBodyDTO": {
+        "type": "object",
+        "properties": {
+          "payType": {
+            "type": "string",
+            "description": "支付类型 请看schema enum再取值",
+            "enum": ["Xunhupay_Alipay", "Xunhupay_Wechat", "Wechat_Official"]
+          },
+          "amount": { "type": "number", "description": "金额 单位元，允许小数点后两位", "minimum": 0.01 },
+          "extraOptions": {
+            "type": "object",
+            "description": "更多充值选项。比如当支付类型为Wechat_Official时，必须传入`extraOptions.openid`，否则会报错"
+          }
+        },
+        "required": ["payType", "amount"]
+      },
+      "PostUserPayDataReceipt201ResDTO": {
+        "type": "object",
+        "properties": {
+          "receiptStatus": { "type": "string", "description": "收据状态 请看schema枚举", "enum": ["Pending", "Success", "Failed"] },
+          "payType": { "type": "string", "description": "支付类型", "enum": ["Xunhupay_Alipay", "Xunhupay_Wechat", "Wechat_Official"] },
+          "userReceiptID": { "type": "string", "description": "收据ID" },
+          "createdAt": { "format": "date-time", "type": "string", "description": "创建时间" },
+          "updatedAt": { "format": "date-time", "type": "string", "description": "更新时间" },
+          "orderID": { "type": "string", "description": "订单ID" },
+          "amount": { "type": "number", "description": "金额" },
+          "userID": { "type": "string", "description": "用户ID" }
+        },
+        "required": ["receiptStatus", "payType", "userReceiptID", "createdAt", "updatedAt", "orderID", "amount", "userID"]
+      },
+      "PostUserPayData201ResDTO": {
+        "type": "object",
+        "properties": {
+          "remoteData": {
+            "type": "object",
+            "description": "远程数据。如果是迅虎，会返回迅虎的请求信息；如果是微信官方，会返回微信官方的请求信息\n\n请`根据这个对象内的数据`，进行前端的进一步对接\n\n* 迅虎参考文档：[发起付款接口](https://www.xunhupay.com/doc/api/pay.html)\n* 微信官方参考文档：[JSAPI支付](https://pay.weixin.qq.com/docs/merchant/apis/jsapi-payment/direct-jsons/jsapi-prepay.html)"
+          },
+          "receipt": {
+            "description": "每次请求都会有收据信息，包括收据ID、创建时间、更新时间、订单ID、金额、用户ID、收据状态、支付类型等数据。\n\n以后后端会添加收据检查功能：如果x小时内没有支付成功，将会自动删除掉收据。",
+            "allOf": [{ "$ref": "#/components/schemas/PostUserPayDataReceipt201ResDTO" }]
+          }
+        },
+        "required": ["remoteData", "receipt"]
+      },
+      "PostUserPay201ResDTO": {
+        "type": "object",
+        "properties": {
+          "statusCode": { "type": "object", "description": "HTTP状态码", "default": 200 },
+          "code": { "type": "object", "description": "状态消息 除非请求过程中网络请求失败才会产生其他的状态码。", "default": 1000 },
+          "message": {
+            "type": "object",
+            "description": "消息 除非请求过程中网络请求失败才会抛出其他错误。其余的情况，请根据`remoteData`的内容参照对应的判断",
+            "default": "成功"
+          },
+          "timestamp": { "type": "object", "description": "时间戳", "default": "2024-05-17T06:06:48.815Z" },
+          "data": { "description": "数据", "allOf": [{ "$ref": "#/components/schemas/PostUserPayData201ResDTO" }] }
+        },
+        "required": ["statusCode", "code", "message", "timestamp", "data"]
+      },
+      "PayXunhupayQueryDTO": {
+        "type": "object",
+        "properties": {
+          "payType": {
+            "type": "string",
+            "description": "支付类型 请看schema enum再取值",
+            "enum": ["Xunhupay_Alipay", "Xunhupay_Wechat", "Wechat_Official"]
+          },
+          "orderID": { "type": "string", "description": "订单号" }
+        },
+        "required": ["payType", "orderID"]
+      }
+    }
+  }
+}

@@ -1,0 +1,119 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/": {
+      "get": {
+        "operationId": "AppController_getHello",
+        "summary": "主页",
+        "parameters": [],
+        "responses": { "200": { "description": "", "content": { "application/json": { "schema": { "type": "number" } } } } }
+      }
+    },
+    "/tag": {
+      "get": {
+        "operationId": "TagController_getTags",
+        "summary": "获取标签列表",
+        "parameters": [
+          {
+            "name": "orderUpdatedAt",
+            "required": false,
+            "in": "query",
+            "description": "更新时间排序",
+            "schema": { "enum": ["latestUpdatedAt", "earliestUpdatedAt"], "type": "string" }
+          },
+          {
+            "name": "orderCreatedAt",
+            "required": false,
+            "in": "query",
+            "description": "创建时间排序",
+            "schema": { "enum": ["latestCreatedAt", "earliestCreatedAt"], "type": "string" }
+          },
+          {
+            "name": "orderViewCount",
+            "required": false,
+            "in": "query",
+            "description": "浏览量排序",
+            "schema": { "enum": ["moreView", "lessView"], "type": "string" }
+          },
+          { "name": "take", "required": false, "in": "query", "description": "限制数量", "schema": { "type": "number" } },
+          { "name": "skip", "required": false, "in": "query", "description": "跳过数量", "schema": { "type": "number" } }
+        ],
+        "responses": { "200": { "description": "" } },
+        "tags": ["标签"]
+      },
+      "post": {
+        "operationId": "TagController_createTag",
+        "summary": "创建标签",
+        "parameters": [],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PostTagBodyDTO" } } } },
+        "responses": {
+          "default": { "description": "", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PostTagResDTO" } } } }
+        },
+        "tags": ["标签"]
+      }
+    },
+    "/tag/search": {
+      "get": {
+        "operationId": "TagController_searchTag",
+        "summary": "搜索标签",
+        "parameters": [
+          {
+            "name": "orderUpdatedAt",
+            "required": false,
+            "in": "query",
+            "description": "更新时间排序",
+            "schema": { "enum": ["latestUpdatedAt", "earliestUpdatedAt"], "type": "string" }
+          },
+          {
+            "name": "orderCreatedAt",
+            "required": false,
+            "in": "query",
+            "description": "创建时间排序",
+            "schema": { "enum": ["latestCreatedAt", "earliestCreatedAt"], "type": "string" }
+          },
+          {
+            "name": "orderViewCount",
+            "required": false,
+            "in": "query",
+            "description": "浏览量排序",
+            "schema": { "enum": ["moreView", "lessView"], "type": "string" }
+          },
+          { "name": "take", "required": false, "in": "query", "description": "限制数量", "schema": { "type": "number" } },
+          { "name": "skip", "required": false, "in": "query", "description": "跳过数量", "schema": { "type": "number" } },
+          { "name": "keywords", "required": true, "in": "query", "description": "关键词", "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "" } },
+        "tags": ["标签"]
+      }
+    }
+  },
+  "info": {
+    "title": "Common",
+    "description": "",
+    "version": "1.0",
+    "contact": { "name": "Zero", "url": "https://naily.cc", "email": "1203970284@qq.com" },
+    "license": { "name": "GPL-3.0", "url": "https://www.gnu.org/licenses/gpl-3.0.html" }
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "securitySchemes": { "bearer": { "scheme": "bearer", "bearerFormat": "JWT", "type": "http" } },
+    "schemas": {
+      "PostTagBodyDTO": {
+        "type": "object",
+        "properties": { "name": { "type": "string", "description": "标签名称" }, "description": { "type": "string", "description": "标签描述" } },
+        "required": ["name"]
+      },
+      "PostTagResDTO": {
+        "type": "object",
+        "properties": {
+          "tagID": { "type": "string", "description": "标签ID" },
+          "createdAt": { "format": "date-time", "type": "string", "description": "创建时间" },
+          "updatedAt": { "format": "date-time", "type": "string", "description": "更新时间" },
+          "tagName": { "type": "string", "description": "标签名称" }
+        },
+        "required": ["tagID", "createdAt", "updatedAt", "tagName"]
+      }
+    }
+  }
+}

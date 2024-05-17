@@ -1,0 +1,393 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/": {
+      "get": {
+        "operationId": "AppController_getHello",
+        "summary": "主页",
+        "parameters": [],
+        "responses": { "200": { "description": "", "content": { "application/json": { "schema": { "type": "number" } } } } }
+      }
+    },
+    "/broswer/mark": {
+      "get": {
+        "operationId": "BrowserMarkController_getMarks",
+        "summary": "获取书签列表",
+        "parameters": [
+          { "name": "take", "required": false, "in": "query", "description": "获取条数", "schema": { "type": "number" } },
+          { "name": "skip", "required": false, "in": "query", "description": "跳过条数", "schema": { "type": "number" } }
+        ],
+        "responses": { "200": { "description": "", "content": { "application/json": { "schema": { "type": "object" } } } } },
+        "tags": ["浏览器书签"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/broswer/mark/v2": {
+      "get": {
+        "operationId": "BrowserMarkController_getMarksV2",
+        "summary": "获取书签列表 V2",
+        "parameters": [
+          { "name": "take", "required": false, "in": "query", "description": "获取条数", "schema": { "type": "number" } },
+          { "name": "skip", "required": false, "in": "query", "description": "跳过条数", "schema": { "type": "number" } },
+          { "name": "version", "required": true, "in": "query", "description": "版本号", "schema": { "type": "number" } }
+        ],
+        "responses": { "200": { "description": "", "content": { "application/json": { "schema": { "type": "object" } } } } },
+        "tags": ["浏览器书签"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/broswer/mark/all": {
+      "post": {
+        "operationId": "BrowserMarkController_createMark",
+        "summary": "创建书签",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PostBrowserMarkBodyDTO" } } }
+        },
+        "responses": { "201": { "description": "", "content": { "application/json": { "schema": { "type": "object" } } } } },
+        "tags": ["浏览器书签"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/broswer/mark/all/v2": {
+      "post": {
+        "operationId": "BrowserMarkController_createMarkV2",
+        "summary": "创建书签 V2",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PostBrowserMarkBodyDTO" } } }
+        },
+        "responses": { "201": { "description": "", "content": { "application/json": { "schema": { "type": "object" } } } } },
+        "tags": ["浏览器书签"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/broswer/track": {
+      "get": {
+        "operationId": "BroswerTrackController_getList",
+        "summary": "获取浏览历史记录",
+        "parameters": [
+          {
+            "name": "orderCreatedAt",
+            "required": false,
+            "in": "query",
+            "description": "创建时间排序",
+            "schema": { "default": "desc", "enum": ["asc", "desc"], "type": "string" }
+          },
+          { "name": "take", "required": false, "in": "query", "description": "每页数量", "schema": { "default": 10, "type": "number" } },
+          { "name": "skip", "required": false, "in": "query", "description": "跳过数量", "schema": { "default": 0, "type": "number" } }
+        ],
+        "responses": { "200": { "description": "", "content": { "application/json": { "schema": { "type": "object" } } } } },
+        "tags": ["浏览历史记录"],
+        "security": [{ "bearer": [] }]
+      },
+      "post": {
+        "operationId": "BroswerTrackController_create",
+        "summary": "创建浏览历史记录",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PostBrowserTrackBodyDTO" } } }
+        },
+        "responses": { "201": { "description": "" } },
+        "tags": ["浏览历史记录"],
+        "security": [{ "bearer": [] }]
+      },
+      "delete": {
+        "operationId": "BroswerTrackController_delete",
+        "summary": "删除浏览历史记录",
+        "parameters": [{ "name": "browserTrackID", "required": true, "in": "query", "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "" } },
+        "tags": ["浏览历史记录"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/broswer/track/all": {
+      "delete": {
+        "operationId": "BroswerTrackController_deleteAll",
+        "summary": "删除所有浏览历史记录",
+        "parameters": [],
+        "responses": { "200": { "description": "", "content": { "application/json": { "schema": { "type": "object" } } } } },
+        "tags": ["浏览历史记录"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/subscribe/apple/user": {
+      "get": {
+        "operationId": "AppleController_getUserStatus",
+        "summary": "获取苹果订阅状态",
+        "parameters": [],
+        "responses": { "200": { "description": "", "content": { "application/json": { "schema": { "type": "object" } } } } },
+        "tags": ["苹果订阅"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/subscribe/apple/check": {
+      "post": {
+        "operationId": "AppleController_checkPay",
+        "summary": "检查苹果订阅状态",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/GetSubscribeAppleCheckBodyDTO" } } }
+        },
+        "responses": { "201": { "description": "", "content": { "application/json": { "schema": { "type": "object" } } } } },
+        "tags": ["苹果订阅"]
+      }
+    },
+    "/subscribe/apple/user/link": {
+      "post": {
+        "operationId": "AppleController_linkTransactionID",
+        "summary": "链接TransactionID到苹果订阅",
+        "parameters": [
+          { "name": "transactionId", "required": true, "in": "query", "description": "苹果transactionId", "schema": { "type": "string" } }
+        ],
+        "responses": { "201": { "description": "", "content": { "application/json": { "schema": { "type": "object" } } } } },
+        "tags": ["苹果订阅"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/broswer/plugin/user": {
+      "get": {
+        "operationId": "UserScriptController_getList",
+        "summary": "用户：获取已添加的插件列表",
+        "parameters": [
+          {
+            "name": "orderAddTime",
+            "required": false,
+            "in": "query",
+            "description": "排序方式",
+            "schema": { "default": "latest", "enum": ["latest", "earliest"], "type": "string" }
+          },
+          { "name": "take", "required": false, "in": "query", "description": "获取数量", "schema": { "default": 10, "type": "number" } },
+          { "name": "skip", "required": false, "in": "query", "description": "跳过数量", "schema": { "default": 0, "type": "number" } }
+        ],
+        "responses": { "200": { "description": "" } },
+        "tags": ["插件 用户"],
+        "security": [{ "bearer": [] }]
+      },
+      "delete": {
+        "operationId": "UserScriptController_delete",
+        "summary": "用户：删除插件",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DeleteBroswerPluginUserBodyDTO" } } }
+        },
+        "responses": { "200": { "description": "", "content": { "application/json": { "schema": { "type": "boolean" } } } } },
+        "tags": ["插件 用户"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/broswer/plugin/user/upload": {
+      "post": {
+        "operationId": "UserScriptController_upload",
+        "summary": "用户：上传插件",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "multipart/form-data": { "schema": { "$ref": "#/components/schemas/PostBroswerPluginUserCheckBodyDTO" } } }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PostBroswerPluginUserCheckResDTO" } } }
+          }
+        },
+        "tags": ["插件 用户"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/broswer/plugin/user/check": {
+      "post": {
+        "operationId": "UserScriptController_check",
+        "summary": "用户：获取插件信息 执行健康检查",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "multipart/form-data": { "schema": { "$ref": "#/components/schemas/PostBroswerPluginUserCheckBodyDTO" } } }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PostBroswerPluginUserCheckRawInfoResDTO" } } }
+          }
+        },
+        "tags": ["插件 用户"]
+      }
+    },
+    "/broswer/plugin/store": {
+      "get": {
+        "operationId": "StoreScriptController_getList",
+        "summary": "获取商店插件列表",
+        "parameters": [
+          {
+            "name": "order",
+            "required": false,
+            "in": "query",
+            "description": "排序方式",
+            "schema": {
+              "enum": ["mostView", "leastView", "latestUpdatedAt", "earliestUpdatedAt", "latestCreatedAt", "earliestCreatedAt"],
+              "type": "string"
+            }
+          },
+          { "name": "take", "required": false, "in": "query", "description": "分页大小", "schema": { "type": "number" } },
+          { "name": "skip", "required": false, "in": "query", "description": "跳过数量", "schema": { "type": "number" } }
+        ],
+        "responses": { "200": { "description": "" } },
+        "tags": ["插件 商店"]
+      },
+      "post": {
+        "operationId": "StoreScriptController_createDraft",
+        "summary": "创建草稿",
+        "description": "创建草稿时：如果已登录但是没有传id，会创建一个新草稿。草稿数量最多10个",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "multipart/form-data": { "schema": { "$ref": "#/components/schemas/PostBroswerPluginStoreBodyDTO" } } }
+        },
+        "responses": { "201": { "description": "" } },
+        "tags": ["插件 商店"],
+        "security": [{ "bearer": [] }]
+      },
+      "delete": {
+        "operationId": "StoreScriptController_deleteScript",
+        "summary": "删除插件",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DeleteBroswerPluginStoreBodyDTO" } } }
+        },
+        "responses": { "200": { "description": "" } },
+        "tags": ["插件 商店"],
+        "security": [{ "bearer": [] }]
+      }
+    }
+  },
+  "info": {
+    "title": "Passport",
+    "description": "",
+    "version": "1.0",
+    "contact": { "name": "Zero", "url": "https://naily.cc", "email": "1203970284@qq.com" },
+    "license": { "name": "GPL-3.0", "url": "https://www.gnu.org/licenses/gpl-3.0.html" }
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "securitySchemes": { "bearer": { "scheme": "bearer", "bearerFormat": "JWT", "type": "http" } },
+    "schemas": {
+      "PostBrowserMarkBodyListDTO": {
+        "type": "object",
+        "properties": {
+          "title": { "type": "string", "description": "标题" },
+          "icon": { "type": "string", "description": "图标" },
+          "color": { "type": "string", "description": "颜色" },
+          "link": { "type": "string", "description": "链接" },
+          "index": { "type": "number", "description": "索引" }
+        },
+        "required": ["title", "icon", "color", "link", "index"]
+      },
+      "PostBrowserMarkBodyDTO": {
+        "type": "object",
+        "properties": { "list": { "description": "列表", "type": "array", "items": { "$ref": "#/components/schemas/PostBrowserMarkBodyListDTO" } } },
+        "required": ["list"]
+      },
+      "PostBrowserTrackBodyDTO": {
+        "type": "object",
+        "properties": {
+          "updatedAt": { "format": "date-time", "type": "string" },
+          "webPageTitle": { "type": "string" },
+          "webPageLink": { "type": "string" }
+        },
+        "required": ["webPageTitle", "webPageLink"]
+      },
+      "GetSubscribeAppleCheckBodyDTO": {
+        "type": "object",
+        "properties": {
+          "isSandbox": { "type": "string", "description": "是否是沙盒环境 默认false", "default": "false" },
+          "bundleId": { "type": "string", "description": "苹果应用的bundleId" },
+          "transactionId": { "type": "string", "description": "苹果应用的transactionId" },
+          "p8Key": { "type": "string", "description": "默认为空则使用默认key 传入则使用传入的key" }
+        },
+        "required": ["bundleId", "transactionId"]
+      },
+      "PostBroswerPluginUserCheckBodyDTO": {
+        "type": "object",
+        "properties": { "content": { "type": "string", "description": "内容", "format": "binary" } },
+        "required": ["content"]
+      },
+      "PostBroswerPluginUserCheckDTOResDTO": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "array", "items": { "type": "string" } },
+          "description": { "type": "array", "items": { "type": "string" } },
+          "icon": { "type": "array", "items": { "type": "string" } },
+          "author": { "type": "array", "items": { "type": "string" } },
+          "license": { "type": "array", "items": { "type": "string" } },
+          "create": { "type": "array", "items": { "type": "string" } },
+          "version": { "type": "array", "items": { "type": "string" } },
+          "connect": { "type": "array", "items": { "type": "string" } },
+          "include": { "type": "array", "items": { "type": "string" } },
+          "exclude": { "type": "array", "items": { "type": "string" } },
+          "supportURL": { "type": "array", "items": { "type": "string" } },
+          "homepageURL": { "type": "array", "items": { "type": "string" } },
+          "copyright": { "type": "array", "items": { "type": "string" } },
+          "lastmodified": { "type": "array", "items": { "type": "string" } },
+          "note": { "type": "array", "items": { "type": "string" } },
+          "resource": { "type": "array", "items": { "type": "string" } },
+          "require": { "type": "array", "items": { "type": "string" } },
+          "grant": { "type": "array", "items": { "type": "string" } },
+          "namespace": { "type": "array", "items": { "type": "string" } },
+          "downloadURL": { "type": "array", "items": { "type": "string" } },
+          "updateURL": { "type": "array", "items": { "type": "string" } }
+        }
+      },
+      "PostBroswerPluginUserCheckHealthDTOBodyDTO": {
+        "type": "object",
+        "properties": {
+          "type": { "type": "string", "description": "信息类型", "enum": ["error", "warning"] },
+          "message": { "type": "string", "description": "信息", "enum": ["NO_GM_registerMenuCommand"] }
+        },
+        "required": ["type", "message"]
+      },
+      "PostBroswerPluginUserCheckResDTO": {
+        "type": "object",
+        "properties": {
+          "content": { "type": "string", "description": "内容 压缩后的" },
+          "info": { "description": "脚本信息", "allOf": [{ "$ref": "#/components/schemas/PostBroswerPluginUserCheckDTOResDTO" }] },
+          "health": {
+            "description": "健康检查",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/PostBroswerPluginUserCheckHealthDTOBodyDTO" }
+          }
+        },
+        "required": ["content", "info", "health"]
+      },
+      "PostBroswerPluginUserCheckRawInfoResDTO": {
+        "type": "object",
+        "properties": { "info": { "description": "脚本信息", "allOf": [{ "$ref": "#/components/schemas/PostBroswerPluginUserCheckDTOResDTO" }] } },
+        "required": ["info"]
+      },
+      "DeleteBroswerPluginUserBodyDTO": {
+        "type": "object",
+        "properties": { "browserScriptID": { "type": "string", "description": "插件ID" } },
+        "required": ["browserScriptID"]
+      },
+      "PostBroswerPluginStoreBodyDTO": {
+        "type": "object",
+        "properties": {
+          "content": { "type": "string", "description": "内容", "format": "binary" },
+          "browserScriptStoreID": { "type": "string", "description": "浏览器插件商店的存储ID 用于更新插件" }
+        },
+        "required": ["content"]
+      },
+      "DeleteBroswerPluginStoreBodyDTO": {
+        "type": "object",
+        "properties": { "browserScriptStoreID": { "type": "string", "description": "浏览器插件商店的存储ID" } },
+        "required": ["browserScriptStoreID"]
+      }
+    }
+  }
+}

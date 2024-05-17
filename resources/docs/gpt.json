@@ -1,0 +1,114 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/": {
+      "get": {
+        "operationId": "AppController_getHello",
+        "summary": "主页",
+        "parameters": [],
+        "responses": { "200": { "description": "", "content": { "application/json": { "schema": { "type": "number" } } } } }
+      }
+    },
+    "/gpt/chat": {
+      "get": {
+        "operationId": "GPTController_chat",
+        "summary": "GPT聊天接口",
+        "parameters": [],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SSEGPTChatBodyDTO" } } } },
+        "responses": { "200": { "description": "", "content": { "application/json": { "schema": { "type": "object" } } } } },
+        "tags": ["GPT"],
+        "security": [{ "bearer": [] }]
+      }
+    }
+  },
+  "info": {
+    "title": "GPT",
+    "description": "",
+    "version": "1.0",
+    "contact": { "name": "Zero", "url": "https://naily.cc", "email": "1203970284@qq.com" },
+    "license": { "name": "GPL-3.0", "url": "https://www.gnu.org/licenses/gpl-3.0.html" }
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "securitySchemes": { "bearer": { "scheme": "bearer", "bearerFormat": "JWT", "type": "http" } },
+    "schemas": {
+      "ChatCompletionSystemMessageParamDTO": {
+        "type": "object",
+        "properties": {
+          "content": { "type": "string", "description": "zh-CN: 系统消息的内容。" },
+          "role": { "type": "string", "description": "消息作者的角色，这里是 `system`。" },
+          "name": { "type": "string", "description": "zh-CN: 参与者的可选名称。提供模型信息以区分相同角色的参与者。" }
+        },
+        "required": ["content", "role"]
+      },
+      "ChatCompletionUserMessageParamDTO": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "description": "消息的内容。",
+            "oneOf": [
+              { "type": "string" },
+              {
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    { "$ref": "#/components/schemas/ChatCompletionContentPartTextDTO" },
+                    { "$ref": "#/components/schemas/ChatCompletionContentPartImageDTO" }
+                  ]
+                }
+              }
+            ]
+          },
+          "role": { "type": "string", "description": "消息作者的角色，这里是 `user`。" },
+          "name": { "type": "string", "description": "参与者的可选名称。提供模型信息以区分相同角色的参与者。" }
+        },
+        "required": ["content", "role"]
+      },
+      "ChatCompletionContentPartTextDTO": {
+        "type": "object",
+        "properties": {
+          "text": { "type": "string", "description": "文本内容。" },
+          "type": { "type": "string", "description": "内容部分的类型。这里是`text`。" }
+        },
+        "required": ["text", "type"]
+      },
+      "ImageURLDTO": {
+        "type": "object",
+        "properties": {
+          "url": { "type": "string", "description": "图像的URL或base64编码的图像数据。" },
+          "detail": {
+            "type": "object",
+            "description": "指定图像的细节级别。在[视觉指南](https://platform.openai.com/docs/guides/vision/low-or-high-fidelity-image-understanding)中了解更多。"
+          }
+        },
+        "required": ["url"]
+      },
+      "ChatCompletionContentPartImageDTO": {
+        "type": "object",
+        "properties": {
+          "image_url": { "$ref": "#/components/schemas/ImageURLDTO" },
+          "type": { "type": "string", "description": "内容部分的类型。这里是`image_url`。" }
+        },
+        "required": ["image_url", "type"]
+      },
+      "SSEGPTChatBodyDTO": {
+        "type": "object",
+        "properties": {
+          "messages": {
+            "description": "要发送的消息 限制必须是数组",
+            "type": "array",
+            "items": {
+              "anyOf": [
+                { "$ref": "#/components/schemas/ChatCompletionSystemMessageParamDTO" },
+                { "$ref": "#/components/schemas/ChatCompletionUserMessageParamDTO" }
+              ]
+            }
+          },
+          "model": { "type": "string", "description": "要使用的模型的名称 限制必须是字符串", "examples": ["gpt-3.5-turbo", "gpt-4"] }
+        },
+        "required": ["messages", "model"]
+      }
+    }
+  }
+}

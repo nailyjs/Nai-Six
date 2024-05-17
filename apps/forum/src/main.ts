@@ -23,6 +23,7 @@ import { ConfigService } from "@nestjs/config";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { join } from "path";
 import { CommonLogger, SetNailyAppInfo } from "cc.naily.six.shared";
+import { writeFileSync } from "fs";
 
 (async function bootstrap() {
   console.clear();
@@ -57,6 +58,7 @@ import { CommonLogger, SetNailyAppInfo } from "cc.naily.six.shared";
     .setLicense("GPL-3.0", "https://www.gnu.org/licenses/gpl-3.0.html")
     .build();
   const document = SwaggerModule.createDocument(app, config);
+  writeFileSync(join(process.env.PROJECT_ROOT, "resources/docs/forum.json"), JSON.stringify(document));
   SwaggerModule.setup("docs", app, document);
 
   await app.listen(port);
