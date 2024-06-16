@@ -357,6 +357,25 @@
         "responses": { "200": { "description": "" } },
         "tags": ["用户权限"]
       }
+    },
+    "/microsoft": {
+      "post": {
+        "operationId": "MicrosoftController_bindMicrosoft",
+        "summary": "绑定微软账号",
+        "parameters": [],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PostMicrosoftBodyDTO" } } } },
+        "responses": { "201": { "description": "返回的信息data字段是更新后的user大对象哦" } },
+        "tags": ["微软"],
+        "security": [{ "bearer": [] }]
+      },
+      "delete": {
+        "operationId": "MicrosoftController_unbindMicrosoft",
+        "summary": "解绑微软账号",
+        "parameters": [],
+        "responses": { "201": { "description": "返回的信息data字段是更新后的user大对象哦" } },
+        "tags": ["微软"],
+        "security": [{ "bearer": [] }]
+      }
     }
   },
   "info": {
@@ -560,7 +579,7 @@
             "description": "消息 除非请求过程中网络请求失败才会抛出其他错误。其余的情况，请根据`remoteData`的内容参照对应的判断",
             "default": "成功"
           },
-          "timestamp": { "type": "object", "description": "时间戳", "default": "2024-05-17T06:06:48.815Z" },
+          "timestamp": { "type": "object", "description": "时间戳", "default": "2024-06-16T07:55:59.422Z" },
           "data": { "description": "数据", "allOf": [{ "$ref": "#/components/schemas/PostUserPayData201ResDTO" }] }
         },
         "required": ["statusCode", "code", "message", "timestamp", "data"]
@@ -576,6 +595,11 @@
           "orderID": { "type": "string", "description": "订单号" }
         },
         "required": ["payType", "orderID"]
+      },
+      "PostMicrosoftBodyDTO": {
+        "type": "object",
+        "properties": { "info": { "type": "string", "description": "微软账号邮箱" } },
+        "required": ["info"]
       }
     }
   }

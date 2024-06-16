@@ -33,5 +33,6 @@
     "subscribe": "cart",
     "interceptors": "controller"
   },
-  "prisma.fileWatcher": true
+  "prisma.fileWatcher": true,
+  "cSpell.words": ["naily"]
 }

@@ -1,4 +1,4 @@
-//🧩Don't Edit this file.✨Generated in Fri Mar 08 2024 07:49:52 GMT+0800 (中国标准时间)✨
+//🧩Don't Edit this file.✨Generated in Sun Jun 16 2024 15:40:50 GMT+0800 (中国标准时间)✨
 
 generator client {
   provider        = "prisma-client-js"
@@ -381,6 +381,8 @@ model User {
   isDeleted             Boolean?                @default(false)
   /// 用户余额
   balance               Float?
+  /// 用户绑定的微软账号 - 标识符
+  microsoftID           String?
   /// 用户的登录标识符
   identifiers           UserIdentifier[]
   /// 用户的浏览器书签

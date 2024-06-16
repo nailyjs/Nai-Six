@@ -34,6 +34,8 @@ model User {
   isDeleted             Boolean?                @default(false)
   /// 用户余额
   balance               Float?
+  /// 用户绑定的微软账号 - 标识符
+  microsoftID            String?
   /// 用户的登录标识符
   identifiers           UserIdentifier[]
   /// 用户的浏览器书签

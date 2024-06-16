@@ -23,6 +23,7 @@ import { RegisterModule } from "./modules/register/register.module";
 import { UserModule } from "./modules/user/user.module";
 import { RoleModule } from "./modules/role/role.module";
 import { PayModule } from "./modules/pay/pay.module";
+import { MicrosoftModule } from "./modules/microsoft/microsoft.module";
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { PayModule } from "./modules/pay/pay.module";
     UserModule.register(),
     PayModule.register(),
     RoleModule.register(),
+    MicrosoftModule.register(),
   ],
   controllers: [AppController],
   providers: [
