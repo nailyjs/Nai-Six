@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsString } from "class-validator";
 
-export class PostMicrosoftBodyDTO {
+export class PostAndPutMicrosoftBodyDTO {
   /**
    * 微软账号邮箱
    *
