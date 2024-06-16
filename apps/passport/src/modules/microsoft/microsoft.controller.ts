@@ -1,5 +1,5 @@
 import { PrismaService } from "@nailyjs.nest.modules/prisma";
-import { Body, Controller, Delete, Post, UseInterceptors } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Delete, Post, UseInterceptors } from "@nestjs/common";
 import { ApiCreatedResponse, ApiTags } from "@nestjs/swagger";
 import { Auth, JwtLoginPayload, User } from "cc.naily.six.auth";
 import { PostMicrosoftBodyDTO } from "./microsoft.dto";
@@ -21,6 +21,7 @@ export class MicrosoftController {
   @UseInterceptors(ResInterceptor)
   @ApiCreatedResponse({ description: "返回的信息data字段是更新后的user大对象哦" })
   public async bindMicrosoft(@User() user: JwtLoginPayload, @Body() { info }: PostMicrosoftBodyDTO) {
+    if (await this.prismaService.user.findFirst({ where: { microsoftID: info } })) throw new BadRequestException("该微软账号已绑定");
     const userInstance = await this.prismaService.user.update({
       where: { userID: user.userID },
       data: { microsoftID: info },
