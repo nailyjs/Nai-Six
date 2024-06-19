@@ -62,6 +62,19 @@
         "tags": ["登录"]
       }
     },
+    "/login/microsoft": {
+      "post": {
+        "operationId": "LoginController_loginByMicrosoft",
+        "summary": "微软登录",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PostLoginMicrosoftBodyDTO" } } }
+        },
+        "responses": { "201": { "description": "" } },
+        "tags": ["登录"]
+      }
+    },
     "/logout": {
       "post": {
         "operationId": "LogoutController_logout",
@@ -466,6 +479,24 @@
         },
         "required": ["loginType", "key"]
       },
+      "PostLoginMicrosoftBodyDTO": {
+        "type": "object",
+        "properties": {
+          "loginType": {
+            "type": "string",
+            "description": "登录设备类型 `请看schema的enum正确传值`",
+            "enum": ["WatchOS", "HarmonyOS_Wearable", "Android", "Web", "IOS", "Panel"]
+          },
+          "microsoftID": { "type": "string", "description": "微软登录的ID" },
+          "loginClient": {
+            "type": "string",
+            "description": "登录的客户端 用于记录哪个APP/哪种浏览器（比如谷歌、火狐浏览器）等\n\nWeb端登录时，该字段可以为空"
+          },
+          "loginDeviceName": { "type": "string", "description": "登录的设备名\n\nWeb端登录时，该字段可以为空" },
+          "identifier": { "type": "string", "description": "设备唯一标识符\n\nWeb端登录时，该字段可以为空" }
+        },
+        "required": ["loginType", "microsoftID"]
+      },
       "PostRegisterPhoneCodeBodyDTO": {
         "type": "object",
         "properties": {
@@ -594,7 +625,7 @@
             "description": "消息 除非请求过程中网络请求失败才会抛出其他错误。其余的情况，请根据`remoteData`的内容参照对应的判断",
             "default": "成功"
           },
-          "timestamp": { "type": "object", "description": "时间戳", "default": "2024-06-16T13:07:12.404Z" },
+          "timestamp": { "type": "object", "description": "时间戳", "default": "2024-06-19T08:23:55.233Z" },
           "data": { "description": "数据", "allOf": [{ "$ref": "#/components/schemas/PostUserPayData201ResDTO" }] }
         },
         "required": ["statusCode", "code", "message", "timestamp", "data"]

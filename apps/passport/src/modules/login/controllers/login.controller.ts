@@ -9,6 +9,7 @@ import { PrismaService } from "@nailyjs.nest.modules/prisma";
 import { QrCodeService } from "../providers/qrcode.service";
 import { PostLoginQrcodeBodyDTO, PostLoginQrcodeConfirmBodyDTO } from "../dtos/qrcode/qrcode.dto";
 import { PostLoginEmailCodeBodyDTO } from "../dtos/email/email.dto";
+import { PostLoginMicrosoftBodyDTO } from "../dtos/microsoft/microsoft.dto";
 
 @ApiTags("登录")
 @Controller("login")
@@ -98,6 +99,25 @@ export class LoginController {
       loginClient: body.loginClient,
       loginType: body.loginType,
       loginMethod: "QrCode",
+      loginDeviceName: body.loginDeviceName,
+      loginIP: ip,
+    });
+  }
+
+  /**
+   * 微软登录
+   *
+   * @memberof LoginController
+   */
+  @Post("microsoft")
+  @UseInterceptors(ResInterceptor)
+  public async loginByMicrosoft(@Body() body: PostLoginMicrosoftBodyDTO, @Ip() ip: string) {
+    const user = await this.prismaService.user.findFirst({ where: { microsoftID: body.microsoftID } });
+    return this.loginService.loginByMicrosoft(user, {
+      identifier: body.identifier,
+      loginClient: body.loginClient,
+      loginType: body.loginType,
+      loginMethod: "Microsoft",
       loginDeviceName: body.loginDeviceName,
       loginIP: ip,
     });

@@ -21,7 +21,7 @@ export class MicrosoftController {
   @UseInterceptors(ResInterceptor)
   @ApiCreatedResponse({ description: "返回的信息data字段是更新后的user大对象哦" })
   public async bindMicrosoft(@User() user: JwtLoginPayload, @Body() { info }: PostAndPutMicrosoftBodyDTO) {
-    if (await this.prismaService.user.findFirst({ where: { microsoftID: info } })) throw new BadRequestException("该微软账号已绑定");
+    if (await this.prismaService.user.findFirst({ where: { microsoftID: info } })) throw new BadRequestException(1098);
     const userInstance = await this.prismaService.user.update({
       where: { userID: user.userID },
       data: { microsoftID: info },
@@ -41,7 +41,7 @@ export class MicrosoftController {
   @UseInterceptors(ResInterceptor)
   @ApiCreatedResponse({ description: "返回的信息data字段是更新后的user大对象哦" })
   public async updateMicrosoft(@User() user: JwtLoginPayload, @Body() { info }: PostAndPutMicrosoftBodyDTO) {
-    if (await this.prismaService.user.findFirst({ where: { microsoftID: info } })) throw new BadRequestException("该微软账号已绑定");
+    if (await this.prismaService.user.findFirst({ where: { microsoftID: info } })) throw new BadRequestException(1098);
     const userInstance = await this.prismaService.user.update({
       where: { userID: user.userID },
       data: { microsoftID: info },

@@ -78,4 +78,17 @@ export class LoginService {
       access_token,
     };
   }
+
+  public async loginByMicrosoft(user: User, loginPayload: ILoginPayload) {
+    user = await this.updateIp(loginPayload, user);
+    const access_token = this.getJwtToken(user, loginPayload);
+    const identifier = await this.identifierService.renewIdentifier(user, loginPayload);
+    if (identifier === "ERROR") throw new BadRequestException(1039);
+    user.password = undefined;
+    return {
+      user,
+      identifier,
+      access_token,
+    };
+  }
 }

@@ -1,4 +1,4 @@
-//🧩Don't Edit this file.✨Generated in Sun Jun 16 2024 15:40:50 GMT+0800 (中国标准时间)✨
+//🧩Don't Edit this file.✨Generated in Wed Jun 19 2024 16:18:02 GMT+0800 (中国标准时间)✨
 
 generator client {
   provider        = "prisma-client-js"
@@ -447,6 +447,7 @@ enum ILoginMethod {
   PhoneCode
   EmailCode
   UsernamePassword
+  Microsoft
 }
 
 enum IReceiptStatus {
