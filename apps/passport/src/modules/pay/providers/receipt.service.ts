@@ -27,8 +27,8 @@ export class UserReceiptService {
   public async findReceiptByUserID(userID: string, orderCreatedAt: CreatedAtEnum, orderUpdatedAt: UpdatedAtEnum, take: number, skip: number) {
     const data = await this.prismaService.userReceipt.findMany({
       where: { userID },
-      take: parseInt(take.toString()) || 10,
-      skip: parseInt(skip.toString()) || 0,
+      take: parseInt((take || "").toString()) || 10,
+      skip: parseInt((skip || "").toString()) || 0,
       orderBy: ((): Prisma.UserReceiptOrderByWithRelationInput[] => {
         const orderBy: Prisma.UserReceiptOrderByWithRelationInput[] = [];
         if (orderCreatedAt === CreatedAtEnum.Earliest) orderBy.push({ createdAt: "asc" });
