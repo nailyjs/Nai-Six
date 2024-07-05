@@ -34,5 +34,5 @@
     "interceptors": "controller"
   },
   "prisma.fileWatcher": true,
-  "cSpell.words": ["dtos", "naily", "Qrcode"]
+  "cSpell.words": ["datasource", "dtos", "naily", "nailyjs", "Qrcode", "redlock"]
 }

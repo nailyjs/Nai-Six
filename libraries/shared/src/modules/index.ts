@@ -25,3 +25,4 @@ export * from "./tencent-cloud";
 export * from "./throttler";
 export * from "./storekit";
 export * from "./error";
+export * from "./redlock";

@@ -21,6 +21,7 @@ import { APP_GUARD, APP_PIPE } from "@nestjs/core";
 import { BroswerModule } from "./modules/broswer/broswer.module";
 import { AppleModule } from "./modules/apple/apple.module";
 import { ScriptModule } from "./modules/script/script.module";
+import { CommonRedlockModule } from "cc.naily.six.shared";
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { ScriptModule } from "./modules/script/script.module";
     CommonAppStoreModule.forRoot(),
     CommonErrorModule.forRoot(),
     CommonJwtModule.forRoot(),
+    CommonRedlockModule.forRoot(),
     BroswerModule.register(),
     AppleModule.register(),
     ScriptModule.register(),
