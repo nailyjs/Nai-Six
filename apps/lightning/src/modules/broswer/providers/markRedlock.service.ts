@@ -1,9 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { RedlockService } from "@nailyjs.nest.modules/redlock";
 import { CommonLogger } from "cc.naily.six.shared";
+import { LockService } from "../lock.interface";
 
 @Injectable()
-export class BrowserMarkRedlockService {
+export class BrowserMarkRedlockService implements LockService {
   private readonly lockTTL = 30000; // 锁的有效期为30秒
 
   constructor(

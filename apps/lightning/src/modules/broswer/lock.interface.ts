@@ -1,12 +1,14 @@
 export interface LockService {
   /**
-   * 检查是否可以查询
+   * 检查是否可以查询。
+   *
+   * @description `BrowserMarkLockService`为sync；`BrowserMarkRedlockService`为async
    *
    * @param {string} userID
-   * @return {*}  {boolean}
+   * @return {boolean}
    * @memberof LockService
    */
-  canFind(userID: string): boolean;
+  canFind(userID: string): boolean | Promise<boolean>;
   /**
    * 添加`更新中`状态
    *

@@ -18,13 +18,14 @@
 import { CACHE_MANAGER, Cache } from "@nestjs/cache-manager";
 import { Inject, Injectable } from "@nestjs/common";
 import { CommonLogger } from "cc.naily.six.shared";
+import { LockService } from "../lock.interface";
 
 interface IsUpdatedBookMark {
   userID: string;
 }
 
 @Injectable()
-export class BrowserMarkLockService {
+export class BrowserMarkLockService implements LockService {
   constructor(private readonly commonLogger: CommonLogger) {
     commonLogger.setContext(BrowserMarkLockService.name);
   }
