@@ -5,6 +5,7 @@ import { sms } from "tencentcloud-sdk-nodejs";
 import { ClientRepository } from "@nailyjs.nest.modules/tencentcloud";
 import { SendSmsResponse } from "tencentcloud-sdk-nodejs/tencentcloud/services/sms/v20210111/sms_models";
 import { ConfigService } from "@nestjs/config";
+import { CommonLogger } from "cc.naily.six.shared";
 
 @Injectable()
 export class PhoneService extends TransportCodeService {
@@ -14,8 +15,9 @@ export class PhoneService extends TransportCodeService {
     @Inject(sms.v20210111.Client)
     private readonly smsClient: ClientRepository<typeof sms.v20210111.Client>,
     private readonly configService: ConfigService,
+    private readonly commonLogger: CommonLogger,
   ) {
-    super(cacheManager);
+    super(cacheManager, commonLogger);
   }
 
   public getRediskey(verifyData: string): string {

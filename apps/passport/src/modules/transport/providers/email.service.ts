@@ -15,7 +15,7 @@ export class EmailService extends TransportCodeService {
     private readonly i18n: I18nService<I18nTranslations>,
     private readonly commonLogger: CommonLogger,
   ) {
-    super(cacheManager);
+    super(cacheManager, commonLogger);
     commonLogger.setContext(EmailService.name);
   }
 

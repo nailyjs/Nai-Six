@@ -1,11 +1,13 @@
 import { CACHE_MANAGER, Cache } from "@nestjs/cache-manager";
 import { Inject, Injectable } from "@nestjs/common";
+import { CommonLogger } from "cc.naily.six.shared";
 
 @Injectable()
 export abstract class TransportCodeService {
   constructor(
     @Inject(CACHE_MANAGER)
     protected readonly cacheManager: Cache,
+    private readonly loggerService: CommonLogger,
   ) {}
 
   public abstract getRediskey(verifyData: string): string;
@@ -27,6 +29,8 @@ export abstract class TransportCodeService {
   }
 
   protected getCode() {
-    return Math.floor(Math.random() * (999999 - 100000 + 1) + 100000);
+    const code = Math.floor(Math.random() * (999999 - 100000 + 1) + 100000);
+    this.loggerService.log(`监听到验证码已发出：${code}`);
+    return code;
   }
 }

@@ -31,7 +31,7 @@ export class RegisterService {
           data: {
             user: {
               connect: {
-                userID: data.userID,
+                userID: result.userID,
               },
             },
             days: 1,
