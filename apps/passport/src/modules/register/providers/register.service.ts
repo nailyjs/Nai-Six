@@ -19,12 +19,37 @@ export class RegisterService {
   }
 
   private async createUser(data: Prisma.UserCreateInput) {
-    return await this.prismaService.user.create({
+    const result = await this.prismaService.user.create({
       data: {
         ...data,
         saying: "这个人很懒，什么都没留下",
       },
     });
+    if (process.env.NODE_ENV === "production") {
+      this.prismaService.shopSubscribe
+        .create({
+          data: {
+            user: {
+              connect: {
+                userID: data.userID,
+              },
+            },
+            days: 1,
+            package: {
+              connect: {
+                packageID: "66a39ab83983c3ea079eb443",
+              },
+            },
+          },
+        })
+        .then((v) => {
+          console.log("注册添加试用资格成功:" + JSON.stringify(v));
+        })
+        .catch((e) => {
+          console.error("注册添加试用资格失败：" + e);
+        });
+    }
+    return result;
   }
 
   public async registerByPhonePassword(phone: string, username: string, ip: string) {
