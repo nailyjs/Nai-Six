@@ -32,7 +32,7 @@ export class BrowserMarkController {
   public async getMarks(@Query() query: GetBroswerMarkQueryDTO, @User() user: UserEntity) {
     if (!query.take) query.take = 10;
     if (!query.skip) query.skip = 0;
-    const canFind = this.markService.canFind(user.userID);
+    const canFind = await this.markService.canFind(user.userID);
     if (!canFind) {
       return await new Promise((resolve) => {
         const timeout = setTimeout(() => {
