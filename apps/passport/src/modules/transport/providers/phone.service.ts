@@ -14,7 +14,7 @@ export class PhoneService extends TransportCodeService {
     @Inject(CACHE_MANAGER)
     protected readonly cacheManager: Cache,
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    @Inject(sms.v20210111.Client) // @ts-expect-error
+    @Inject(sms.v20210111.Client)
     private readonly smsClient: ClientRepository<typeof sms.v20210111.Client>,
     private readonly configService: ConfigService,
     private readonly commonLogger: CommonLogger,
@@ -53,7 +53,7 @@ export class PhoneService extends TransportCodeService {
       SignName: this.configService.get("global.tencent.cloud.sms.SignName"),
       PhoneNumberSet: [`${phone}`],
       TemplateId: this.configService.get("global.tencent.cloud.sms.TemplateId"),
-      TemplateParamSet: [`${code}`, "5"],
+      TemplateParamSet: [`${code}`],
     });
     if (isSended.SendStatusSet[0].Code === "Ok") {
       await this.cacheManager.set(key, code, 1000 * 60 * 5);

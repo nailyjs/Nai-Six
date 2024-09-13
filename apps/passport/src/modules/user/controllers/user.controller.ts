@@ -1,15 +1,19 @@
 import { Controller, Delete, Get, Query, UseInterceptors } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { User as UserEntity } from "@prisma/client";
-import { Auth, User } from "cc.naily.six.auth";
+import { Auth, Token, User } from "cc.naily.six.auth";
 import { PrismaService } from "@nailyjs.nest.modules/prisma";
 import { ResInterceptor } from "cc.naily.six.shared";
 import { GetUserQueryDTO } from "../dtos/user/user.dto";
+import { JwtService } from "@nestjs/jwt";
 
 @ApiTags("用户")
 @Controller("user")
 export class UserController {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly jwtService: JwtService,
+  ) {}
 
   /**
    * 获取已登录用户信息
@@ -92,5 +96,19 @@ export class UserController {
       where: { userID: user.userID },
       data: { isDeleted: true, phone: null, email: null },
     });
+  }
+
+  /**
+   * 已登陆状态下获取token信息
+   *
+   * @param {string} token
+   * @return
+   * @memberof UserController
+   */
+  @Auth()
+  @Get("token-info")
+  @UseInterceptors(ResInterceptor)
+  getTokenInfo(@Token() token: string) {
+    return this.jwtService.decode(token);
   }
 }
