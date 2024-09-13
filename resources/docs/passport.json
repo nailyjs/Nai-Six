@@ -4,7 +4,7 @@
     "/": {
       "get": {
         "operationId": "AppController_getHello",
-        "summary": "主页",
+        "summary": "主页\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/21\n@return {number}\n@memberof AppController",
         "parameters": [],
         "responses": { "200": { "description": "", "content": { "application/json": { "schema": { "type": "number" } } } } }
       }
@@ -12,7 +12,7 @@
     "/login/phone/code": {
       "post": {
         "operationId": "LoginController_loginByPhoneCode",
-        "summary": "手机号验证码登录",
+        "summary": "手机号验证码登录\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/02",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -25,7 +25,7 @@
     "/login/email/code": {
       "post": {
         "operationId": "LoginController_loginByEmailCode",
-        "summary": "邮箱验证码登录",
+        "summary": "邮箱验证码登录\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -38,7 +38,7 @@
     "/login/qrcode/confirm": {
       "post": {
         "operationId": "LoginController_confirmQrCode",
-        "summary": "二维码登录：确认登录",
+        "summary": "二维码登录：确认登录\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/31",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -52,7 +52,7 @@
     "/login/qrcode/refresh": {
       "post": {
         "operationId": "LoginController_refreshQrCode",
-        "summary": "二维码登录：检查二维码状态并登录",
+        "summary": "二维码登录：检查二维码状态并登录\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/27\n@memberof LoginController",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -65,7 +65,7 @@
     "/login/microsoft": {
       "post": {
         "operationId": "LoginController_loginByMicrosoft",
-        "summary": "微软登录",
+        "summary": "微软登录\n\n@memberof LoginController",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -78,7 +78,7 @@
     "/logout": {
       "post": {
         "operationId": "LogoutController_logout",
-        "summary": "登出",
+        "summary": "登出\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/28",
         "parameters": [],
         "responses": { "201": { "description": "", "content": { "application/json": { "schema": { "type": "number" } } } } },
         "tags": ["登出"],
@@ -88,7 +88,7 @@
     "/register/phone/code": {
       "post": {
         "operationId": "RegisterController_registerByPhonePassword",
-        "summary": "手机号验证码注册",
+        "summary": "手机号验证码注册\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/02",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -101,7 +101,7 @@
     "/register/email/code": {
       "post": {
         "operationId": "RegisterController_registerByEmailPassword",
-        "summary": "邮箱验证码注册",
+        "summary": "邮箱验证码注册\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/10",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -114,7 +114,7 @@
     "/transport/email": {
       "post": {
         "operationId": "TransportController_email",
-        "summary": "发送邮箱验证码",
+        "summary": "发送邮箱验证码\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/02\n@memberof TransportController",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -127,7 +127,7 @@
     "/transport/sms": {
       "post": {
         "operationId": "TransportController_phone",
-        "summary": "发送手机验证码",
+        "summary": "发送手机验证码\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/02",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -140,7 +140,7 @@
     "/transport/qrcode": {
       "get": {
         "operationId": "QrCodeController_getQrCode",
-        "summary": "二维码登录：获取二维码",
+        "summary": "二维码登录：获取二维码\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/27\n@memberof QrCodeController",
         "parameters": [],
         "responses": { "200": { "description": "" } },
         "tags": ["传输"]
@@ -149,7 +149,7 @@
     "/user/logging": {
       "get": {
         "operationId": "UserController_getUser",
-        "summary": "获取已登录用户信息",
+        "summary": "获取已登录用户信息\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/02",
         "parameters": [],
         "responses": { "200": { "description": "" } },
         "tags": ["用户"],
@@ -159,24 +159,36 @@
     "/user": {
       "get": {
         "operationId": "UserController_getUserList",
-        "summary": "获取用户列表",
+        "summary": "获取用户列表\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/05\n@memberof UserController",
         "parameters": [
           {
             "name": "orderRegisterTime",
             "required": false,
             "in": "query",
-            "description": "根据注册时间排序",
+            "description": "根据注册时间排序\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/05\n@type {(\"ASC\" | \"DESC\")}\n@memberof GetUserQueryDTO",
             "schema": { "default": "late", "enum": ["early", "late"], "type": "string" }
           },
-          { "name": "take", "required": false, "in": "query", "description": "获取数量", "schema": { "type": "number" } },
-          { "name": "skip", "required": false, "in": "query", "description": "跳过数量", "schema": { "type": "number" } }
+          {
+            "name": "take",
+            "required": false,
+            "in": "query",
+            "description": "获取数量\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/05\n@type {number}\n@memberof GetUserQueryDTO",
+            "schema": { "type": "number" }
+          },
+          {
+            "name": "skip",
+            "required": false,
+            "in": "query",
+            "description": "跳过数量\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/05\n@type {number}\n@memberof GetUserQueryDTO",
+            "schema": { "type": "number" }
+          }
         ],
         "responses": { "200": { "description": "" } },
         "tags": ["用户"]
       },
       "delete": {
         "operationId": "UserController_deleteUser",
-        "summary": "注销账号",
+        "summary": "注销账号\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/02",
         "parameters": [],
         "responses": { "200": { "description": "" } },
         "tags": ["用户"],
@@ -186,7 +198,7 @@
     "/user/username": {
       "put": {
         "operationId": "UserChangerController_changeUsername",
-        "summary": "修改用户名",
+        "summary": "修改用户名\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/02\n@memberof UserChangerController",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -200,7 +212,7 @@
     "/user/password": {
       "put": {
         "operationId": "UserChangerController_changePassword",
-        "summary": "已登录用户修改密码",
+        "summary": "已登录用户修改密码\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/13\n@memberof UserChangerController",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -217,7 +229,7 @@
     "/user/saying": {
       "put": {
         "operationId": "UserChangerController_changeSaying",
-        "summary": "修改个性签名",
+        "summary": "修改个性签名\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/26",
         "parameters": [],
         "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PutUserSayingBodyDTO" } } } },
         "responses": { "200": { "description": "", "content": { "application/json": { "schema": { "type": "number" } } } } },
@@ -228,7 +240,7 @@
     "/user/email": {
       "put": {
         "operationId": "UserChangerController_changeEmail",
-        "summary": "修改邮箱",
+        "summary": "修改邮箱\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/26",
         "parameters": [],
         "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PutUserEmailBodyDTO" } } } },
         "responses": { "200": { "description": "", "content": { "application/json": { "schema": { "type": "number" } } } } },
@@ -239,7 +251,7 @@
     "/user/phone": {
       "put": {
         "operationId": "UserChangerController_changePhone",
-        "summary": "修改手机",
+        "summary": "修改手机\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/26",
         "parameters": [],
         "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PutUserPhoneBodyDTO" } } } },
         "responses": { "200": { "description": "", "content": { "application/json": { "schema": { "type": "number" } } } } },
@@ -250,15 +262,23 @@
     "/user/data": {
       "get": {
         "operationId": "UserDataController_getUserDataByKey",
-        "summary": "获取用户数据",
-        "parameters": [{ "name": "key", "required": true, "in": "query", "description": "获取用户数据的键", "schema": { "type": "string" } }],
+        "summary": "获取用户数据\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/10\n@memberof UserDataController",
+        "parameters": [
+          {
+            "name": "key",
+            "required": true,
+            "in": "query",
+            "description": "获取用户数据的键\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/10\n@type {string}\n@memberof GetUserDataQueryDTO",
+            "schema": { "type": "string" }
+          }
+        ],
         "responses": { "200": { "description": "" } },
         "tags": ["用户数据"],
         "security": [{ "bearer": [] }]
       },
       "post": {
         "operationId": "UserDataController_setUserDataByKey",
-        "summary": "设置/更新用户数据",
+        "summary": "设置/更新用户数据\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/10",
         "parameters": [],
         "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PostUserDataBodyDTO" } } } },
         "responses": { "201": { "description": "" } },
@@ -267,8 +287,16 @@
       },
       "delete": {
         "operationId": "UserDataController_deleteUserDataByKey",
-        "summary": "删除用户数据",
-        "parameters": [{ "name": "key", "required": true, "in": "query", "description": "获取用户数据的键", "schema": { "type": "string" } }],
+        "summary": "删除用户数据\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/10",
+        "parameters": [
+          {
+            "name": "key",
+            "required": true,
+            "in": "query",
+            "description": "获取用户数据的键\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/10\n@type {string}\n@memberof GetUserDataQueryDTO",
+            "schema": { "type": "string" }
+          }
+        ],
         "responses": { "200": { "description": "" } },
         "tags": ["用户数据"],
         "security": [{ "bearer": [] }]
@@ -277,7 +305,7 @@
     "/user/pay": {
       "post": {
         "operationId": "PayController_pay",
-        "summary": "充值",
+        "summary": "充值\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@memberof PayController",
         "parameters": [],
         "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PostUserPayBodyDTO" } } } },
         "responses": {
@@ -290,7 +318,7 @@
     "/user/pay/xunhupay/notify": {
       "post": {
         "operationId": "PayController_notify",
-        "summary": "虎皮椒：回调接口",
+        "summary": "虎皮椒：回调接口\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11",
         "parameters": [],
         "responses": { "201": { "description": "", "content": { "application/json": { "schema": { "type": "string" } } } } },
         "tags": ["余额"]
@@ -299,7 +327,7 @@
     "/user/pay/xunhupay/query": {
       "post": {
         "operationId": "PayController_query",
-        "summary": "虎皮椒：查询订单",
+        "summary": "虎皮椒：查询订单\n\n@author Zero <gczgroup@qq.com>\n@date 2024/03/13",
         "parameters": [],
         "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PayXunhupayQueryDTO" } } } },
         "responses": { "201": { "description": "" } },
@@ -309,24 +337,36 @@
     "/user/receipt": {
       "get": {
         "operationId": "ReceiptController_getReceipts",
-        "summary": "获取已登录用户的收据列表",
+        "summary": "获取已登录用户的收据列表\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11",
         "parameters": [
           {
             "name": "orderCreatedAt",
             "required": false,
             "in": "query",
-            "description": "根据订单排序时间排序",
+            "description": "根据订单排序时间排序\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@type {UpdatedAtEnum}\n@memberof GetUserReceiptQueryDTO",
             "schema": { "enum": ["latestCreatedAt", "earliestCreatedAt"], "type": "string" }
           },
           {
             "name": "orderUpdatedAt",
             "required": false,
             "in": "query",
-            "description": "根据订单更新时间排序",
+            "description": "根据订单更新时间排序\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@type {UpdatedAtEnum}\n@memberof GetUserReceiptQueryDTO",
             "schema": { "enum": ["latestUpdatedAt", "earliestUpdatedAt"], "type": "string" }
           },
-          { "name": "take", "required": false, "in": "query", "description": "获取数量", "schema": { "type": "number" } },
-          { "name": "skip", "required": false, "in": "query", "description": "跳过数量", "schema": { "type": "number" } }
+          {
+            "name": "take",
+            "required": false,
+            "in": "query",
+            "description": "获取数量\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@type {number}\n@memberof GetUserReceiptQueryDTO",
+            "schema": { "type": "number" }
+          },
+          {
+            "name": "skip",
+            "required": false,
+            "in": "query",
+            "description": "跳过数量\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@type {number}\n@memberof GetUserReceiptQueryDTO",
+            "schema": { "type": "number" }
+          }
         ],
         "responses": { "200": { "description": "" } },
         "tags": ["收据"],
@@ -346,7 +386,7 @@
     "/user/role": {
       "get": {
         "operationId": "RoleController_getRoles",
-        "summary": "获取用户角色",
+        "summary": "获取用户角色\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/10",
         "parameters": [],
         "responses": { "200": { "description": "" } },
         "tags": ["用户角色"],
@@ -356,8 +396,16 @@
     "/user/role/permission": {
       "get": {
         "operationId": "RoleController_getRolePermissions",
-        "summary": "获取角色详情",
-        "parameters": [{ "name": "roleID", "required": true, "in": "query", "description": "角色ID", "schema": { "type": "string" } }],
+        "summary": "获取角色详情\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/10\n@memberof PermissionController",
+        "parameters": [
+          {
+            "name": "roleID",
+            "required": true,
+            "in": "query",
+            "description": "角色ID\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/10\n@type {string}\n@memberof GetUserRolePermissionQueryDTO",
+            "schema": { "type": "string" }
+          }
+        ],
         "responses": { "200": { "description": "" } },
         "tags": ["用户角色"]
       }
@@ -365,7 +413,7 @@
     "/user/permission": {
       "get": {
         "operationId": "PermissionController_getPermissions",
-        "summary": "获取权限列表",
+        "summary": "获取权限列表\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/10\n@memberof PermissionController",
         "parameters": [],
         "responses": { "200": { "description": "" } },
         "tags": ["用户权限"]
@@ -423,17 +471,29 @@
         "properties": {
           "loginType": {
             "type": "string",
-            "description": "登录设备类型 `请看schema的enum正确传值`",
+            "description": "登录设备类型 `请看schema的enum正确传值`\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/24\n@type {LoginType}\n@memberof PostLoginEmailCodeBodyDTO",
             "enum": ["WatchOS", "HarmonyOS_Wearable", "Android", "Web", "IOS", "Panel"]
           },
-          "phone": { "type": "string", "description": "中国大陆手机号" },
-          "code": { "type": "number", "description": "验证码" },
+          "phone": {
+            "type": "string",
+            "description": "中国大陆手机号\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/24\n@type {string}\n@memberof PostLoginEmailCodeBodyDTO"
+          },
+          "code": {
+            "type": "number",
+            "description": "验证码\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/24\n@type {string}\n@memberof PostLoginEmailCodeBodyDTO"
+          },
           "loginClient": {
             "type": "string",
-            "description": "登录的客户端 用于记录哪个APP/哪种浏览器（比如谷歌、火狐浏览器）等\n\nWeb端登录时，该字段可以为空"
+            "description": "登录的客户端 用于记录哪个APP/哪种浏览器（比如谷歌、火狐浏览器）等\n\nWeb端登录时，该字段可以为空\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/24\n@type {string}\n@memberof PostLoginEmailCodeBodyDTO"
           },
-          "loginDeviceName": { "type": "string", "description": "登录的设备名\n\nWeb端登录时，该字段可以为空" },
-          "identifier": { "type": "string", "description": "设备唯一标识符\n\nWeb端登录时，该字段可以为空" }
+          "loginDeviceName": {
+            "type": "string",
+            "description": "登录的设备名\n\nWeb端登录时，该字段可以为空\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/28\n@type {string}\n@memberof PostLoginPhoneCodeBodyDTO"
+          },
+          "identifier": {
+            "type": "string",
+            "description": "设备唯一标识符\n\nWeb端登录时，该字段可以为空\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/24\n@type {string}\n@memberof PostLoginEmailCodeBodyDTO"
+          }
         },
         "required": ["loginType", "phone", "code"]
       },
@@ -442,23 +502,42 @@
         "properties": {
           "loginType": {
             "type": "string",
-            "description": "登录设备类型 `请看schema的enum正确传值`",
+            "description": "登录设备类型 `请看schema的enum正确传值`\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/24\n@type {LoginType}\n@memberof PostLoginEmailCodeBodyDTO",
             "enum": ["WatchOS", "HarmonyOS_Wearable", "Android", "Web", "IOS", "Panel"]
           },
-          "email": { "type": "string", "description": "邮箱" },
-          "code": { "type": "number", "description": "验证码", "minimum": 100000, "maximum": 999999 },
+          "email": {
+            "type": "string",
+            "description": "邮箱\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/24\n@type {string}\n@memberof PostLoginEmailCodeBodyDTO"
+          },
+          "code": {
+            "type": "number",
+            "description": "验证码\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/24\n@type {string}\n@memberof PostLoginEmailCodeBodyDTO",
+            "minimum": 100000,
+            "maximum": 999999
+          },
           "loginClient": {
             "type": "string",
-            "description": "登录的客户端 用于记录哪个APP/哪种浏览器（比如谷歌、火狐浏览器）等\n\nWeb端登录时，该字段可以为空"
+            "description": "登录的客户端 用于记录哪个APP/哪种浏览器（比如谷歌、火狐浏览器）等\n\nWeb端登录时，该字段可以为空\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/24\n@type {string}\n@memberof PostLoginEmailCodeBodyDTO"
           },
-          "loginDeviceName": { "type": "string", "description": "登录的设备名\n\nWeb端登录时，该字段可以为空" },
-          "identifier": { "type": "string", "description": "设备唯一标识符\n\nWeb端登录时，该字段可以为空" }
+          "loginDeviceName": {
+            "type": "string",
+            "description": "登录的设备名\n\nWeb端登录时，该字段可以为空\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/28\n@type {string}\n@memberof PostLoginEmailCodeBodyDTO"
+          },
+          "identifier": {
+            "type": "string",
+            "description": "设备唯一标识符\n\nWeb端登录时，该字段可以为空\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/24\n@type {string}\n@memberof PostLoginEmailCodeBodyDTO"
+          }
         },
         "required": ["loginType", "email", "code"]
       },
       "PostLoginQrcodeConfirmBodyDTO": {
         "type": "object",
-        "properties": { "key": { "type": "string", "description": "二维码key" } },
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "二维码key\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/27\n@type {string}\n@memberof PostLoginQrcodeConfirmBodyDTO"
+          }
+        },
         "required": ["key"]
       },
       "PostLoginQrcodeBodyDTO": {
@@ -466,16 +545,25 @@
         "properties": {
           "loginType": {
             "type": "string",
-            "description": "登录设备类型 `请看schema的enum正确传值`",
+            "description": "登录设备类型 `请看schema的enum正确传值`\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/24\n@type {LoginType}\n@memberof PostLoginQrcodeBodyDTO",
             "enum": ["WatchOS", "HarmonyOS_Wearable", "Android", "Web", "IOS", "Panel"]
           },
-          "key": { "type": "string", "description": "二维码key" },
+          "key": {
+            "type": "string",
+            "description": "二维码key\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/27\n@type {string}\n@memberof PostLoginQrcodeBodyDTO"
+          },
           "loginClient": {
             "type": "string",
-            "description": "登录的客户端 用于记录哪个APP/哪种浏览器（比如谷歌、火狐浏览器）等\n\nWeb端登录时，该字段可以为空"
+            "description": "登录的客户端 用于记录哪个APP/哪种浏览器（比如谷歌、火狐浏览器）等\n\nWeb端登录时，该字段可以为空\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/24\n@type {string}\n@memberof PostLoginQrcodeBodyDTO"
           },
-          "loginDeviceName": { "type": "string", "description": "登录的设备名\n\nWeb端登录时，该字段可以为空" },
-          "identifier": { "type": "string", "description": "设备唯一标识符\n\nWeb端登录时，该字段可以为空" }
+          "loginDeviceName": {
+            "type": "string",
+            "description": "登录的设备名\n\nWeb端登录时，该字段可以为空\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/28\n@type {string}\n@memberof PostLoginQrcodeBodyDTO"
+          },
+          "identifier": {
+            "type": "string",
+            "description": "设备唯一标识符\n\nWeb端登录时，该字段可以为空\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/24\n@type {string}\n@memberof PostLoginQrcodeBodyDTO"
+          }
         },
         "required": ["loginType", "key"]
       },
@@ -484,73 +572,124 @@
         "properties": {
           "loginType": {
             "type": "string",
-            "description": "登录设备类型 `请看schema的enum正确传值`",
+            "description": "登录设备类型 `请看schema的enum正确传值`\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/24\n@type {LoginType}\n@memberof PostLoginEmailCodeBodyDTO",
             "enum": ["WatchOS", "HarmonyOS_Wearable", "Android", "Web", "IOS", "Panel"]
           },
-          "microsoftID": { "type": "string", "description": "微软登录的ID" },
+          "microsoftID": { "type": "string", "description": "微软登录的ID\n\n@type {string}\n@memberof PostLoginMicrosoftBodyDTO" },
           "loginClient": {
             "type": "string",
-            "description": "登录的客户端 用于记录哪个APP/哪种浏览器（比如谷歌、火狐浏览器）等\n\nWeb端登录时，该字段可以为空"
+            "description": "登录的客户端 用于记录哪个APP/哪种浏览器（比如谷歌、火狐浏览器）等\n\nWeb端登录时，该字段可以为空\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/24\n@type {string}\n@memberof PostLoginEmailCodeBodyDTO"
           },
-          "loginDeviceName": { "type": "string", "description": "登录的设备名\n\nWeb端登录时，该字段可以为空" },
-          "identifier": { "type": "string", "description": "设备唯一标识符\n\nWeb端登录时，该字段可以为空" }
+          "loginDeviceName": {
+            "type": "string",
+            "description": "登录的设备名\n\nWeb端登录时，该字段可以为空\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/28\n@type {string}\n@memberof PostLoginEmailCodeBodyDTO"
+          },
+          "identifier": {
+            "type": "string",
+            "description": "设备唯一标识符\n\nWeb端登录时，该字段可以为空\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/24\n@type {string}\n@memberof PostLoginEmailCodeBodyDTO"
+          }
         },
         "required": ["loginType", "microsoftID"]
       },
       "PostRegisterPhoneCodeBodyDTO": {
         "type": "object",
         "properties": {
-          "phone": { "type": "string", "description": "手机号 中国大陆" },
-          "username": { "type": "string", "description": "用户名 可选 为空时自动生成" },
-          "code": { "type": "number", "description": "验证码" }
+          "phone": {
+            "type": "string",
+            "description": "手机号 中国大陆\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/28\n@type {string}\n@memberof PostRegisterPhoneCodeBodyDTO"
+          },
+          "username": {
+            "type": "string",
+            "description": "用户名 可选 为空时自动生成\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/28\n@type {string}\n@memberof PostRegisterPhoneCodeBodyDTO"
+          },
+          "code": {
+            "type": "number",
+            "description": "验证码\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/28\n@type {number}\n@memberof PostRegisterPhoneCodeBodyDTO"
+          }
         },
         "required": ["phone", "code"]
       },
       "PostRegisterEmailCodeBodyDTO": {
         "type": "object",
         "properties": {
-          "email": { "type": "string", "description": "电子邮件地址" },
-          "username": { "type": "string", "description": "用户名 可选 为空时自动生成" },
-          "code": { "type": "number", "description": "验证码" }
+          "email": {
+            "type": "string",
+            "description": "电子邮件地址\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/10\n@type {string}\n@memberof PostRegisterEmailCodeBodyDTO"
+          },
+          "username": {
+            "type": "string",
+            "description": "用户名 可选 为空时自动生成\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/28\n@type {string}\n@memberof PostRegisterEmailCodeBodyDTO"
+          },
+          "code": {
+            "type": "number",
+            "description": "验证码\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/10\n@type {number}\n@memberof PostRegisterEmailCodeBodyDTO"
+          }
         },
         "required": ["email", "code"]
       },
       "PostTransportEmailBodyDTO": {
         "type": "object",
-        "properties": { "email": { "type": "string", "description": "邮箱" } },
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "邮箱\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/02\n@type {string}\n@memberof PostTransportEmailBodyDTO"
+          }
+        },
         "required": ["email"]
       },
       "PostTransportPhoneBodyDTO": {
         "type": "object",
-        "properties": { "phone": { "type": "string", "description": "手机号" } },
+        "properties": {
+          "phone": {
+            "type": "string",
+            "description": "手机号\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/02\n@type {string}\n@memberof PostTransportPhoneBodyDTO"
+          }
+        },
         "required": ["phone"]
       },
       "PutUserUsernameBodyDTO": {
         "type": "object",
-        "properties": { "username": { "type": "string", "description": "新用户名" } },
+        "properties": {
+          "username": {
+            "type": "string",
+            "description": "新用户名\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/02\n@type {string}\n@memberof PutUserUsernameBodyDTO"
+          }
+        },
         "required": ["username"]
       },
       "PutUserPasswordBodyDTO": {
         "type": "object",
         "properties": {
           "verifyType": { "type": "string", "description": "验证类别 `email` 邮箱 `phone` 手机", "enum": ["email", "phone"] },
-          "oldPassword": { "type": "string", "description": "旧密码（如果有旧密码，必填；如果没有，不填）" },
-          "verifyCode": { "type": "number", "description": "验证码" },
-          "newPassword": { "type": "string", "description": "新密码" }
+          "oldPassword": {
+            "type": "string",
+            "description": "旧密码（如果有旧密码，必填；如果没有，不填）\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/13\n@type {string}\n@memberof PutUserPasswordBodyDTO"
+          },
+          "verifyCode": {
+            "type": "number",
+            "description": "验证码\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/13\n@type {string}\n@memberof PutUserPasswordBodyDTO"
+          },
+          "newPassword": {
+            "type": "string",
+            "description": "新密码\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/13\n@type {string}\n@memberof PutUserPasswordBodyDTO"
+          }
         },
         "required": ["verifyType", "verifyCode", "newPassword"]
       },
       "PutUserSayingBodyDTO": {
         "type": "object",
-        "properties": { "saying": { "type": "string", "description": "个性签名" } },
+        "properties": { "saying": { "type": "string", "description": "个性签名\n\n@type {string}\n@memberof PutUserSayingBodyDTO" } },
         "required": ["saying"]
       },
       "PutUserEmailBodyDTO": {
         "type": "object",
         "properties": {
           "verifyType": { "type": "string", "description": "验证类别 `email` 邮箱 `phone` 手机", "enum": ["email", "phone"] },
-          "newEmail": { "type": "string", "description": "新邮箱" },
-          "verifyCode": { "type": "number", "description": "验证码" }
+          "newEmail": { "type": "string", "description": "新邮箱\n\n@type {string}\n@memberof PutUserEmailBodyDTO" },
+          "verifyCode": {
+            "type": "number",
+            "description": "验证码\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/13\n@type {string}\n@memberof PutUserEmailBodyDTO"
+          }
         },
         "required": ["verifyType", "newEmail", "verifyCode"]
       },
@@ -558,16 +697,22 @@
         "type": "object",
         "properties": {
           "verifyType": { "type": "string", "description": "验证类别 `email` 邮箱 `phone` 手机", "enum": ["email", "phone"] },
-          "newPhone": { "type": "string", "description": "新手机号" },
-          "verifyCode": { "type": "number", "description": "验证码" }
+          "newPhone": { "type": "string", "description": "新手机号\n\n@type {string}\n@memberof PutUserPhoneBodyDTO" },
+          "verifyCode": { "type": "number", "description": "验证码\n\n@type {string}\n@memberof PutUserPhoneBodyDTO" }
         },
         "required": ["verifyType", "newPhone", "verifyCode"]
       },
       "PostUserDataBodyDTO": {
         "type": "object",
         "properties": {
-          "key": { "type": "string", "description": "设置用户数据的键" },
-          "value": { "type": "string", "description": "设置用户数据的值" }
+          "key": {
+            "type": "string",
+            "description": "设置用户数据的键\n\n@type {string}\n@memberof PostUserDataBodyDTO\n@author Zero <gczgroup@qq.com>\n@date 2024/02/10"
+          },
+          "value": {
+            "type": "string",
+            "description": "设置用户数据的值\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/10\n@type {string}\n@memberof PostUserDataBodyDTO"
+          }
         },
         "required": ["key", "value"]
       },
@@ -579,10 +724,14 @@
             "description": "支付类型 请看schema enum再取值",
             "enum": ["Xunhupay_Alipay", "Xunhupay_Wechat", "Wechat_Official"]
           },
-          "amount": { "type": "number", "description": "金额 单位元，允许小数点后两位", "minimum": 0.01 },
+          "amount": {
+            "type": "number",
+            "description": "金额 单位元，允许小数点后两位\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@type {number}\n@memberof PostUserPayBodyDTO",
+            "minimum": 0.01
+          },
           "extraOptions": {
             "type": "object",
-            "description": "更多充值选项。比如当支付类型为Wechat_Official时，必须传入`extraOptions.openid`，否则会报错"
+            "description": "更多充值选项。比如当支付类型为Wechat_Official时，必须传入`extraOptions.openid`，否则会报错\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@type {Record<string, any>}\n@memberof PostUserPayBodyDTO"
           }
         },
         "required": ["payType", "amount"]
@@ -592,12 +741,32 @@
         "properties": {
           "receiptStatus": { "type": "string", "description": "收据状态 请看schema枚举", "enum": ["Pending", "Success", "Failed"] },
           "payType": { "type": "string", "description": "支付类型", "enum": ["Xunhupay_Alipay", "Xunhupay_Wechat", "Wechat_Official"] },
-          "userReceiptID": { "type": "string", "description": "收据ID" },
-          "createdAt": { "format": "date-time", "type": "string", "description": "创建时间" },
-          "updatedAt": { "format": "date-time", "type": "string", "description": "更新时间" },
-          "orderID": { "type": "string", "description": "订单ID" },
-          "amount": { "type": "number", "description": "金额" },
-          "userID": { "type": "string", "description": "用户ID" }
+          "userReceiptID": {
+            "type": "string",
+            "description": "收据ID\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@type {string}\n@memberof PostUserPayDataReceipt201ResDTO"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "创建时间\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@type {Date}\n@memberof PostUserPayDataReceipt201ResDTO"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "更新时间\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@type {Date}\n@memberof PostUserPayDataReceipt201ResDTO"
+          },
+          "orderID": {
+            "type": "string",
+            "description": "订单ID\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@type {string}\n@memberof PostUserPayDataReceipt201ResDTO"
+          },
+          "amount": {
+            "type": "number",
+            "description": "金额\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@type {number}\n@memberof PostUserPayDataReceipt201ResDTO"
+          },
+          "userID": {
+            "type": "string",
+            "description": "用户ID\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@type {string}\n@memberof PostUserPayDataReceipt201ResDTO"
+          }
         },
         "required": ["receiptStatus", "payType", "userReceiptID", "createdAt", "updatedAt", "orderID", "amount", "userID"]
       },
@@ -606,10 +775,10 @@
         "properties": {
           "remoteData": {
             "type": "object",
-            "description": "远程数据。如果是迅虎，会返回迅虎的请求信息；如果是微信官方，会返回微信官方的请求信息\n\n请`根据这个对象内的数据`，进行前端的进一步对接\n\n* 迅虎参考文档：[发起付款接口](https://www.xunhupay.com/doc/api/pay.html)\n* 微信官方参考文档：[JSAPI支付](https://pay.weixin.qq.com/docs/merchant/apis/jsapi-payment/direct-jsons/jsapi-prepay.html)"
+            "description": "远程数据。如果是迅虎，会返回迅虎的请求信息；如果是微信官方，会返回微信官方的请求信息\n\n请`根据这个对象内的数据`，进行前端的进一步对接\n\n* 迅虎参考文档：[发起付款接口](https://www.xunhupay.com/doc/api/pay.html)\n* 微信官方参考文档：[JSAPI支付](https://pay.weixin.qq.com/docs/merchant/apis/jsapi-payment/direct-jsons/jsapi-prepay.html)\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@type {Record<string, any>}\n@memberof PostUserPayData201ResDTO"
           },
           "receipt": {
-            "description": "每次请求都会有收据信息，包括收据ID、创建时间、更新时间、订单ID、金额、用户ID、收据状态、支付类型等数据。\n\n以后后端会添加收据检查功能：如果x小时内没有支付成功，将会自动删除掉收据。",
+            "description": "每次请求都会有收据信息，包括收据ID、创建时间、更新时间、订单ID、金额、用户ID、收据状态、支付类型等数据。\n\n以后后端会添加收据检查功能：如果x小时内没有支付成功，将会自动删除掉收据。\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@type {PostUserPayDataReceipt201ResDTO}\n@memberof PostUserPayData201ResDTO",
             "allOf": [{ "$ref": "#/components/schemas/PostUserPayDataReceipt201ResDTO" }]
           }
         },
@@ -618,15 +787,30 @@
       "PostUserPay201ResDTO": {
         "type": "object",
         "properties": {
-          "statusCode": { "type": "object", "description": "HTTP状态码", "default": 200 },
-          "code": { "type": "object", "description": "状态消息 除非请求过程中网络请求失败才会产生其他的状态码。", "default": 1000 },
+          "statusCode": {
+            "type": "object",
+            "description": "HTTP状态码\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@memberof PostUserPay201ResDTO",
+            "default": 200
+          },
+          "code": {
+            "type": "object",
+            "description": "状态消息 除非请求过程中网络请求失败才会产生其他的状态码。\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@memberof PostUserPay201ResDTO",
+            "default": 1000
+          },
           "message": {
             "type": "object",
-            "description": "消息 除非请求过程中网络请求失败才会抛出其他错误。其余的情况，请根据`remoteData`的内容参照对应的判断",
+            "description": "消息 除非请求过程中网络请求失败才会抛出其他错误。其余的情况，请根据`remoteData`的内容参照对应的判断\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@memberof PostUserPay201ResDTO",
             "default": "成功"
           },
-          "timestamp": { "type": "object", "description": "时间戳", "default": "2024-07-26T13:09:09.237Z" },
-          "data": { "description": "数据", "allOf": [{ "$ref": "#/components/schemas/PostUserPayData201ResDTO" }] }
+          "timestamp": {
+            "type": "object",
+            "description": "时间戳\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@memberof PostUserPay201ResDTO",
+            "default": "2024-07-27T12:07:57.048Z"
+          },
+          "data": {
+            "description": "数据\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@type {PostUserPayData201ResDTO}\n@memberof PostUserPay201ResDTO",
+            "allOf": [{ "$ref": "#/components/schemas/PostUserPayData201ResDTO" }]
+          }
         },
         "required": ["statusCode", "code", "message", "timestamp", "data"]
       },
@@ -638,13 +822,13 @@
             "description": "支付类型 请看schema enum再取值",
             "enum": ["Xunhupay_Alipay", "Xunhupay_Wechat", "Wechat_Official"]
           },
-          "orderID": { "type": "string", "description": "订单号" }
+          "orderID": { "type": "string", "description": "订单号\n\n@type {string}\n@memberof PayXunhupayQueryDTO" }
         },
         "required": ["payType", "orderID"]
       },
       "PostAndPutMicrosoftBodyDTO": {
         "type": "object",
-        "properties": { "info": { "type": "string", "description": "微软账号邮箱" } },
+        "properties": { "info": { "type": "string", "description": "微软账号邮箱\n\n@type {string}\n@memberof PostMicrosoftBodyDTO" } },
         "required": ["info"]
       }
     }

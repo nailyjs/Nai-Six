@@ -1,10 +1,12 @@
-import { Body, Controller, Post, UseInterceptors } from "@nestjs/common";
-import { ApiTags } from "@nestjs/swagger";
+import { Body, Controller, Patch, Post, Put, UseInterceptors } from "@nestjs/common";
+import { ApiExcludeEndpoint, ApiTags } from "@nestjs/swagger";
 import { ResInterceptor } from "cc.naily.six.shared";
 import { EmailService } from "../providers/email.service";
 import { PhoneService } from "../providers/phone.service";
 import { PostTransportEmailBodyDTO } from "../dtos/email/email.dto";
 import { PostTransportPhoneBodyDTO } from "../dtos/phone/phone.dto";
+import { BlockingService } from "../classes/blocking.service";
+import { BlockDTO } from "../dtos/block.dto";
 
 @ApiTags("传输")
 @Controller("transport")
@@ -12,6 +14,7 @@ export class TransportController {
   constructor(
     private readonly emailService: EmailService,
     private readonly phoneService: PhoneService,
+    private readonly blockingService: BlockingService,
   ) {}
 
   /**
@@ -41,5 +44,19 @@ export class TransportController {
   @UseInterceptors(ResInterceptor)
   public phone(@Body() body: PostTransportPhoneBodyDTO) {
     return this.phoneService.sendCode(body.phone);
+  }
+
+  @Put("block")
+  @ApiExcludeEndpoint()
+  @UseInterceptors(ResInterceptor)
+  public async block(@Body() body: BlockDTO) {
+    return this.blockingService.block(body.data);
+  }
+
+  @Patch("block")
+  @ApiExcludeEndpoint()
+  @UseInterceptors(ResInterceptor)
+  public async unblock(@Body() body: BlockDTO) {
+    return this.blockingService.unblock(body.data);
   }
 }

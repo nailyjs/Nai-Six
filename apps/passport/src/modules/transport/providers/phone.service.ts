@@ -6,16 +6,19 @@ import { ClientRepository } from "@nailyjs.nest.modules/tencentcloud";
 import { SendSmsResponse } from "tencentcloud-sdk-nodejs/tencentcloud/services/sms/v20210111/sms_models";
 import { ConfigService } from "@nestjs/config";
 import { CommonLogger } from "cc.naily.six.shared";
+import { BlockingService } from "../classes/blocking.service";
 
 @Injectable()
 export class PhoneService extends TransportCodeService {
   constructor(
     @Inject(CACHE_MANAGER)
     protected readonly cacheManager: Cache,
-    @Inject(sms.v20210111.Client)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    @Inject(sms.v20210111.Client) // @ts-expect-error
     private readonly smsClient: ClientRepository<typeof sms.v20210111.Client>,
     private readonly configService: ConfigService,
     private readonly commonLogger: CommonLogger,
+    private readonly blockingService: BlockingService,
   ) {
     super(cacheManager, commonLogger);
   }
@@ -27,6 +30,7 @@ export class PhoneService extends TransportCodeService {
   public async sendCode(phone: string): Promise<any>;
   public async sendCode(phone: string): Promise<SendSmsResponse> {
     const code = this.getCode();
+    if (await this.blockingService.checkBlock(phone)) return 0 as any;
     const key = this.getRediskey(phone);
     if (phone === "15349814714") {
       await this.cacheManager.store.set(key, 114514);

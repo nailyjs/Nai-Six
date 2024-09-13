@@ -5,6 +5,7 @@ import { MailerService } from "@nestjs-modules/mailer";
 import { I18nService } from "nestjs-i18n";
 import { I18nTranslations } from "cc.naily.six.generated";
 import { CommonLogger } from "cc.naily.six.shared";
+import { BlockingService } from "../classes/blocking.service";
 
 @Injectable()
 export class EmailService extends TransportCodeService {
@@ -14,6 +15,7 @@ export class EmailService extends TransportCodeService {
     private readonly mailerService: MailerService,
     private readonly i18n: I18nService<I18nTranslations>,
     private readonly commonLogger: CommonLogger,
+    private readonly blockingService: BlockingService,
   ) {
     super(cacheManager, commonLogger);
     commonLogger.setContext(EmailService.name);
@@ -25,6 +27,7 @@ export class EmailService extends TransportCodeService {
 
   public async sendCode(email: string) {
     const code = await super.sendCode(email);
+    if (await this.blockingService.checkBlock(email)) return 0;
     try {
       await this.mailerService.sendMail({
         to: email,
