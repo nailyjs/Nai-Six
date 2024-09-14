@@ -1,5 +1,5 @@
 import { Controller, Delete, Get, Query, UseInterceptors } from "@nestjs/common";
-import { ApiTags } from "@nestjs/swagger";
+import { ApiHeader, ApiTags } from "@nestjs/swagger";
 import { User as UserEntity } from "@prisma/client";
 import { Auth, Token, User } from "cc.naily.six.auth";
 import { PrismaService } from "@nailyjs.nest.modules/prisma";
@@ -99,16 +99,25 @@ export class UserController {
   }
 
   /**
-   * 已登陆状态下获取token信息
+   * 获取token信息
    *
    * @param {string} token
    * @return
    * @memberof UserController
    */
-  @Auth()
   @Get("token-info")
+  @ApiHeader({ name: "Authorization", description: "Bearer Jwt token" })
   @UseInterceptors(ResInterceptor)
-  getTokenInfo(@Token() token: string) {
-    return this.jwtService.decode(token);
+  async getTokenInfo(@Token() token: string) {
+    const payload = this.jwtService.decode(token);
+    return {
+      payload,
+      willExpireAt: new Date((payload || {}).exp * 1000),
+      isExpired: (payload || {}).exp * 1000 < Date.now(),
+      isVerified: await this.jwtService
+        .verifyAsync(token)
+        .then(() => true)
+        .catch(() => false),
+    };
   }
 }

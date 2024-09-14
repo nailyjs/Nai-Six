@@ -198,11 +198,10 @@
     "/user/token-info": {
       "get": {
         "operationId": "UserController_getTokenInfo",
-        "summary": "已登陆状态下获取token信息",
-        "parameters": [],
-        "responses": { "200": { "description": "", "content": { "application/json": { "schema": { "type": "object" } } } } },
-        "tags": ["用户"],
-        "security": [{ "bearer": [] }]
+        "summary": "获取token信息",
+        "parameters": [{ "name": "Authorization", "in": "header", "description": "Bearer Jwt token", "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "" } },
+        "tags": ["用户"]
       }
     },
     "/user/username": {
@@ -815,7 +814,7 @@
           "timestamp": {
             "type": "object",
             "description": "时间戳\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@memberof PostUserPay201ResDTO",
-            "default": "2024-09-13T14:51:50.674Z"
+            "default": "2024-09-14T12:19:06.821Z"
           },
           "data": {
             "description": "数据\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@type {PostUserPayData201ResDTO}\n@memberof PostUserPay201ResDTO",
