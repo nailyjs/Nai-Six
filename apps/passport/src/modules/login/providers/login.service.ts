@@ -5,6 +5,7 @@ import { CommonIdentifierService, ILoginPayload, JwtLoginPayload } from "cc.nail
 import { PrismaService } from "@nailyjs.nest.modules/prisma";
 import { PhoneService } from "src/modules/transport/providers/phone.service";
 import { EmailService } from "src/modules/transport/providers/email.service";
+import { CommonLogger } from "cc.naily.six.shared";
 
 @Injectable()
 export class LoginService {
@@ -14,7 +15,19 @@ export class LoginService {
     private readonly emailService: EmailService,
     private readonly prismaService: PrismaService,
     private readonly jwtService: JwtService,
-  ) {}
+    private readonly loggerService: CommonLogger,
+  ) {
+    prismaService.$use(async (params, next) => {
+      const before = Date.now();
+      const result = await next(params);
+      const after = Date.now();
+      this.loggerService.debug(
+        `Query ${params.model}.${params.action} took ${after - before}ms is Run In Transaction: ${params.runInTransaction}`,
+        LoginService.name,
+      );
+      return result;
+    });
+  }
 
   private getJwtToken(user: User, loginPayload: ILoginPayload) {
     if (!user) throw new NotFoundException(1007);
