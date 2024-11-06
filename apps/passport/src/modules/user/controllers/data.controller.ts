@@ -52,8 +52,8 @@ export class UserDataController {
       update: { userDataValue: body.value },
     });
 
+    this.schedulerRegistry.deleteTimeout(`user-data-${user.userID}-${body.key}`);
     if (typeof body.selfDestruct === "number" && body.selfDestruct >= 0) {
-      this.schedulerRegistry.deleteTimeout(`user-data-${user.userID}-${body.key}`);
       const timer = setTimeout(() => {
         this.prismaService.userData
           .delete({
