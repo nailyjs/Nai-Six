@@ -48,10 +48,11 @@ export class UserDataController {
     });
 
     if (typeof body.selfDestruct === "number" && body.selfDestruct >= 0) {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         this.prismaService.userData.delete({
           where: { userID: user.userID, userDataKey: body.key },
         });
+        clearTimeout(timer);
       }, body.selfDestruct * 1000);
     }
 
