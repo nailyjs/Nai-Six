@@ -721,7 +721,8 @@
           "value": {
             "type": "string",
             "description": "设置用户数据的值\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/10\n@type {string}\n@memberof PostUserDataBodyDTO"
-          }
+          },
+          "selfDestruct": { "type": "number", "description": "设置用户数据的自毁时间, 单位秒\n\n@type {number}\n@memberof PostUserDataBodyDTO" }
         },
         "required": ["key", "value"]
       },
@@ -814,7 +815,7 @@
           "timestamp": {
             "type": "object",
             "description": "时间戳\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@memberof PostUserPay201ResDTO",
-            "default": "2024-09-28T08:46:04.375Z"
+            "default": "2024-11-06T10:59:25.331Z"
           },
           "data": {
             "description": "数据\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@type {PostUserPayData201ResDTO}\n@memberof PostUserPay201ResDTO",

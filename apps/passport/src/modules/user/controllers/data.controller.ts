@@ -40,12 +40,22 @@ export class UserDataController {
   @Auth()
   @Post()
   @UseInterceptors(ResInterceptor)
-  public setUserDataByKey(@Body() body: PostUserDataBodyDTO, @User() user: JwtLoginPayload) {
-    return this.prismaService.userData.upsert({
+  public async setUserDataByKey(@Body() body: PostUserDataBodyDTO, @User() user: JwtLoginPayload) {
+    const result = await this.prismaService.userData.upsert({
       where: { userID: user.userID, userDataKey: body.key },
       create: { userID: user.userID, userDataKey: body.key, userDataValue: body.value },
       update: { userDataValue: body.value },
     });
+
+    if (typeof body.selfDestruct === "number" && body.selfDestruct >= 0) {
+      setTimeout(() => {
+        this.prismaService.userData.delete({
+          where: { userID: user.userID, userDataKey: body.key },
+        });
+      }, body.selfDestruct * 1000);
+    }
+
+    return result;
   }
 
   /**

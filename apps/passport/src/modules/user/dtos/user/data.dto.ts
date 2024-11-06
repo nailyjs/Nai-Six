@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 
 export class GetUserDataQueryDTO {
   /**
@@ -35,4 +35,13 @@ export class PostUserDataBodyDTO {
    * @memberof PostUserDataBodyDTO
    */
   value: string;
+  /**
+   * 设置用户数据的自毁时间, 单位秒
+   *
+   * @type {number}
+   * @memberof PostUserDataBodyDTO
+   */
+  @IsNumber()
+  @IsOptional()
+  selfDestruct?: number;
 }
