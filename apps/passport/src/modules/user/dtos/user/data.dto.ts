@@ -45,3 +45,11 @@ export class PostUserDataBodyDTO {
   @IsOptional()
   selfDestruct?: number;
 }
+
+export class XXXUserDataBodyDTO {
+  @IsNotEmpty()
+  s: number;
+
+  @IsNotEmpty()
+  developerAccessKey: string;
+}
