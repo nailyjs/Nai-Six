@@ -87,6 +87,7 @@ export class UserDataController {
       where: { userID: user.userID, userDataKey: query.key },
     });
     if (!haveData) throw new BadRequestException(1089);
+    this.schedulerRegistry.deleteTimeout(`user-data-${user.userID}-${query.key}`);
     return this.prismaService.userData.delete({
       where: { userID: user.userID, userDataKey: query.key },
     });
