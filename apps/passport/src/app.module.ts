@@ -24,6 +24,7 @@ import { UserModule } from "./modules/user/user.module";
 import { RoleModule } from "./modules/role/role.module";
 import { PayModule } from "./modules/pay/pay.module";
 import { MicrosoftModule } from "./modules/microsoft/microsoft.module";
+import { ScheduleModule } from "@nestjs/schedule";
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { MicrosoftModule } from "./modules/microsoft/microsoft.module";
     CommonJwtModule.forRoot(),
     CommonErrorModule.forRoot(),
     CommonRoleModule.forRoot(),
+    ScheduleModule.forRoot(),
     LoginModule.register(),
     RegisterModule.register(),
     TransportModule.register(),

@@ -3,12 +3,17 @@ import { BadRequestException, Body, Controller, Delete, Get, Post, Query, UseInt
 import { ApiTags } from "@nestjs/swagger";
 import { GetUserDataQueryDTO, PostUserDataBodyDTO } from "../dtos/user/data.dto";
 import { Auth, JwtLoginPayload, User } from "cc.naily.six.auth";
-import { ResInterceptor } from "cc.naily.six.shared";
+import { CommonLogger, ResInterceptor } from "cc.naily.six.shared";
+import { SchedulerRegistry } from "@nestjs/schedule";
 
 @ApiTags("用户数据")
 @Controller("user/data")
 export class UserDataController {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly schedulerRegistry: SchedulerRegistry,
+    private readonly logger: CommonLogger,
+  ) {}
 
   /**
    * 获取用户数据
@@ -48,12 +53,17 @@ export class UserDataController {
     });
 
     if (typeof body.selfDestruct === "number" && body.selfDestruct >= 0) {
+      this.schedulerRegistry.deleteTimeout(`user-data-${user.userID}-${body.key}`);
       const timer = setTimeout(() => {
-        this.prismaService.userData.delete({
-          where: { userID: user.userID, userDataKey: body.key },
-        });
-        clearTimeout(timer);
+        this.prismaService.userData
+          .delete({
+            where: { userID: user.userID, userDataKey: body.key },
+          })
+          .then(() => this.logger.debug(`用户数据 ${user.userID}-${body.key} 已自动销毁`));
       }, body.selfDestruct * 1000);
+
+      this.logger.debug(`用户数据 ${user.userID}-${body.key} 已设置自动销毁时间为 ${body.selfDestruct} 秒`);
+      this.schedulerRegistry.addTimeout(`user-data-${user.userID}-${body.key}`, timer);
     }
 
     return result;
