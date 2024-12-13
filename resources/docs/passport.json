@@ -204,6 +204,65 @@
         "tags": ["用户"]
       }
     },
+    "/user/developer/all": {
+      "get": {
+        "operationId": "UserDeveloperController_getSingleUserByUsername",
+        "summary": "查询某个用户名/手机号下的所有用户\n\n@date 2024-12-11",
+        "parameters": [
+          { "name": "username", "required": true, "in": "query", "schema": { "type": "string" } },
+          { "name": "phone", "required": true, "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "" } },
+        "tags": ["开发者"]
+      }
+    },
+    "/user/developer/all/subscribed": {
+      "get": {
+        "operationId": "UserDeveloperController_getSubscribed",
+        "summary": "查询某个用户订阅的所有订单\n\n@date 2024-12-11",
+        "parameters": [{ "name": "userID", "required": true, "in": "query", "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "" } },
+        "tags": ["开发者"]
+      }
+    },
+    "/user/developer/subscribe": {
+      "delete": {
+        "operationId": "UserDeveloperController_deleteSubscribe",
+        "summary": "删除某个用户的订阅\n\n@date 2024-12-11",
+        "parameters": [{ "name": "subscribeID", "required": true, "in": "query", "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "" } },
+        "tags": ["开发者"]
+      },
+      "post": {
+        "operationId": "UserDeveloperController_createSubscribe",
+        "summary": "手动创建一个订阅\n\n@date 2024-12-11",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UserDeveloperCreateSubscribeDTO" } } }
+        },
+        "responses": { "201": { "description": "" } },
+        "tags": ["开发者"]
+      }
+    },
+    "/user/developer/user-receipt": {
+      "get": {
+        "operationId": "UserDeveloperController_getUserReceipt",
+        "summary": "获取某个用户的订阅收据\n\n@date 2024-12-11",
+        "parameters": [{ "name": "userID", "required": true, "in": "query", "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "" } },
+        "tags": ["开发者"]
+      }
+    },
+    "/user/developer/user-receipt/single": {
+      "get": {
+        "operationId": "UserDeveloperController_getUserReceiptSingle",
+        "summary": "获取某个用户的单个订阅收据",
+        "parameters": [{ "name": "userReceiptID", "required": true, "in": "query", "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "" } },
+        "tags": ["开发者"]
+      }
+    },
     "/user/username": {
       "put": {
         "operationId": "UserChangerController_changeUsername",
@@ -656,6 +715,11 @@
         },
         "required": ["phone"]
       },
+      "UserDeveloperCreateSubscribeDTO": {
+        "type": "object",
+        "properties": { "userID": { "type": "string" }, "subscribeID": { "type": "string" }, "days": { "type": "number" } },
+        "required": ["userID", "subscribeID", "days"]
+      },
       "PutUserUsernameBodyDTO": {
         "type": "object",
         "properties": {
@@ -815,7 +879,7 @@
           "timestamp": {
             "type": "object",
             "description": "时间戳\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@memberof PostUserPay201ResDTO",
-            "default": "2024-11-06T12:15:10.025Z"
+            "default": "2024-12-13T10:09:51.724Z"
           },
           "data": {
             "description": "数据\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@type {PostUserPayData201ResDTO}\n@memberof PostUserPay201ResDTO",
