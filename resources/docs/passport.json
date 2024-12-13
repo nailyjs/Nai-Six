@@ -209,6 +209,7 @@
         "operationId": "UserDeveloperController_getSingleUserByUsername",
         "summary": "查询某个用户名/手机号下的所有用户\n\n@date 2024-12-11",
         "parameters": [
+          { "name": "x-developer-access-key", "in": "header", "description": "开发者访问密钥", "required": true, "schema": { "type": "string" } },
           { "name": "username", "required": true, "in": "query", "schema": { "type": "string" } },
           { "name": "phone", "required": true, "in": "query", "schema": { "type": "string" } }
         ],
@@ -220,7 +221,10 @@
       "get": {
         "operationId": "UserDeveloperController_getSubscribed",
         "summary": "查询某个用户订阅的所有订单\n\n@date 2024-12-11",
-        "parameters": [{ "name": "userID", "required": true, "in": "query", "schema": { "type": "string" } }],
+        "parameters": [
+          { "name": "x-developer-access-key", "in": "header", "description": "开发者访问密钥", "required": true, "schema": { "type": "string" } },
+          { "name": "userID", "required": true, "in": "query", "schema": { "type": "string" } }
+        ],
         "responses": { "200": { "description": "" } },
         "tags": ["开发者"]
       }
@@ -229,14 +233,19 @@
       "delete": {
         "operationId": "UserDeveloperController_deleteSubscribe",
         "summary": "删除某个用户的订阅\n\n@date 2024-12-11",
-        "parameters": [{ "name": "subscribeID", "required": true, "in": "query", "schema": { "type": "string" } }],
+        "parameters": [
+          { "name": "x-developer-access-key", "in": "header", "description": "开发者访问密钥", "required": true, "schema": { "type": "string" } },
+          { "name": "subscribeID", "required": true, "in": "query", "schema": { "type": "string" } }
+        ],
         "responses": { "200": { "description": "" } },
         "tags": ["开发者"]
       },
       "post": {
         "operationId": "UserDeveloperController_createSubscribe",
         "summary": "手动创建一个订阅\n\n@date 2024-12-11",
-        "parameters": [],
+        "parameters": [
+          { "name": "x-developer-access-key", "in": "header", "description": "开发者访问密钥", "required": true, "schema": { "type": "string" } }
+        ],
         "requestBody": {
           "required": true,
           "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UserDeveloperCreateSubscribeDTO" } } }
@@ -249,7 +258,10 @@
       "get": {
         "operationId": "UserDeveloperController_getUserReceipt",
         "summary": "获取某个用户的订阅收据\n\n@date 2024-12-11",
-        "parameters": [{ "name": "userID", "required": true, "in": "query", "schema": { "type": "string" } }],
+        "parameters": [
+          { "name": "x-developer-access-key", "in": "header", "description": "开发者访问密钥", "required": true, "schema": { "type": "string" } },
+          { "name": "userID", "required": true, "in": "query", "schema": { "type": "string" } }
+        ],
         "responses": { "200": { "description": "" } },
         "tags": ["开发者"]
       }
@@ -258,7 +270,10 @@
       "get": {
         "operationId": "UserDeveloperController_getUserReceiptSingle",
         "summary": "获取某个用户的单个订阅收据",
-        "parameters": [{ "name": "userReceiptID", "required": true, "in": "query", "schema": { "type": "string" } }],
+        "parameters": [
+          { "name": "x-developer-access-key", "in": "header", "description": "开发者访问密钥", "required": true, "schema": { "type": "string" } },
+          { "name": "userReceiptID", "required": true, "in": "query", "schema": { "type": "string" } }
+        ],
         "responses": { "200": { "description": "" } },
         "tags": ["开发者"]
       }
@@ -879,7 +894,7 @@
           "timestamp": {
             "type": "object",
             "description": "时间戳\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@memberof PostUserPay201ResDTO",
-            "default": "2024-12-13T10:09:51.724Z"
+            "default": "2024-12-13T10:23:44.698Z"
           },
           "data": {
             "description": "数据\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@type {PostUserPayData201ResDTO}\n@memberof PostUserPay201ResDTO",

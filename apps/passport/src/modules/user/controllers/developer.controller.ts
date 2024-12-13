@@ -9,9 +9,10 @@ import {
   UserDeveloperReceiptSingleDTO,
 } from "../dtos/user/developer.dto";
 import { ResInterceptor } from "cc.naily.six.shared";
-import { ApiExcludeController, ApiTags } from "@nestjs/swagger";
+import { ApiTags } from "@nestjs/swagger";
+import { OnlyDeveloper } from "src/guards/developer.guard";
 
-@ApiExcludeController(false)
+@OnlyDeveloper()
 @ApiTags("开发者")
 @Controller("user/developer")
 export class UserDeveloperController {
