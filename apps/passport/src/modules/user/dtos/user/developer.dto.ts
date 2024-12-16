@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { IsNotEmpty, IsString } from "class-validator";
 
 export class UserDeveloperAllDTO {
   @IsString()
@@ -25,10 +25,7 @@ export class UserDeveloperCreateSubscribeDTO {
   userID: string;
 
   @IsString()
-  subscribeID: string;
-
-  @IsNumber()
-  days: number;
+  packageID: string;
 }
 
 export class UserDeveloperReceiptDTO {
@@ -38,5 +35,5 @@ export class UserDeveloperReceiptDTO {
 
 export class UserDeveloperReceiptSingleDTO {
   @IsString()
-  userReceiptID: string;
+  orderID: string;
 }

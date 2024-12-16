@@ -1,5 +1,5 @@
 import { PrismaService } from "@nailyjs.nest.modules/prisma";
-import { Body, Controller, Delete, Get, Post, Query, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Delete, Get, NotFoundException, Post, Query, UseInterceptors } from "@nestjs/common";
 import {
   UserDeveloperAllDTO,
   UserDeveloperAllSubscribedDTO,
@@ -86,11 +86,17 @@ export class UserDeveloperController {
   @Post("subscribe")
   @UseInterceptors(ResInterceptor)
   public async createSubscribe(@Body() body: UserDeveloperCreateSubscribeDTO) {
+    const shopPackage = await this.prismaService.shopSubscribePackage.findUnique({
+      where: {
+        packageID: body.packageID,
+      },
+    });
+    if (!shopPackage) throw new NotFoundException("没有找到套餐");
     return this.prismaService.shopSubscribe.create({
       data: {
         userID: body.userID,
-        days: body.days,
-        packageID: body.subscribeID,
+        days: shopPackage.days,
+        packageID: body.packageID,
       },
     });
   }
@@ -113,7 +119,7 @@ export class UserDeveloperController {
   }
 
   /**
-   * 获取某个用户的单个订阅收据
+   * 通过orderID获取某个用户的单个订阅收据
    *
    * @param {UserDeveloperReceiptSingleDTO} query
    * @memberof UserDeveloperController
@@ -121,9 +127,9 @@ export class UserDeveloperController {
   @Get("user-receipt/single")
   @UseInterceptors(ResInterceptor)
   public async getUserReceiptSingle(@Query() query: UserDeveloperReceiptSingleDTO) {
-    return this.prismaService.userReceipt.findUnique({
+    return this.prismaService.userReceipt.findMany({
       where: {
-        userReceiptID: query.userReceiptID,
+        orderID: query.orderID,
       },
     });
   }
