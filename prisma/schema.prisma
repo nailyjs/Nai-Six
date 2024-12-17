@@ -1,4 +1,4 @@
-//🧩Don't Edit this file.✨Generated in Tue Dec 17 2024 23:40:53 GMT+0800 (中国标准时间)✨
+//🧩Don't Edit this file.✨Generated in Tue Dec 17 2024 23:43:49 GMT+0800 (中国标准时间)✨
 
 generator client {
   provider        = "prisma-client-js"
@@ -456,4 +456,5 @@ enum IReceiptStatus {
   Pending
   Success
   Failed
+  Refunded
 }

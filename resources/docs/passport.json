@@ -828,7 +828,7 @@
       "PostUserPayDataReceipt201ResDTO": {
         "type": "object",
         "properties": {
-          "receiptStatus": { "type": "string", "description": "收据状态 请看schema枚举", "enum": ["Pending", "Success", "Failed"] },
+          "receiptStatus": { "type": "string", "description": "收据状态 请看schema枚举", "enum": ["Pending", "Success", "Failed", "Refunded"] },
           "payType": { "type": "string", "description": "支付类型", "enum": ["Xunhupay_Alipay", "Xunhupay_Wechat", "Wechat_Official"] },
           "userReceiptID": {
             "type": "string",
@@ -894,7 +894,7 @@
           "timestamp": {
             "type": "object",
             "description": "时间戳\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@memberof PostUserPay201ResDTO",
-            "default": "2024-12-16T11:48:39.946Z"
+            "default": "2024-12-17T15:44:16.742Z"
           },
           "data": {
             "description": "数据\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@type {PostUserPayData201ResDTO}\n@memberof PostUserPay201ResDTO",

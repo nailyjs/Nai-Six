@@ -21,4 +21,5 @@ enum IReceiptStatus {
   Pending
   Success
   Failed
+  Refunded
 }
