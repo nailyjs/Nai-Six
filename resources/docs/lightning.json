@@ -4,7 +4,7 @@
     "/": {
       "get": {
         "operationId": "AppController_getHello",
-        "summary": "主页",
+        "summary": "主页\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/21\n@return {number}\n@memberof AppController",
         "parameters": [],
         "responses": { "200": { "description": "", "content": { "application/json": { "schema": { "type": "number" } } } } }
       }
@@ -12,10 +12,22 @@
     "/broswer/mark": {
       "get": {
         "operationId": "BrowserMarkController_getMarks",
-        "summary": "获取书签列表",
+        "summary": "获取书签列表\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/02\n@memberof BrowserMarkController",
         "parameters": [
-          { "name": "take", "required": false, "in": "query", "description": "获取条数", "schema": { "type": "number" } },
-          { "name": "skip", "required": false, "in": "query", "description": "跳过条数", "schema": { "type": "number" } }
+          {
+            "name": "take",
+            "required": false,
+            "in": "query",
+            "description": "获取条数\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/02\n@type {number}\n@memberof GetBroswerMarkQueryDTO",
+            "schema": { "type": "number" }
+          },
+          {
+            "name": "skip",
+            "required": false,
+            "in": "query",
+            "description": "跳过条数\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/02\n@type {number}\n@memberof GetBroswerMarkQueryDTO",
+            "schema": { "type": "number" }
+          }
         ],
         "responses": { "200": { "description": "", "content": { "application/json": { "schema": { "type": "object" } } } } },
         "tags": ["浏览器书签"],
@@ -25,11 +37,29 @@
     "/broswer/mark/v2": {
       "get": {
         "operationId": "BrowserMarkController_getMarksV2",
-        "summary": "获取书签列表 V2",
+        "summary": "获取书签列表 V2\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/21",
         "parameters": [
-          { "name": "take", "required": false, "in": "query", "description": "获取条数", "schema": { "type": "number" } },
-          { "name": "skip", "required": false, "in": "query", "description": "跳过条数", "schema": { "type": "number" } },
-          { "name": "version", "required": true, "in": "query", "description": "版本号", "schema": { "type": "number" } }
+          {
+            "name": "take",
+            "required": false,
+            "in": "query",
+            "description": "获取条数\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/02\n@type {number}\n@memberof GetBroswerMarkQueryDTO",
+            "schema": { "type": "number" }
+          },
+          {
+            "name": "skip",
+            "required": false,
+            "in": "query",
+            "description": "跳过条数\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/02\n@type {number}\n@memberof GetBroswerMarkQueryDTO",
+            "schema": { "type": "number" }
+          },
+          {
+            "name": "version",
+            "required": true,
+            "in": "query",
+            "description": "版本号\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/15\n@type {number}\n@memberof GetBroswerMarkV2QueryDTO",
+            "schema": { "type": "number" }
+          }
         ],
         "responses": { "200": { "description": "", "content": { "application/json": { "schema": { "type": "object" } } } } },
         "tags": ["浏览器书签"],
@@ -39,7 +69,7 @@
     "/broswer/mark/all": {
       "post": {
         "operationId": "BrowserMarkController_createMark",
-        "summary": "创建书签",
+        "summary": "创建书签\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/21",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -53,7 +83,7 @@
     "/broswer/mark/all/v2": {
       "post": {
         "operationId": "BrowserMarkController_createMarkV2",
-        "summary": "创建书签 V2",
+        "summary": "创建书签 V2\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/21",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -67,7 +97,7 @@
     "/broswer/track": {
       "get": {
         "operationId": "BroswerTrackController_getList",
-        "summary": "获取浏览历史记录",
+        "summary": "获取浏览历史记录\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/02",
         "parameters": [
           {
             "name": "orderCreatedAt",
@@ -76,8 +106,20 @@
             "description": "创建时间排序",
             "schema": { "default": "desc", "enum": ["asc", "desc"], "type": "string" }
           },
-          { "name": "take", "required": false, "in": "query", "description": "每页数量", "schema": { "default": 10, "type": "number" } },
-          { "name": "skip", "required": false, "in": "query", "description": "跳过数量", "schema": { "default": 0, "type": "number" } }
+          {
+            "name": "take",
+            "required": false,
+            "in": "query",
+            "description": "每页数量\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/28\n@type {number}\n@memberof GetBrowserTrackListQueryDTO",
+            "schema": { "default": 10, "type": "number" }
+          },
+          {
+            "name": "skip",
+            "required": false,
+            "in": "query",
+            "description": "跳过数量\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/28\n@type {number}\n@memberof GetBrowserTrackListQueryDTO",
+            "schema": { "default": 0, "type": "number" }
+          }
         ],
         "responses": { "200": { "description": "", "content": { "application/json": { "schema": { "type": "object" } } } } },
         "tags": ["浏览历史记录"],
@@ -85,7 +127,7 @@
       },
       "post": {
         "operationId": "BroswerTrackController_create",
-        "summary": "创建浏览历史记录",
+        "summary": "创建浏览历史记录\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/02",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -97,7 +139,7 @@
       },
       "delete": {
         "operationId": "BroswerTrackController_delete",
-        "summary": "删除浏览历史记录",
+        "summary": "删除浏览历史记录\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/02",
         "parameters": [{ "name": "browserTrackID", "required": true, "in": "query", "schema": { "type": "string" } }],
         "responses": { "200": { "description": "" } },
         "tags": ["浏览历史记录"],
@@ -107,7 +149,7 @@
     "/broswer/track/all": {
       "delete": {
         "operationId": "BroswerTrackController_deleteAll",
-        "summary": "删除所有浏览历史记录",
+        "summary": "删除所有浏览历史记录\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/02",
         "parameters": [],
         "responses": { "200": { "description": "", "content": { "application/json": { "schema": { "type": "object" } } } } },
         "tags": ["浏览历史记录"],
@@ -117,7 +159,7 @@
     "/subscribe/apple/user": {
       "get": {
         "operationId": "AppleController_getUserStatus",
-        "summary": "获取苹果订阅状态",
+        "summary": "获取苹果订阅状态\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/02",
         "parameters": [],
         "responses": { "200": { "description": "", "content": { "application/json": { "schema": { "type": "object" } } } } },
         "tags": ["苹果订阅"],
@@ -127,7 +169,7 @@
     "/subscribe/apple/check": {
       "post": {
         "operationId": "AppleController_checkPay",
-        "summary": "检查苹果订阅状态",
+        "summary": "检查苹果订阅状态\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/02",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -140,9 +182,15 @@
     "/subscribe/apple/user/link": {
       "post": {
         "operationId": "AppleController_linkTransactionID",
-        "summary": "链接TransactionID到苹果订阅",
+        "summary": "链接TransactionID到苹果订阅\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/02",
         "parameters": [
-          { "name": "transactionId", "required": true, "in": "query", "description": "苹果transactionId", "schema": { "type": "string" } }
+          {
+            "name": "transactionId",
+            "required": true,
+            "in": "query",
+            "description": "苹果transactionId\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/25\n@type {string}\n@memberof GetSubscribeAppleUserStatusDTO",
+            "schema": { "type": "string" }
+          }
         ],
         "responses": { "201": { "description": "", "content": { "application/json": { "schema": { "type": "object" } } } } },
         "tags": ["苹果订阅"],
@@ -152,17 +200,29 @@
     "/broswer/plugin/user": {
       "get": {
         "operationId": "UserScriptController_getList",
-        "summary": "用户：获取已添加的插件列表",
+        "summary": "用户：获取已添加的插件列表\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/07\n@memberof ScriptController",
         "parameters": [
           {
             "name": "orderAddTime",
             "required": false,
             "in": "query",
-            "description": "排序方式",
+            "description": "排序方式\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/07\n@type {(\"latest\" | \"earliest\")}\n@memberof GetBroswerPluginUserQueryDTO",
             "schema": { "default": "latest", "enum": ["latest", "earliest"], "type": "string" }
           },
-          { "name": "take", "required": false, "in": "query", "description": "获取数量", "schema": { "default": 10, "type": "number" } },
-          { "name": "skip", "required": false, "in": "query", "description": "跳过数量", "schema": { "default": 0, "type": "number" } }
+          {
+            "name": "take",
+            "required": false,
+            "in": "query",
+            "description": "获取数量\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/07\n@type {number}\n@memberof GetBroswerPluginUserQueryDTO",
+            "schema": { "default": 10, "type": "number" }
+          },
+          {
+            "name": "skip",
+            "required": false,
+            "in": "query",
+            "description": "跳过数量\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/07\n@type {number}\n@memberof GetBroswerPluginUserQueryDTO",
+            "schema": { "default": 0, "type": "number" }
+          }
         ],
         "responses": { "200": { "description": "" } },
         "tags": ["插件 用户"],
@@ -170,7 +230,7 @@
       },
       "delete": {
         "operationId": "UserScriptController_delete",
-        "summary": "用户：删除插件",
+        "summary": "用户：删除插件\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/08",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -184,7 +244,7 @@
     "/broswer/plugin/user/upload": {
       "post": {
         "operationId": "UserScriptController_upload",
-        "summary": "用户：上传插件",
+        "summary": "用户：上传插件\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/07\n@memberof ScriptController",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -203,7 +263,7 @@
     "/broswer/plugin/user/check": {
       "post": {
         "operationId": "UserScriptController_check",
-        "summary": "用户：获取插件信息 执行健康检查",
+        "summary": "用户：获取插件信息 执行健康检查\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/07\n@memberof ScriptController",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -221,20 +281,32 @@
     "/broswer/plugin/store": {
       "get": {
         "operationId": "StoreScriptController_getList",
-        "summary": "获取商店插件列表",
+        "summary": "获取商店插件列表\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/08",
         "parameters": [
           {
             "name": "order",
             "required": false,
             "in": "query",
-            "description": "排序方式",
+            "description": "排序方式\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/08\n@type {ViewEnum}\n@memberof GetBroswerScriptStoreQueryDTO\n@default ViewEnum.Least",
             "schema": {
               "enum": ["mostView", "leastView", "latestUpdatedAt", "earliestUpdatedAt", "latestCreatedAt", "earliestCreatedAt"],
               "type": "string"
             }
           },
-          { "name": "take", "required": false, "in": "query", "description": "分页大小", "schema": { "type": "number" } },
-          { "name": "skip", "required": false, "in": "query", "description": "跳过数量", "schema": { "type": "number" } }
+          {
+            "name": "take",
+            "required": false,
+            "in": "query",
+            "description": "分页大小\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/08\n@type {number}\n@memberof GetBroswerScriptStoreQueryDTO",
+            "schema": { "type": "number" }
+          },
+          {
+            "name": "skip",
+            "required": false,
+            "in": "query",
+            "description": "跳过数量\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/08\n@type {number}\n@memberof GetBroswerScriptStoreQueryDTO",
+            "schema": { "type": "number" }
+          }
         ],
         "responses": { "200": { "description": "" } },
         "tags": ["插件 商店"]
@@ -254,7 +326,7 @@
       },
       "delete": {
         "operationId": "StoreScriptController_deleteScript",
-        "summary": "删除插件",
+        "summary": "删除插件\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/08",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -281,17 +353,38 @@
       "PostBrowserMarkBodyListDTO": {
         "type": "object",
         "properties": {
-          "title": { "type": "string", "description": "标题" },
-          "icon": { "type": "string", "description": "图标" },
-          "color": { "type": "string", "description": "颜色" },
-          "link": { "type": "string", "description": "链接" },
-          "index": { "type": "number", "description": "索引" }
+          "title": {
+            "type": "string",
+            "description": "标题\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/28\n@type {string}\n@memberof PostBrowserMarkBodyDTO"
+          },
+          "icon": {
+            "type": "string",
+            "description": "图标\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/28\n@type {string}\n@memberof PostBrowserMarkBodyDTO"
+          },
+          "color": {
+            "type": "string",
+            "description": "颜色\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/28\n@type {string}\n@memberof PostBrowserMarkBodyDTO"
+          },
+          "link": {
+            "type": "string",
+            "description": "链接\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/28\n@type {string}\n@memberof PostBrowserMarkBodyDTO"
+          },
+          "index": {
+            "type": "number",
+            "description": "索引\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/28\n@type {number}\n@memberof PostBrowserMarkBodyDTO"
+          }
         },
         "required": ["title", "icon", "color", "link", "index"]
       },
       "PostBrowserMarkBodyDTO": {
         "type": "object",
-        "properties": { "list": { "description": "列表", "type": "array", "items": { "$ref": "#/components/schemas/PostBrowserMarkBodyListDTO" } } },
+        "properties": {
+          "list": {
+            "description": "列表\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/29\n@type {PostBrowserMarkBodyListDTO[]}\n@memberof PostBrowserMarkBodyDTO",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/PostBrowserMarkBodyListDTO" }
+          }
+        },
         "required": ["list"]
       },
       "PostBrowserTrackBodyDTO": {
@@ -306,16 +399,35 @@
       "GetSubscribeAppleCheckBodyDTO": {
         "type": "object",
         "properties": {
-          "isSandbox": { "type": "string", "description": "是否是沙盒环境 默认false", "default": "false" },
-          "bundleId": { "type": "string", "description": "苹果应用的bundleId" },
-          "transactionId": { "type": "string", "description": "苹果应用的transactionId" },
-          "p8Key": { "type": "string", "description": "默认为空则使用默认key 传入则使用传入的key" }
+          "isSandbox": {
+            "type": "string",
+            "description": "是否是沙盒环境 默认false\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/31\n@type {string}\n@memberof GetSubscribeAppleCheckBodyDTO",
+            "default": "false"
+          },
+          "bundleId": {
+            "type": "string",
+            "description": "苹果应用的bundleId\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/28\n@type {string}\n@memberof GetSubscribeAppleCheckBodyDTO"
+          },
+          "transactionId": {
+            "type": "string",
+            "description": "苹果应用的transactionId\n\n@author Zero <gczgroup@qq.com>\n@date 2024/01/28\n@type {string}\n@memberof GetSubscribeAppleCheckBodyDTO"
+          },
+          "p8Key": {
+            "type": "string",
+            "description": "默认为空则使用默认key 传入则使用传入的key\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/22\n@type {string}\n@memberof GetSubscribeAppleCheckBodyDTO"
+          }
         },
         "required": ["bundleId", "transactionId"]
       },
       "PostBroswerPluginUserCheckBodyDTO": {
         "type": "object",
-        "properties": { "content": { "type": "string", "description": "内容", "format": "binary" } },
+        "properties": {
+          "content": {
+            "type": "string",
+            "description": "内容\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/07\n@type {string}\n@memberof PostBroswerPluginUserCheckBodyDTO",
+            "format": "binary"
+          }
+        },
         "required": ["content"]
       },
       "PostBroswerPluginUserCheckDTOResDTO": {
@@ -347,18 +459,32 @@
       "PostBroswerPluginUserCheckHealthDTOBodyDTO": {
         "type": "object",
         "properties": {
-          "type": { "type": "string", "description": "信息类型", "enum": ["error", "warning"] },
-          "message": { "type": "string", "description": "信息", "enum": ["NO_GM_registerMenuCommand"] }
+          "type": {
+            "type": "string",
+            "description": "信息类型\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/08\n@type {(\"error\" | \"warning\")}\n@enum {HealthTypeEnum}\n@memberof PostBroswerPluginUserCheckHealthDTOBodyDTO",
+            "enum": ["error", "warning"]
+          },
+          "message": {
+            "type": "string",
+            "description": "信息\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/08\n@type {HealthEnum}\n@memberof PostBroswerPluginUserCheckHealthDTOBodyDTO",
+            "enum": ["NO_GM_registerMenuCommand"]
+          }
         },
         "required": ["type", "message"]
       },
       "PostBroswerPluginUserCheckResDTO": {
         "type": "object",
         "properties": {
-          "content": { "type": "string", "description": "内容 压缩后的" },
-          "info": { "description": "脚本信息", "allOf": [{ "$ref": "#/components/schemas/PostBroswerPluginUserCheckDTOResDTO" }] },
+          "content": {
+            "type": "string",
+            "description": "内容 压缩后的\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/07\n@type {string}\n@memberof PostBroswerPluginUserCheckResDTO"
+          },
+          "info": {
+            "description": "脚本信息\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/07\n@type {PostBroswerPluginUserCheckDTOResDTO}\n@memberof PostBroswerPluginUserCheckResDTO",
+            "allOf": [{ "$ref": "#/components/schemas/PostBroswerPluginUserCheckDTOResDTO" }]
+          },
           "health": {
-            "description": "健康检查",
+            "description": "健康检查\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/08\n@type {PostBroswerPluginUserCheckHealthDTOBodyDTO[]}\n@memberof PostBroswerPluginUserCheckResDTO",
             "type": "array",
             "items": { "$ref": "#/components/schemas/PostBroswerPluginUserCheckHealthDTOBodyDTO" }
           }
@@ -367,25 +493,47 @@
       },
       "PostBroswerPluginUserCheckRawInfoResDTO": {
         "type": "object",
-        "properties": { "info": { "description": "脚本信息", "allOf": [{ "$ref": "#/components/schemas/PostBroswerPluginUserCheckDTOResDTO" }] } },
+        "properties": {
+          "info": {
+            "description": "脚本信息\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/07\n@type {PostBroswerPluginUserCheckDTOResDTO}\n@memberof PostBroswerPluginUserCheckResDTO",
+            "allOf": [{ "$ref": "#/components/schemas/PostBroswerPluginUserCheckDTOResDTO" }]
+          }
+        },
         "required": ["info"]
       },
       "DeleteBroswerPluginUserBodyDTO": {
         "type": "object",
-        "properties": { "browserScriptID": { "type": "string", "description": "插件ID" } },
+        "properties": {
+          "browserScriptID": {
+            "type": "string",
+            "description": "插件ID\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/08\n@type {string}\n@memberof DeleteBroswerPluginUserBodyDTO"
+          }
+        },
         "required": ["browserScriptID"]
       },
       "PostBroswerPluginStoreBodyDTO": {
         "type": "object",
         "properties": {
-          "content": { "type": "string", "description": "内容", "format": "binary" },
-          "browserScriptStoreID": { "type": "string", "description": "浏览器插件商店的存储ID 用于更新插件" }
+          "content": {
+            "type": "string",
+            "description": "内容\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/07\n@type {string}\n@memberof PostBroswerPluginStoreBodyDTO",
+            "format": "binary"
+          },
+          "browserScriptStoreID": {
+            "type": "string",
+            "description": "浏览器插件商店的存储ID 用于更新插件\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/08\n@type {string}\n@memberof PostBroswerPluginStoreBodyDTO"
+          }
         },
         "required": ["content"]
       },
       "DeleteBroswerPluginStoreBodyDTO": {
         "type": "object",
-        "properties": { "browserScriptStoreID": { "type": "string", "description": "浏览器插件商店的存储ID" } },
+        "properties": {
+          "browserScriptStoreID": {
+            "type": "string",
+            "description": "浏览器插件商店的存储ID\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/08\n@type {string}\n@memberof DeleteBroswerPluginStoreBodyDTO"
+          }
+        },
         "required": ["browserScriptStoreID"]
       }
     }

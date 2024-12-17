@@ -97,6 +97,7 @@ export class UserDeveloperController {
         userID: body.userID,
         days: shopPackage.days,
         packageID: body.packageID,
+        isManualCreate: true,
       },
     });
   }

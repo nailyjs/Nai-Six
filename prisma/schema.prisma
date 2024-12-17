@@ -1,4 +1,4 @@
-//🧩Don't Edit this file.✨Generated in Wed Jun 19 2024 16:18:02 GMT+0800 (中国标准时间)✨
+//🧩Don't Edit this file.✨Generated in Mon Dec 16 2024 18:41:14 GMT+0800 (中国标准时间)✨
 
 generator client {
   provider        = "prisma-client-js"
@@ -263,21 +263,23 @@ model ShopSubscribePackage {
 
 model ShopSubscribe {
   /// 评论ID
-  subscribeID String               @id @default(auto()) @map("_id") @db.ObjectId
+  subscribeID    String               @id @default(auto()) @map("_id") @db.ObjectId
   /// 创建时间
-  createdAt   DateTime             @default(now())
+  createdAt      DateTime             @default(now())
   /// 更新时间
-  updatedAt   DateTime             @updatedAt
+  updatedAt      DateTime             @updatedAt
   /// 用户
-  user        User                 @relation(fields: [userID], references: [userID])
+  user           User                 @relation(fields: [userID], references: [userID])
   /// 用户ID
-  userID      String               @db.ObjectId
+  userID         String               @db.ObjectId
   /// 到期天数
-  days        Int
+  days           Int
   /// 套餐
-  package     ShopSubscribePackage @relation(fields: [packageID], references: [packageID])
+  package        ShopSubscribePackage @relation(fields: [packageID], references: [packageID])
   /// 套餐ID
-  packageID   String               @db.ObjectId
+  packageID      String               @db.ObjectId
+  /// 是否手动创建的订阅
+  isManualCreate Boolean              @default(false)
 }
 
 model UserData {

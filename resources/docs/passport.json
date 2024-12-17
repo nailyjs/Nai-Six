@@ -269,10 +269,10 @@
     "/user/developer/user-receipt/single": {
       "get": {
         "operationId": "UserDeveloperController_getUserReceiptSingle",
-        "summary": "获取某个用户的单个订阅收据",
+        "summary": "通过orderID获取某个用户的单个订阅收据",
         "parameters": [
           { "name": "x-developer-access-key", "in": "header", "description": "开发者访问密钥", "required": true, "schema": { "type": "string" } },
-          { "name": "userReceiptID", "required": true, "in": "query", "schema": { "type": "string" } }
+          { "name": "orderID", "required": true, "in": "query", "schema": { "type": "string" } }
         ],
         "responses": { "200": { "description": "" } },
         "tags": ["开发者"]
@@ -732,8 +732,8 @@
       },
       "UserDeveloperCreateSubscribeDTO": {
         "type": "object",
-        "properties": { "userID": { "type": "string" }, "subscribeID": { "type": "string" }, "days": { "type": "number" } },
-        "required": ["userID", "subscribeID", "days"]
+        "properties": { "userID": { "type": "string" }, "packageID": { "type": "string" } },
+        "required": ["userID", "packageID"]
       },
       "PutUserUsernameBodyDTO": {
         "type": "object",
@@ -894,7 +894,7 @@
           "timestamp": {
             "type": "object",
             "description": "时间戳\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@memberof PostUserPay201ResDTO",
-            "default": "2024-12-13T10:23:44.698Z"
+            "default": "2024-12-16T11:48:39.946Z"
           },
           "data": {
             "description": "数据\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@type {PostUserPayData201ResDTO}\n@memberof PostUserPay201ResDTO",
