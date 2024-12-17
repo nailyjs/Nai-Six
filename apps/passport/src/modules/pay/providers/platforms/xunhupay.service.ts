@@ -132,7 +132,7 @@ export class XunhupayService implements PayServiceImpl {
       return error;
     }
 
-    await this.userReceiptService.setReceiptStatus(receiptID, IReceiptStatus.Refunded);
-    return { remoteData, receiptID };
+    const newUserReceipt = await this.userReceiptService.setReceiptStatus(receiptID, IReceiptStatus.Refunded);
+    return { remoteData, receipt: newUserReceipt };
   }
 }
