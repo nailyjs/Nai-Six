@@ -43,5 +43,5 @@ model ShopSubscribe {
   /// 套餐ID
   packageID   String               @db.ObjectId
   /// 是否手动创建的订阅
-  isManualCreate Boolean           @default(false)
+  isManualCreate Boolean?           @default(false)
 }

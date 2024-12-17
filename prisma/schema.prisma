@@ -1,4 +1,4 @@
-//🧩Don't Edit this file.✨Generated in Mon Dec 16 2024 18:41:14 GMT+0800 (中国标准时间)✨
+//🧩Don't Edit this file.✨Generated in Tue Dec 17 2024 23:40:53 GMT+0800 (中国标准时间)✨
 
 generator client {
   provider        = "prisma-client-js"
@@ -279,7 +279,7 @@ model ShopSubscribe {
   /// 套餐ID
   packageID      String               @db.ObjectId
   /// 是否手动创建的订阅
-  isManualCreate Boolean              @default(false)
+  isManualCreate Boolean?             @default(false)
 }
 
 model UserData {
