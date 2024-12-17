@@ -8,6 +8,7 @@ import { PayController } from "./controllers/pay.controller";
 import { XunhupayService } from "./providers/platforms/xunhupay.service";
 import { UserReceiptService } from "./providers/receipt.service";
 import { ReceiptController } from "./controllers/receipt.controller";
+import { PayDeveloperController } from "./controllers/developer.controller";
 
 @Module({})
 export class PayModule extends NailyContext {
@@ -42,7 +43,7 @@ export class PayModule extends NailyContext {
     return {
       module: this,
       global: true,
-      controllers: [PayController, ReceiptController],
+      controllers: [PayController, ReceiptController, PayDeveloperController],
       providers: [PayService, XunhupayService, UserReceiptService],
     };
   }

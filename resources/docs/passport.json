@@ -466,6 +466,21 @@
         "security": [{ "bearer": [] }]
       }
     },
+    "/pay/developer/refund": {
+      "post": {
+        "operationId": "PayDeveloperController_refund",
+        "summary": "退款\n\n@date 2024-12-18\n@author Zero <gczgroup@qq.com>\n@memberof PayDeveloperController",
+        "parameters": [
+          { "name": "x-developer-access-key", "in": "header", "description": "开发者访问密钥", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PostPayDeveloperRefundBodyDTO" } } }
+        },
+        "responses": { "201": { "description": "", "content": { "application/json": { "schema": { "type": "object" } } } } },
+        "tags": ["开发者"]
+      }
+    },
     "/user/role": {
       "get": {
         "operationId": "RoleController_getRoles",
@@ -894,7 +909,7 @@
           "timestamp": {
             "type": "object",
             "description": "时间戳\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@memberof PostUserPay201ResDTO",
-            "default": "2024-12-17T15:44:16.742Z"
+            "default": "2024-12-17T17:05:31.357Z"
           },
           "data": {
             "description": "数据\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@type {PostUserPayData201ResDTO}\n@memberof PostUserPay201ResDTO",
@@ -914,6 +929,11 @@
           "orderID": { "type": "string", "description": "订单号\n\n@type {string}\n@memberof PayXunhupayQueryDTO" }
         },
         "required": ["payType", "orderID"]
+      },
+      "PostPayDeveloperRefundBodyDTO": {
+        "type": "object",
+        "properties": { "reason": { "type": "string" }, "userReceiptID": { "type": "string" } },
+        "required": ["reason", "userReceiptID"]
       },
       "PostAndPutMicrosoftBodyDTO": {
         "type": "object",

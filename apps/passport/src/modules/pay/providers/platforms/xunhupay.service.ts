@@ -1,5 +1,5 @@
 import md5 from "md5";
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { IPayType, PayServiceImpl } from "../../interfaces/interface.impl";
 import { PayService } from "../pay.service";
 import { XunhupayBody, XunhupayNotify } from "../../interfaces/xunhupay.interface";
@@ -7,6 +7,7 @@ import axios from "axios";
 import { IReceiptStatus, User } from "@prisma/client";
 import { UserReceiptService } from "../receipt.service";
 import { PrismaService } from "@nailyjs.nest.modules/prisma";
+import { CommonLogger } from "cc.naily.six.shared";
 
 @Injectable()
 export class XunhupayService implements PayServiceImpl {
@@ -14,6 +15,7 @@ export class XunhupayService implements PayServiceImpl {
     private readonly payService: PayService,
     private readonly userReceiptService: UserReceiptService,
     private readonly prismaService: PrismaService,
+    private readonly commonLogger: CommonLogger,
   ) {}
 
   public wxPaySign(params: any, key: string): string {
@@ -98,5 +100,39 @@ export class XunhupayService implements PayServiceImpl {
 
     const receipt = await this.userReceiptService.createReceipt(payType, amount, trade_order_id, user.userID, randomStr);
     return { remoteData, receipt };
+  }
+
+  public async refund(receiptID: string, reason: string) {
+    const receipt = await this.prismaService.userReceipt.findUnique({
+      where: { userReceiptID: receiptID },
+    });
+    if (!receipt) throw new BadRequestException("订单不存在");
+    const payConfiguration = this.payService.getPayConfiguration(receipt.payType);
+    const { appid, appsecret } = payConfiguration;
+    const requestBody = {
+      appid,
+      trade_order_id: receipt.orderID,
+      reason,
+      time: new Date().getTime(),
+      nonce_str: new Date().getTime() + "-" + Math.random().toString().substring(2, 10),
+    };
+    const hash = this.wxPaySign(requestBody, appsecret);
+    requestBody["hash"] = hash;
+
+    let remoteData: any;
+    try {
+      const { data } = await axios({
+        url: "https://api.xunhupay.com/payment/refund.html",
+        method: "POST",
+        data: requestBody,
+      });
+      remoteData = data;
+    } catch (error) {
+      this.commonLogger.error("退款请求发起失败", error);
+      return error;
+    }
+
+    await this.userReceiptService.setReceiptStatus(receiptID, IReceiptStatus.Refunded);
+    return { remoteData, receiptID };
   }
 }
