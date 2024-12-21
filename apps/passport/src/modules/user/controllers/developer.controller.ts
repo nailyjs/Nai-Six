@@ -28,6 +28,8 @@ export class UserDeveloperController {
   @Get("all")
   @UseInterceptors(ResInterceptor)
   public async getSingleUserByUsername(@Query() query: UserDeveloperAllDTO) {
+    if (!query.username && !query.phone) throw new NotFoundException("请输入用户名或手机号");
+    if (query.username && query.phone) throw new NotFoundException("只能输入用户名或手机号");
     return this.prismaService.user.findMany({
       where: {
         OR: [

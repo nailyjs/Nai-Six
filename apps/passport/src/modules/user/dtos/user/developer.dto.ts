@@ -1,12 +1,12 @@
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsOptional, IsString } from "class-validator";
 
 export class UserDeveloperAllDTO {
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   username: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   phone: string;
 }
 
