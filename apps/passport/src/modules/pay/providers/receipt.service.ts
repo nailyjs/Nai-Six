@@ -4,13 +4,30 @@ import { IReceiptStatus, Prisma } from "@prisma/client";
 import { IPayType } from "../interfaces/interface.impl";
 import { CreatedAtEnum, UpdatedAtEnum } from "../enums/order.enum";
 
+export interface CreateReceiptOptions {
+  payType: IPayType;
+  amount: number;
+  orderID: string;
+  userID: string;
+  nonceStr?: string;
+  channel: string;
+}
+
 @Injectable()
 export class UserReceiptService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  public async createReceipt(payType: IPayType, amount: number, orderID: string, userID: string, nonceStr?: string, channel?: string) {
+  public async createReceipt(options: CreateReceiptOptions) {
     const data = await this.prismaService.userReceipt.create({
-      data: { receiptStatus: IReceiptStatus.Pending, user: { connect: { userID } }, amount, payType, orderID, nonceStr, channel },
+      data: {
+        receiptStatus: IReceiptStatus.Pending,
+        user: { connect: { userID: options.userID } },
+        amount: options.amount,
+        payType: options.payType,
+        orderID: options.orderID,
+        nonceStr: options.nonceStr,
+        channel: options.channel,
+      },
     });
     delete data.nonceStr;
     return data;

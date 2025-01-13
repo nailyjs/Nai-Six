@@ -64,7 +64,7 @@ export class XunhupayService implements PayServiceImpl {
 
   public async pay(amount: number, payType: IPayType, user: User): Promise<any> {
     const payConfiguration = this.payService.getPayConfiguration(payType);
-    const { appid, appsecret, notify_url, return_url, callback_url, gateway, name } = payConfiguration;
+    const { appid, appsecret, notify_url, return_url, callback_url, gateway, name, id } = payConfiguration;
     const trade_order_id = await this.payService.getOrderNo();
     const randomStr = new Date().getTime() + "-" + Math.random().toString().substring(2, 10);
     const requestBody: XunhupayBody = {
@@ -98,7 +98,14 @@ export class XunhupayService implements PayServiceImpl {
       return error;
     }
 
-    const receipt = await this.userReceiptService.createReceipt(payType, amount, trade_order_id, user.userID, randomStr, name);
+    const receipt = await this.userReceiptService.createReceipt({
+      payType,
+      amount,
+      orderID: trade_order_id,
+      userID: user.userID,
+      nonceStr: randomStr,
+      channel: id,
+    });
     return { remoteData, receipt };
   }
 

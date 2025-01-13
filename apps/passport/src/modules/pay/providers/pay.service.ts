@@ -50,22 +50,30 @@ export class PayService {
     // 如果没有enabled选项 说明是单例配置 直接返回
     if (this.isSingletonConfig(configs)) return configs;
     // 如果有enabled选项 说明是多实例配置 返回对应实例
-    return (configs.channel || [])[configs.enabled] || {};
+    const channelConfigs: any[] = configs.channel || [];
+    const finded = channelConfigs.find((item) => item.id === configs.enabled);
+    if (!finded) throw new BadRequestException(1099);
+    return finded;
   }
 
   public getDefaultPayConfiguration(payType: string) {
+    if (!this.configService.get("global.pay.enabled").includes(payType)) throw new BadRequestException(1018);
     const configs = this.configService.get(`global.pay.${payType}`);
     // 如果没有enabled选项 说明是单例配置 直接返回
     if (!configs.enabled && typeof configs.enabled !== "boolean") return configs;
     // 如果有enabled选项 说明是多实例配置 返回对应实例
-    return (configs.channel || [])[configs.default] || {};
+    const channelConfigs: any[] = configs.channel || [];
+    const finded = channelConfigs.find((item) => item.id === configs.default);
+    if (!finded) throw new BadRequestException(1099);
+    return finded;
   }
 
   public getPayConfigurationByChannel(payType: string, channel: string) {
+    if (!this.configService.get("global.pay.enabled").includes(payType)) throw new BadRequestException(1018);
     const configs = this.configService.get(`global.pay.${payType}`) || {};
     if (this.isSingletonConfig(configs)) return configs;
     const channelConfigs: any[] = configs.channel || [];
-    const finded = channelConfigs.find((item) => item.channel === channel);
+    const finded = channelConfigs.find((item) => item.id === channel);
     if (!finded) throw new BadRequestException(1099);
     return finded;
   }
