@@ -107,6 +107,7 @@ export type I18nTranslations = {
             "1096": string;
             "1097": string;
             "1098": string;
+            "1099": string;
             "40001005": string;
             "---": string;
             "----": string;

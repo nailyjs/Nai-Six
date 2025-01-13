@@ -8,9 +8,9 @@ import { CreatedAtEnum, UpdatedAtEnum } from "../enums/order.enum";
 export class UserReceiptService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  public async createReceipt(payType: IPayType, amount: number, orderID: string, userID: string, nonceStr?: string) {
+  public async createReceipt(payType: IPayType, amount: number, orderID: string, userID: string, nonceStr?: string, channel?: string) {
     const data = await this.prismaService.userReceipt.create({
-      data: { receiptStatus: IReceiptStatus.Pending, user: { connect: { userID } }, amount, payType, orderID, nonceStr },
+      data: { receiptStatus: IReceiptStatus.Pending, user: { connect: { userID } }, amount, payType, orderID, nonceStr, channel },
     });
     delete data.nonceStr;
     return data;
