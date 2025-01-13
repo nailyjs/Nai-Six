@@ -41,7 +41,11 @@ export class PayService {
 
   public getPayConfiguration(payType: string) {
     if (!this.configService.get("global.pay.enabled").includes(payType)) throw new BadRequestException(1018);
-    return this.configService.get(`global.pay.${payType}`);
+    const configs = this.configService.get(`global.pay.${payType}`);
+    // 如果没有enabled选项 说明是单例配置 直接返回
+    if (!configs.enabled && typeof configs.enabled !== "boolean") return configs;
+    // 如果有enabled选项 说明是多实例配置 返回对应实例
+    return (configs.channel || [])[configs.enabled] || {};
   }
 
   /**

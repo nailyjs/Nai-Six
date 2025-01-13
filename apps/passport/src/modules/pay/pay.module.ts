@@ -22,12 +22,19 @@ export class PayModule extends NailyContext {
       callback_url: Joi.string().required().description("支付成功后跳转地址"),
       gateway: Joi.string().default("https://api.xunhupay.com/payment/do.html"),
     }).strict(false);
+
     const Schema = Joi.object({
       enabled: Joi.array()
         .items(Joi.string().valid(...PayTypeArray))
         .default([])
         .required(),
-      Xunhupay_Wechat: XunhupaySchema,
+      Xunhupay_Wechat: Joi.alternatives().try(
+        XunhupaySchema,
+        Joi.object({
+          enabled: Joi.number(),
+          channel: Joi.array().items(XunhupaySchema),
+        }),
+      ),
       Xunhupay_Alipay: XunhupaySchema,
       Wechat_Official: Joi.object().strict(false),
     });
