@@ -1,4 +1,4 @@
-//🧩Don't Edit this file.✨Generated in Tue Dec 17 2024 23:43:49 GMT+0800 (中国标准时间)✨
+//🧩Don't Edit this file.✨Generated in Mon Jan 13 2025 23:07:38 GMT+0800 (中国标准时间)✨
 
 generator client {
   provider        = "prisma-client-js"
@@ -335,6 +335,8 @@ model UserReceipt {
   payType       String
   /// 随机字符串 用于鉴定
   nonceStr      String?
+  /// 支付通道
+  channel       String?
 }
 
 /// 角色

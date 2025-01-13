@@ -19,4 +19,6 @@ model UserReceipt {
   payType       String
   /// 随机字符串 用于鉴定
   nonceStr      String?
+  /// 支付通道
+  channel       String?
 }
