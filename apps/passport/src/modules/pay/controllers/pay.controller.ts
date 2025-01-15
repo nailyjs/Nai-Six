@@ -84,8 +84,14 @@ export class PayController {
     };
     const hash = this.xunhupayService.wxPaySign(requestBody, this.configService.getOrThrow(`global.pay.${body.payType}.appsecret`));
     requestBody["hash"] = hash;
+    const receipt = await this.prismaService.userReceipt.findFirst({
+      where: { orderID: body.orderID },
+    });
+    const configguration = receipt.channel
+      ? this.payService.getPayConfigurationByChannel(body.payType, receipt.channel)
+      : this.payService.getPayConfiguration(body.payType);
     const { data } = await axios({
-      url: "https://api.xunhupay.com/payment/query.html",
+      url: configguration.query_gateway ? configguration.query_gateway : "https://api.xunhupay.com/payment/query.html",
       method: "POST",
       data: requestBody,
     });

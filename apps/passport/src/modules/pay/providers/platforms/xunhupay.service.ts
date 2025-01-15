@@ -115,7 +115,7 @@ export class XunhupayService implements PayServiceImpl {
     });
     if (!receipt) throw new BadRequestException("订单不存在");
     // 如果当前收据记录了支付渠道，则使用该渠道的支付配置；否则使用默认配置尝试退款
-    const { appid, appsecret, gateway } =
+    const { appid, appsecret, refund_gateway } =
       typeof receipt.channel === "string"
         ? this.payService.getPayConfigurationByChannel(receipt.payType, receipt.channel)
         : this.payService.getDefaultPayConfiguration(receipt.payType);
@@ -132,7 +132,7 @@ export class XunhupayService implements PayServiceImpl {
     let remoteData: any;
     try {
       const { data } = await axios({
-        url: gateway ? gateway : "https://api.xunhupay.com/payment/refund.html",
+        url: refund_gateway ? refund_gateway : "https://api.xunhupay.com/payment/refund.html",
         method: "POST",
         data: requestBody,
       });
