@@ -91,7 +91,7 @@ export class PayController {
       ? this.payService.getPayConfigurationByChannel(body.payType, receipt.channel)
       : this.payService.getPayConfiguration(body.payType);
     const { data } = await axios({
-      url: configguration.query_gateway ? configguration.query_gateway : "https://api.xunhupay.com/payment/query.html",
+      url: configguration.query_gateway,
       method: "POST",
       data: requestBody,
     });

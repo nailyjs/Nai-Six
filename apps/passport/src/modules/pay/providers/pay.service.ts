@@ -65,7 +65,12 @@ export class PayService {
     const channelConfigs: any[] = configs.channel || [];
     const finded = channelConfigs.find((item) => item.id === configs.default);
     if (!finded) throw new BadRequestException(1099);
-    return finded;
+    return {
+      ...finded,
+      query_gateway: finded.query_gateway || "https://api.xunhupay.com/payment/query.html",
+      gateway: finded.gateway || "https://api.xunhupay.com/payment/do.html",
+      refund_gateway: finded.refund_gateway || "https://api.xunhupay.com/payment/refund.html",
+    };
   }
 
   public getPayConfigurationByChannel(payType: string, channel: string) {
@@ -75,7 +80,12 @@ export class PayService {
     const channelConfigs: any[] = configs.channel || [];
     const finded = channelConfigs.find((item) => item.id === channel);
     if (!finded) throw new BadRequestException(1099);
-    return finded;
+    return {
+      ...finded,
+      query_gateway: finded.query_gateway || "https://api.xunhupay.com/payment/query.html",
+      gateway: finded.gateway || "https://api.xunhupay.com/payment/do.html",
+      refund_gateway: finded.refund_gateway || "https://api.xunhupay.com/payment/refund.html",
+    };
   }
 
   /**

@@ -89,7 +89,7 @@ export class XunhupayService implements PayServiceImpl {
     let remoteData: any;
     try {
       const { data } = await axios({
-        url: gateway ? gateway : "https://api.xunhupay.com/payment/do.html",
+        url: gateway,
         method: "POST",
         data: requestBody,
       });
@@ -132,7 +132,7 @@ export class XunhupayService implements PayServiceImpl {
     let remoteData: any;
     try {
       const { data } = await axios({
-        url: refund_gateway ? refund_gateway : "https://api.xunhupay.com/payment/refund.html",
+        url: refund_gateway,
         method: "POST",
         data: requestBody,
       });

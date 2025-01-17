@@ -20,7 +20,7 @@ export class PayModule extends NailyContext {
       notify_url: Joi.string().required(),
       return_url: Joi.string().required(),
       callback_url: Joi.string().required().description("支付成功后跳转地址"),
-      gateway: Joi.string().default("https://api.xunhupay.com/payment/do.html"),
+      gateway: Joi.string(),
     }).strict(false);
 
     const Schema = Joi.object({
