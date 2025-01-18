@@ -14,13 +14,16 @@ import { PayDeveloperController } from "./controllers/developer.controller";
 export class PayModule extends NailyContext {
   private static validate(configObject: Record<string, any>) {
     const XunhupaySchema = Joi.object({
-      name: Joi.string().required(),
-      appid: Joi.string().required(),
-      appsecret: Joi.string().required(),
-      notify_url: Joi.string().required(),
-      return_url: Joi.string().required(),
-      callback_url: Joi.string().required().description("支付成功后跳转地址"),
+      name: Joi.string(),
+      appid: Joi.string(),
+      appsecret: Joi.string(),
+      notify_url: Joi.string(),
+      return_url: Joi.string(),
+      callback_url: Joi.string().description("支付成功后跳转地址"),
       gateway: Joi.string(),
+      id: Joi.string().optional(),
+      refund_gateway: Joi.string().optional(),
+      query_gateway: Joi.string().optional(),
     }).strict(false);
 
     const Schema = Joi.object({
@@ -31,9 +34,10 @@ export class PayModule extends NailyContext {
       Xunhupay_Wechat: Joi.alternatives().try(
         XunhupaySchema,
         Joi.object({
-          enabled: Joi.number(),
+          enabled: Joi.any(),
+          default: Joi.any(),
           channel: Joi.array().items(XunhupaySchema),
-        }),
+        }).strict(false),
       ),
       Xunhupay_Alipay: XunhupaySchema,
       Wechat_Official: Joi.object().strict(false),
