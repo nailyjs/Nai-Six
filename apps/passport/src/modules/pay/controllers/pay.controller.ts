@@ -79,9 +79,11 @@ export class PayController {
     const receipt = await this.prismaService.userReceipt.findFirst({
       where: { orderID: body.orderID },
     });
+    if (!receipt) throw new BadRequestException(1099);
     const configguration = receipt.channel
       ? this.payService.getPayConfigurationByChannel(body.payType, receipt.channel)
-      : this.payService.getPayConfiguration(body.payType);
+      : this.payService.getDefaultPayConfiguration(body.payType);
+
     const requestBody = {
       appid: configguration.appid,
       out_trade_order: body.orderID,
