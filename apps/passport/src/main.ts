@@ -65,7 +65,6 @@ import { writeFileSync } from "fs";
       jsonDocumentUrl: "docs/swagger.json",
       yamlDocumentUrl: "docs/swagger.yml",
     });
-
   await app.listen(port);
   return app;
 })().then(async (app) => {

@@ -85,16 +85,18 @@ export class XunhupayService implements PayServiceImpl {
     };
     const hash = this.wxPaySign(requestBody, appsecret);
     requestBody.hash = hash;
-
     let remoteData: any;
     try {
-      const { data } = await axios({
+      const axiosRequest = {
         url: gateway,
         method: "POST",
         data: requestBody,
-      });
+      };
+      console.log(`axiosRequest: ${JSON.stringify(axiosRequest)}`);
+      const { data } = await axios(axiosRequest);
       remoteData = data;
     } catch (error) {
+      console.error(error);
       return error;
     }
 
