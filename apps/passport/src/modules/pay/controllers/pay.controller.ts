@@ -76,20 +76,20 @@ export class PayController {
   @UseInterceptors(ResInterceptor)
   public async query(@Body() body: PayXunhupayQueryDTO) {
     this.payService.isEnabledOrThrow(body.payType);
-    const requestBody = {
-      appid: this.configService.getOrThrow(`global.pay.${body.payType}.appid`),
-      out_trade_order: body.orderID,
-      time: Date.now(),
-      nonce_str: new Date().getTime() + "-" + Math.random().toString().substring(2, 10),
-    };
-    const hash = this.xunhupayService.wxPaySign(requestBody, this.configService.getOrThrow(`global.pay.${body.payType}.appsecret`));
-    requestBody["hash"] = hash;
     const receipt = await this.prismaService.userReceipt.findFirst({
       where: { orderID: body.orderID },
     });
     const configguration = receipt.channel
       ? this.payService.getPayConfigurationByChannel(body.payType, receipt.channel)
       : this.payService.getPayConfiguration(body.payType);
+    const requestBody = {
+      appid: configguration.appid,
+      out_trade_order: body.orderID,
+      time: Date.now(),
+      nonce_str: new Date().getTime() + "-" + Math.random().toString().substring(2, 10),
+    };
+    const hash = this.xunhupayService.wxPaySign(requestBody, configguration.appsecret);
+    requestBody["hash"] = hash;
     const { data } = await axios({
       url: configguration.query_gateway,
       method: "POST",
