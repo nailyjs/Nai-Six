@@ -21,4 +21,6 @@ model UserReceipt {
   nonceStr      String?
   /// 支付通道
   channel       String?
+
+  @@index([userID, orderID])
 }
