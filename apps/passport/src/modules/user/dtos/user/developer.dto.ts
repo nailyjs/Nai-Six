@@ -37,3 +37,8 @@ export class UserDeveloperReceiptSingleDTO {
   @IsString()
   orderID: string;
 }
+
+export class UserDeveloperOrderRefundDTO {
+  @IsString()
+  orderID: string;
+}

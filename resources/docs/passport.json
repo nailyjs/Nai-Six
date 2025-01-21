@@ -278,6 +278,21 @@
         "tags": ["开发者"]
       }
     },
+    "/user/developer/order/refund": {
+      "post": {
+        "operationId": "UserDeveloperController_refundOrder",
+        "summary": "将某个订单设置为已退款\n\n@date 2025-01-21",
+        "parameters": [
+          { "name": "x-developer-access-key", "in": "header", "description": "开发者访问密钥", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UserDeveloperOrderRefundDTO" } } }
+        },
+        "responses": { "201": { "description": "", "content": { "application/json": { "schema": { "type": "object" } } } } },
+        "tags": ["开发者"]
+      }
+    },
     "/user/username": {
       "put": {
         "operationId": "UserChangerController_changeUsername",
@@ -383,6 +398,15 @@
         "responses": { "200": { "description": "" } },
         "tags": ["用户数据"],
         "security": [{ "bearer": [] }]
+      }
+    },
+    "/user/data/xxx": {
+      "post": {
+        "operationId": "UserDataController_xxx",
+        "parameters": [],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/XXXUserDataBodyDTO" } } } },
+        "responses": { "201": { "description": "" } },
+        "tags": ["用户数据"]
       }
     },
     "/user/pay": {
@@ -750,6 +774,7 @@
         "properties": { "userID": { "type": "string" }, "packageID": { "type": "string" } },
         "required": ["userID", "packageID"]
       },
+      "UserDeveloperOrderRefundDTO": { "type": "object", "properties": { "orderID": { "type": "string" } }, "required": ["orderID"] },
       "PutUserUsernameBodyDTO": {
         "type": "object",
         "properties": {
@@ -819,6 +844,11 @@
           "selfDestruct": { "type": "number", "description": "设置用户数据的自毁时间, 单位秒\n\n@type {number}\n@memberof PostUserDataBodyDTO" }
         },
         "required": ["key", "value"]
+      },
+      "XXXUserDataBodyDTO": {
+        "type": "object",
+        "properties": { "s": { "type": "number" }, "developerAccessKey": { "type": "string" } },
+        "required": ["s", "developerAccessKey"]
       },
       "PostUserPayBodyDTO": {
         "type": "object",
@@ -909,7 +939,7 @@
           "timestamp": {
             "type": "object",
             "description": "时间戳\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@memberof PostUserPay201ResDTO",
-            "default": "2025-01-18T14:07:51.175Z"
+            "default": "2025-01-21T06:09:14.945Z"
           },
           "data": {
             "description": "数据\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@type {PostUserPayData201ResDTO}\n@memberof PostUserPay201ResDTO",

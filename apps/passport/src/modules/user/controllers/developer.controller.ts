@@ -5,6 +5,7 @@ import {
   UserDeveloperAllSubscribedDTO,
   UserDeveloperCreateSubscribeDTO,
   UserDeveloperDeleteSubscribeDTO,
+  UserDeveloperOrderRefundDTO,
   UserDeveloperReceiptDTO,
   UserDeveloperReceiptSingleDTO,
 } from "../dtos/user/developer.dto";
@@ -133,6 +134,26 @@ export class UserDeveloperController {
     return this.prismaService.userReceipt.findMany({
       where: {
         orderID: query.orderID,
+      },
+    });
+  }
+
+  /**
+   * 将某个订单设置为已退款
+   *
+   * @date 2025-01-21
+   * @param {UserDeveloperOrderRefundDTO} body
+   * @memberof UserDeveloperController
+   */
+  @Post("order/refund")
+  @UseInterceptors(ResInterceptor)
+  public async refundOrder(@Body() body: UserDeveloperOrderRefundDTO) {
+    return this.prismaService.userReceipt.updateMany({
+      where: {
+        orderID: body.orderID,
+      },
+      data: {
+        receiptStatus: "Refunded",
       },
     });
   }

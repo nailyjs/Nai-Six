@@ -14,7 +14,9 @@ import { PayDeveloperController } from "./controllers/developer.controller";
 export class PayModule extends NailyContext {
   private static validate(configObject: Record<string, any>) {
     const XunhupaySchema = Joi.object({
-      name: Joi.string(),
+      title: Joi.string(),
+      wap_name: Joi.string(),
+      wap_url: Joi.string(),
       appid: Joi.string(),
       appsecret: Joi.string(),
       notify_url: Joi.string(),
@@ -32,16 +34,16 @@ export class PayModule extends NailyContext {
         .default([])
         .required(),
       Xunhupay_Wechat: Joi.alternatives().try(
-        XunhupaySchema,
         Joi.object({
           enabled: Joi.any(),
           default: Joi.any(),
           channel: Joi.array().items(XunhupaySchema),
         }).strict(false),
+        XunhupaySchema,
       ),
       Xunhupay_Alipay: XunhupaySchema,
       Wechat_Official: Joi.object().strict(false),
-    });
+    }).strict(false);
     const { error } = Schema.validate(configObject);
     if (error) throw error;
   }
