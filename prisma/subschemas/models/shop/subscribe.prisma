@@ -44,4 +44,6 @@ model ShopSubscribe {
   packageID   String               @db.ObjectId
   /// 是否手动创建的订阅
   isManualCreate Boolean?           @default(false)
+
+  @@index([userID, packageID])
 }
