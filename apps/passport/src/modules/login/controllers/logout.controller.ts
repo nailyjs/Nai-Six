@@ -47,7 +47,7 @@ export class LogoutController {
     const jwtPayload: JwtLoginPayload = this.jwtService.decode(token);
     const userIdentifier = await this.prismaService.userIdentifier.findFirst({
       where: {
-        user: { userID: user.userID },
+        userID: user.userID,
         identifier: jwtPayload.identifier,
         loginClient: jwtPayload.loginClient,
         loginMethod: jwtPayload.loginMethod,

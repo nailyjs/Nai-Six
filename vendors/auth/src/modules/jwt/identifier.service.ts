@@ -76,11 +76,11 @@ export class CommonIdentifierService {
     }
     const findIdentifier = await this.prismaService.userIdentifier.findFirst({
       where: {
-        user: { userID },
         loginMethod,
         loginType,
         loginClient,
         identifier,
+        userID,
       },
     });
     if (!findIdentifier) return "NOT_FOUND";
