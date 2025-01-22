@@ -104,7 +104,7 @@ export class CommonIdentifierService {
     // 找到当前用户的所有identifier
     const identifiers = await this.prismaService.userIdentifier.findMany({
       where: {
-        user: { userID: user.userID },
+        userID: user.userID,
       },
     });
     // 找到当前登录标识符
