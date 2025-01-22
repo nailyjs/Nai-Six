@@ -22,4 +22,6 @@ model UserIdentifier {
   user             User         @relation(fields: [userID], references: [userID])
   /// 登录的用户ID
   userID           String       @db.ObjectId
+
+  @@index([userID])
 }
