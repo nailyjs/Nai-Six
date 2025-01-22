@@ -1,4 +1,4 @@
-//🧩Don't Edit this file.✨Generated in Wed Jan 22 2025 01:03:13 GMT+0800 (中国标准时间)✨
+//🧩Don't Edit this file.✨Generated in Wed Jan 22 2025 17:01:10 GMT+0800 (中国标准时间)✨
 
 generator client {
   provider        = "prisma-client-js"
@@ -317,6 +317,8 @@ model UserIdentifier {
   user             User         @relation(fields: [userID], references: [userID])
   /// 登录的用户ID
   userID           String       @db.ObjectId
+
+  @@index([userID])
 }
 
 model UserReceipt {
