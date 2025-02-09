@@ -8569,7 +8569,7 @@ snapshots:
       '@types/node': 20.5.1
       chalk: 4.1.2
       cosmiconfig: 8.3.6(typescript@5.2.2)
-      cosmiconfig-typescript-loader: 4.4.0(@types/node@20.5.1)(cosmiconfig@8.3.6(typescript@5.2.2))(ts-node@10.9.2(@swc/core@1.7.2)(@types/node@20.14.12)(typescript@5.2.2))(typescript@5.2.2)
+      cosmiconfig-typescript-loader: 4.4.0(@types/node@20.5.1)(cosmiconfig@8.3.6(typescript@5.2.2))(ts-node@10.9.2(@swc/core@1.7.2)(@types/node@20.5.1)(typescript@5.2.2))(typescript@5.2.2)
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       lodash.uniq: 4.5.0
@@ -11393,11 +11393,11 @@ snapshots:
       object-assign: 4.1.1
       vary: 1.1.2
 
-  cosmiconfig-typescript-loader@4.4.0(@types/node@20.5.1)(cosmiconfig@8.3.6(typescript@5.2.2))(ts-node@10.9.2(@swc/core@1.7.2)(@types/node@20.14.12)(typescript@5.2.2))(typescript@5.2.2):
+  cosmiconfig-typescript-loader@4.4.0(@types/node@20.5.1)(cosmiconfig@8.3.6(typescript@5.2.2))(ts-node@10.9.2(@swc/core@1.7.2)(@types/node@20.5.1)(typescript@5.2.2))(typescript@5.2.2):
     dependencies:
       '@types/node': 20.5.1
       cosmiconfig: 8.3.6(typescript@5.2.2)
-      ts-node: 10.9.2(@swc/core@1.7.2)(@types/node@20.14.12)(typescript@5.2.2)
+      ts-node: 10.9.2(@swc/core@1.7.2)(@types/node@20.5.1)(typescript@5.2.2)
       typescript: 5.2.2
 
   cosmiconfig@8.3.6(typescript@5.2.2):
