@@ -293,6 +293,18 @@
         "tags": ["开发者"]
       }
     },
+    "/user/developer/user": {
+      "get": {
+        "operationId": "UserDeveloperController_getUser",
+        "summary": "获取某个用户\n\n@date 2025-03-02",
+        "parameters": [
+          { "name": "x-developer-access-key", "in": "header", "description": "开发者访问密钥", "required": true, "schema": { "type": "string" } },
+          { "name": "userID", "required": true, "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "" } },
+        "tags": ["开发者"]
+      }
+    },
     "/user/username": {
       "put": {
         "operationId": "UserChangerController_changeUsername",
@@ -939,7 +951,7 @@
           "timestamp": {
             "type": "object",
             "description": "时间戳\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@memberof PostUserPay201ResDTO",
-            "default": "2025-01-22T09:18:58.706Z"
+            "default": "2025-03-02T14:29:40.156Z"
           },
           "data": {
             "description": "数据\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@type {PostUserPayData201ResDTO}\n@memberof PostUserPay201ResDTO",
