@@ -42,3 +42,8 @@ export class UserDeveloperOrderRefundDTO {
   @IsString()
   orderID: string;
 }
+
+export class UserDeveloperUserDTO {
+  @IsString()
+  userID: string;
+}

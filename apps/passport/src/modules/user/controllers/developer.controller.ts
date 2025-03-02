@@ -8,6 +8,7 @@ import {
   UserDeveloperOrderRefundDTO,
   UserDeveloperReceiptDTO,
   UserDeveloperReceiptSingleDTO,
+  UserDeveloperUserDTO,
 } from "../dtos/user/developer.dto";
 import { ResInterceptor } from "cc.naily.six.shared";
 import { ApiTags } from "@nestjs/swagger";
@@ -154,6 +155,23 @@ export class UserDeveloperController {
       },
       data: {
         receiptStatus: "Refunded",
+      },
+    });
+  }
+
+  /**
+   * 获取某个用户
+   *
+   * @date 2025-03-02
+   * @param {UserDeveloperUserDTO} query
+   * @memberof UserDeveloperController
+   */
+  @Get("user")
+  @UseInterceptors(ResInterceptor)
+  public async getUser(@Query() query: UserDeveloperUserDTO) {
+    return this.prismaService.user.findUnique({
+      where: {
+        userID: query.userID,
       },
     });
   }
