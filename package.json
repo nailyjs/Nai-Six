@@ -122,6 +122,7 @@
     "rxjs": "^7.8.1",
     "studio": "github:prisma/studio",
     "swagger-ui-express": "^5.0.0",
+    "tencentcloud-cls-sdk-js": "^1.0.6",
     "tencentcloud-sdk-nodejs": "^4.0.792",
     "tsx": "^4.7.0",
     "unocss": "^0.58.4",

@@ -15,17 +15,70 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { ConsoleLogger, Injectable, Scope } from "@nestjs/common";
+import { ConsoleLogger, ConsoleLoggerOptions, Inject, Injectable, Scope } from "@nestjs/common";
 import { LoggerService } from "@nestjs/common/services/logger.service";
 import { LOGGER } from "./logger.module";
+import { ConfigService } from "@nestjs/config";
+import { AsyncClient, Content, LogGroup, LogItem, PutLogsRequest } from "tencentcloud-cls-sdk-js";
 
-@Injectable({ scope: Scope.TRANSIENT })
+@Injectable({ scope: Scope.DEFAULT })
 export class CommonLogger extends ConsoleLogger implements LoggerService {
+  private readonly cls?: AsyncClient;
+  private readonly clsTopic: string;
+
+  constructor(@Inject(ConfigService) configServiceOrContext?: ConfigService | string, options?: ConsoleLoggerOptions) {
+    super(typeof configServiceOrContext === "string" ? configServiceOrContext : undefined, options);
+
+    if (configServiceOrContext instanceof ConfigService) {
+      const clsConfig = configServiceOrContext.get("global.tencent.cloud.cls");
+      if (!clsConfig) return;
+      this.cls = new AsyncClient({
+        endpoint: configServiceOrContext.getOrThrow("global.tencent.cloud.cls.endpoint") || "",
+        retry_times: Number(configServiceOrContext.get("global.tencent.cloud.cls.retry_times") || 10),
+        secretId: configServiceOrContext.getOrThrow("global.tencent.cloud.cls.secretId") || "",
+        secretKey: configServiceOrContext.getOrThrow("global.tencent.cloud.cls.secretKey") || "",
+        sourceIp: configServiceOrContext.get("global.tencent.cloud.cls.sourceIp") || "127.0.0.1",
+      });
+      this.clsTopic = configServiceOrContext.getOrThrow("global.tencent.cloud.cls.topic") || "默认话题";
+    }
+  }
+
+  private async add<Message>(context: string, message: Message) {
+    if (!this.cls || !this.clsTopic) return;
+    context = context ? context : this.context ? this.context : "Other";
+
+    try {
+      const item = new LogItem();
+      item.setTime(Math.floor(Date.now() / 1000));
+
+      if (typeof message === "object") {
+        if (Array.isArray(message)) {
+          item.pushBack(new Content(context, JSON.stringify(message)));
+        } else {
+          for (const key in message) {
+            item.pushBack(new Content(key, String(message[key])));
+          }
+        }
+      } else {
+        item.pushBack(new Content(context, String(message)));
+      }
+
+      const loggroup = new LogGroup();
+      loggroup.addLogs(item);
+      const request = new PutLogsRequest(this.clsTopic, loggroup);
+      await this.cls.PutLogs(request);
+    } catch (error) {
+      this.error("发送日志到腾讯云日志服务失败", error);
+      console.error(error);
+    }
+  }
+
   log<Message>(message: Message, context?: string) {
     LOGGER.info({
       message,
       context: this.context ? this.context : context,
     });
+    this.add(this.context ? this.context : context, message);
   }
 
   warn<Message>(message: Message, context?: string) {
@@ -33,6 +86,7 @@ export class CommonLogger extends ConsoleLogger implements LoggerService {
       message,
       context: this.context ? this.context : context,
     });
+    this.add(this.context ? this.context : context, message);
   }
 
   verbose<Message>(message: Message, context?: string) {
@@ -40,6 +94,7 @@ export class CommonLogger extends ConsoleLogger implements LoggerService {
       message,
       context: this.context ? this.context : context,
     });
+    this.add(this.context ? this.context : context, message);
   }
 
   error<Message>(message: Message, context?: string) {
@@ -47,6 +102,8 @@ export class CommonLogger extends ConsoleLogger implements LoggerService {
       message,
       context: this.context ? this.context : context,
     });
+    if (JSON.stringify(message).includes("发送日志到")) return;
+    this.add(this.context ? this.context : context, message);
   }
 
   fatal<Message>(message: Message, context?: string) {
@@ -54,6 +111,7 @@ export class CommonLogger extends ConsoleLogger implements LoggerService {
       message,
       context: this.context ? this.context : context,
     });
+    this.add(this.context ? this.context : context, message);
   }
 
   debug<Message>(message: Message, context?: string) {
@@ -61,5 +119,6 @@ export class CommonLogger extends ConsoleLogger implements LoggerService {
       message,
       context: this.context ? this.context : context,
     });
+    this.add(this.context ? this.context : context, message);
   }
 }
