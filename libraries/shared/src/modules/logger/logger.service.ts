@@ -51,18 +51,7 @@ export class CommonLogger extends ConsoleLogger implements LoggerService {
       const item = new LogItem();
       item.setTime(Math.floor(Date.now() / 1000));
 
-      if (typeof message === "object") {
-        if (Array.isArray(message)) {
-          item.pushBack(new Content(context, String(this.getConsoleMessage(message))));
-        } else {
-          for (const key in message) {
-            item.pushBack(new Content(key, String(message[key])));
-          }
-        }
-      } else {
-        item.pushBack(new Content(context, String(this.getConsoleMessage(message))));
-      }
-
+      item.pushBack(new Content(context, String(this.getConsoleMessage(message))));
       const loggroup = new LogGroup();
       loggroup.addLogs(item);
       const request = new PutLogsRequest(this.clsTopic, loggroup);
