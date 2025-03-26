@@ -53,7 +53,7 @@ export class CommonLogger extends ConsoleLogger implements LoggerService {
 
       if (typeof message === "object") {
         if (Array.isArray(message)) {
-          item.pushBack(new Content(context, JSON.stringify(message)));
+          item.pushBack(new Content(context, String(this.getConsoleMessage(message))));
         } else {
           for (const key in message) {
             item.pushBack(new Content(key, String(message[key])));
@@ -73,9 +73,17 @@ export class CommonLogger extends ConsoleLogger implements LoggerService {
     }
   }
 
+  private getConsoleMessage<Message>(message: Message) {
+    try {
+      return JSON.stringify(message);
+    } catch (error) {
+      return message;
+    }
+  }
+
   log<Message>(message: Message, context?: string) {
     LOGGER.info({
-      message,
+      message: typeof message === "object" ? this.getConsoleMessage(message) : String(message),
       context: this.context ? this.context : context,
     });
     this.add(this.context ? this.context : context, message);
@@ -83,7 +91,7 @@ export class CommonLogger extends ConsoleLogger implements LoggerService {
 
   warn<Message>(message: Message, context?: string) {
     LOGGER.warn({
-      message,
+      message: typeof message === "object" ? this.getConsoleMessage(message) : String(message),
       context: this.context ? this.context : context,
     });
     this.add(this.context ? this.context : context, message);
@@ -91,7 +99,7 @@ export class CommonLogger extends ConsoleLogger implements LoggerService {
 
   verbose<Message>(message: Message, context?: string) {
     LOGGER.verbose({
-      message,
+      message: typeof message === "object" ? this.getConsoleMessage(message) : String(message),
       context: this.context ? this.context : context,
     });
     this.add(this.context ? this.context : context, message);
@@ -99,7 +107,7 @@ export class CommonLogger extends ConsoleLogger implements LoggerService {
 
   error<Message>(message: Message, context?: string) {
     LOGGER.error({
-      message,
+      message: typeof message === "object" ? this.getConsoleMessage(message) : String(message),
       context: this.context ? this.context : context,
     });
     if (JSON.stringify(message).includes("发送日志到")) return;
@@ -108,7 +116,7 @@ export class CommonLogger extends ConsoleLogger implements LoggerService {
 
   fatal<Message>(message: Message, context?: string) {
     LOGGER.error({
-      message,
+      message: typeof message === "object" ? this.getConsoleMessage(message) : String(message),
       context: this.context ? this.context : context,
     });
     this.add(this.context ? this.context : context, message);
@@ -116,7 +124,7 @@ export class CommonLogger extends ConsoleLogger implements LoggerService {
 
   debug<Message>(message: Message, context?: string) {
     LOGGER.debug({
-      message,
+      message: typeof message === "object" ? this.getConsoleMessage(message) : String(message),
       context: this.context ? this.context : context,
     });
     this.add(this.context ? this.context : context, message);

@@ -42,7 +42,7 @@ export class CommonHttpFilter implements ExceptionFilter {
         timestamp: new Date(),
       });
 
-      return this.commonLogger.error(JSON.stringify(exception));
+      return this.commonLogger.error(exception);
     }
 
     if (typeof msg === "string") {
@@ -52,7 +52,7 @@ export class CommonHttpFilter implements ExceptionFilter {
         message: msg,
         timestamp: new Date(),
       });
-      return this.commonLogger.error(JSON.stringify(exception));
+      return this.commonLogger.error(exception);
     }
 
     if (typeof msg === "object") {
@@ -63,7 +63,7 @@ export class CommonHttpFilter implements ExceptionFilter {
         timestamp: new Date(),
         ...msg,
       });
-      return this.commonLogger.error(JSON.stringify(exception));
+      return this.commonLogger.error(exception);
     }
   }
 
