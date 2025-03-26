@@ -21,7 +21,7 @@ import { LOGGER } from "./logger.module";
 import { ConfigService } from "@nestjs/config";
 import { AsyncClient, Content, LogGroup, LogItem, PutLogsRequest } from "tencentcloud-cls-sdk-js";
 
-@Injectable({ scope: Scope.DEFAULT })
+@Injectable({ scope: Scope.TRANSIENT })
 export class CommonLogger extends ConsoleLogger implements LoggerService {
   private readonly cls?: AsyncClient;
   private readonly clsTopic: string;
