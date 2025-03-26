@@ -60,7 +60,7 @@ export class CommonLogger extends ConsoleLogger implements LoggerService {
           }
         }
       } else {
-        item.pushBack(new Content(context, String(message)));
+        item.pushBack(new Content(context, String(this.getConsoleMessage(message))));
       }
 
       const loggroup = new LogGroup();
