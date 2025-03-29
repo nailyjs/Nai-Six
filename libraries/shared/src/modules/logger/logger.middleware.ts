@@ -35,12 +35,13 @@ export class LoggerMiddleware implements NestMiddleware {
 
   public use(req: Request, res: Response, next: NextFunction) {
     const random = this.generateFiveDigitNumber();
+    const timestamp = new Date().getTime();
     this.commonLogger.log(`${random} START ${req.method} {${req.originalUrl}} ${req.ip}`);
     this.commonLogger.debug(`${random} PARAMS: ${JSON.stringify(req.params)}`);
     this.commonLogger.debug(`${random} QUERY: ${JSON.stringify(req.query)}`);
     this.commonLogger.debug(`${random} BODY: ${JSON.stringify(req.body)}`);
     req.once("end", () => {
-      this.commonLogger.log(`${random} END ${req.method} {${req.originalUrl}} ${req.ip} ${res.statusCode}`);
+      this.commonLogger.log(`${random} END ${req.method} {${req.originalUrl}} ${req.ip} ${res.statusCode} <${new Date().getTime() - timestamp}ms>`);
     });
     next();
   }
