@@ -41,7 +41,7 @@ export class LoggerMiddleware implements NestMiddleware {
     this.commonLogger.debug(`${random} QUERY: ${JSON.stringify(req.query)}`);
     this.commonLogger.debug(`${random} BODY: ${JSON.stringify(req.body)}`);
     req.once("end", () => {
-      this.commonLogger.log(`${random} END ${req.method} {${req.originalUrl}} ${req.ip} ${res.statusCode} <${new Date().getTime() - timestamp}ms>`);
+      this.commonLogger.log(`${random} END ${req.method} {${req.originalUrl}} ${req.ip} ${res.statusCode} <${new Date().getTime() - timestamp}>ms`);
     });
     next();
   }
