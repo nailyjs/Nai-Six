@@ -20,8 +20,37 @@ export abstract class TransportCodeService {
     return code;
   }
 
+  private readonly _maxReadCount = 100;
+  private readonly _userLimitBucket = new Map<string, { count: number; code: number }>();
+
   public async checkCode(verifyData: string, code: number): Promise<boolean> {
-    return (await this.cacheManager.get(this.getRediskey(verifyData))) === code;
+    const cachedCode = await this.cacheManager.get(this.getRediskey(verifyData));
+
+    // 如果Redis中没有验证码（已过期），清除Map中的记录
+    if (cachedCode === undefined || cachedCode === null) {
+      this._userLimitBucket.delete(verifyData);
+      return false;
+    }
+
+    const isRight = cachedCode === code;
+    if (!isRight) return false;
+
+    // 限制获取验证码次数，100次（由 _maxReadCount 控制）
+    // 如果超过100次，则在100次后，将验证码从redis中删除
+    let currentCount = this._userLimitBucket.get(verifyData);
+    if (!currentCount) {
+      currentCount = { count: 0, code };
+      this._userLimitBucket.set(verifyData, currentCount);
+    }
+
+    currentCount.count++;
+    if (currentCount.count >= this._maxReadCount) {
+      await this.deleteCode(verifyData);
+      this._userLimitBucket.delete(verifyData);
+      return false;
+    }
+
+    return isRight;
   }
 
   public deleteCode(verifyData: string): Promise<void> {
