@@ -25,16 +25,16 @@ export class LoggerMiddleware implements NestMiddleware {
     commonLogger.setContext(`Request`);
   }
 
-  public generateFiveDigitNumber() {
+  public generateTenDigitNumber() {
     // 生成0到1之间的随机小数
     const randomDecimal = Math.random();
-    // 将随机小数乘以90000，加上10000，得到范围在10000到99999之间的五位整数
-    const fiveDigitNumber = Math.floor(randomDecimal * 90000) + 10000;
-    return fiveDigitNumber;
+    // 将随机小数乘以9000000000，加上1000000000，得到范围在1000000000到9999999999之间的十位整数
+    const tenDigitNumber = Math.floor(randomDecimal * 9000000000) + 1000000000;
+    return tenDigitNumber;
   }
 
   public use(req: Request, res: Response, next: NextFunction) {
-    const random = this.generateFiveDigitNumber();
+    const random = this.generateTenDigitNumber();
     const timestamp = new Date().getTime();
     this.commonLogger.log(`${random} START ${req.method} {${req.originalUrl}} ${req.ip}`);
     this.commonLogger.debug(`${random} PARAMS: ${JSON.stringify(req.params)}`);
