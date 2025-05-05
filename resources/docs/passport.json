@@ -757,7 +757,7 @@
             "description": "消息 除非请求过程中网络请求失败才会抛出其他错误。其余的情况，请根据`remoteData`的内容参照对应的判断",
             "default": "成功"
           },
-          "timestamp": { "type": "object", "description": "时间戳", "default": "2025-05-05T03:14:45.358Z" },
+          "timestamp": { "type": "object", "description": "时间戳", "default": "2025-05-05T03:41:51.879Z" },
           "data": { "description": "数据", "allOf": [{ "$ref": "#/components/schemas/PostUserPayData201ResDTO" }] }
         },
         "required": ["statusCode", "code", "message", "timestamp", "data"]

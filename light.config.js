@@ -23,6 +23,7 @@ module.exports = {
       name: "six-Lightning",
       script: "./resources/dist/apps/lightning/src/main.js",
       exec_mode: "cluster",
+      instances: require("os").cpus().length,
       env: {
         NODE_ENV: "production",
         NEW_RELIC_PROXY_URL: "http://127.0.0.1:7890",
@@ -34,6 +35,7 @@ module.exports = {
       name: "six-Passport",
       script: "./resources/dist/apps/passport/src/main.js",
       exec_mode: "cluster",
+      instances: require("os").cpus().length,
       env: {
         NODE_ENV: "production",
         NEW_RELIC_PROXY_URL: "http://127.0.0.1:7890",
@@ -51,6 +53,7 @@ module.exports = {
       name: "six-Common",
       script: "./resources/dist/apps/common/src/main.js",
       exec_mode: "cluster",
+      instances: require("os").cpus().length,
       env: {
         NODE_ENV: "production",
         NEW_RELIC_PROXY_URL: "http://127.0.0.1:7890",
