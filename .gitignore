@@ -32,3 +32,5 @@ isolate-*
 0x-*
 
 newrelic_agent.log
+
+tsx-*
