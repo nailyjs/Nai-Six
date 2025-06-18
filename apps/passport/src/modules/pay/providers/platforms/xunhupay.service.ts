@@ -62,7 +62,7 @@ export class XunhupayService implements PayServiceImpl {
     return "success";
   }
 
-  public async pay(amount: number, payType: IPayType, user: User): Promise<any> {
+  public async pay(amount: number, payType: IPayType, user: User, productName: string): Promise<any> {
     const payConfiguration = this.payService.getPayConfiguration(payType);
     const { appid, appsecret, notify_url, return_url, callback_url, gateway, id, ...rest } = payConfiguration;
     const trade_order_id = await this.payService.getOrderNo();
@@ -79,6 +79,8 @@ export class XunhupayService implements PayServiceImpl {
       nonce_str: randomStr,
       attach: randomStr,
       payment: payType === "Xunhupay_Wechat" ? "wechat" : "alipay",
+      title: productName,
+      wap_name: productName,
       ...rest,
     };
     const hash = this.wxPaySign(requestBody, appsecret);

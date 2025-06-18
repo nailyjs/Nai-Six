@@ -1,7 +1,7 @@
 import { BadRequestException, Body, Controller, Inject, Post, UseInterceptors } from "@nestjs/common";
 import { ApiCreatedResponse, ApiTags } from "@nestjs/swagger";
 import { ResInterceptor } from "cc.naily.six.shared";
-import { PayXunhupayQueryDTO, PostUserPayBodyDTO } from "../dtos/pay/pay.dto";
+import { PayXunhupayQueryDTO, PostUserPayBodyDTO, PostUserPayV2BodyDTO } from "../dtos/pay/pay.dto";
 import { Auth, JwtLoginPayload, User } from "cc.naily.six.auth";
 import { PayService } from "../providers/pay.service";
 import { XunhupayService } from "../providers/platforms/xunhupay.service";
@@ -31,6 +31,7 @@ export class PayController {
    * @author Zero <gczgroup@qq.com>
    * @date 2024/02/11
    * @memberof PayController
+   * @deprecated 请使用payV2
    */
   @Post()
   @Auth()
@@ -46,7 +47,32 @@ export class PayController {
     if (body.payType === "Wechat_Official") {
       return "暂不支持";
     } else {
-      return await this.xunhupayService.pay(body.amount, body.payType, userInstance);
+      return await this.xunhupayService.pay(body.amount, body.payType, userInstance, body.productName);
+    }
+  }
+
+  /**
+   * 充值V2
+   *
+   * @author Zero <gczgroup@qq.com>
+   * @date 2025/06/18
+   * @param {PostUserPayV2BodyDTO} body
+   * @param {JwtLoginPayload} user
+   * @memberof PayController
+   */
+  @Post("v2")
+  @Auth()
+  @UseInterceptors(ResInterceptor)
+  @ApiCreatedResponse({ type: PostUserPay201ResDTO })
+  public async payV2(@Body() body: PostUserPayV2BodyDTO, @User() user: JwtLoginPayload) {
+    const userInstance = await this.prismaService.user.findUnique({ where: { userID: user.userID } });
+    if (!userInstance) throw new BadRequestException(1099);
+    if (body.productID === "9fdbcbe1-110f-4057-8b0f-0409bd34de63") {
+      return await this.xunhupayService.pay(6.0, "Xunhupay_Alipay", userInstance, "腕上浏览器一个月会员");
+    } else if (body.productID === "8adfe225-963b-4d5f-ab6b-da8c46855488") {
+      return await this.xunhupayService.pay(48.0, "Xunhupay_Alipay", userInstance, "腕上浏览器一年会员");
+    } else {
+      throw new BadRequestException(1099);
     }
   }
 
