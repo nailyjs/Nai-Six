@@ -68,9 +68,9 @@ export class PayController {
     const userInstance = await this.prismaService.user.findUnique({ where: { userID: user.userID } });
     if (!userInstance) throw new BadRequestException(1099);
     if (body.productID === "9fdbcbe1-110f-4057-8b0f-0409bd34de63") {
-      return await this.xunhupayService.pay(6.0, "Xunhupay_Alipay", userInstance, "腕上浏览器一个月会员");
+      return await this.xunhupayService.pay(6.0, "Xunhupay_Wechat", userInstance, "腕上浏览器一个月会员");
     } else if (body.productID === "8adfe225-963b-4d5f-ab6b-da8c46855488") {
-      return await this.xunhupayService.pay(48.0, "Xunhupay_Alipay", userInstance, "腕上浏览器一年会员");
+      return await this.xunhupayService.pay(48.0, "Xunhupay_Wechat", userInstance, "腕上浏览器一年会员");
     } else {
       throw new BadRequestException(1099);
     }
