@@ -412,15 +412,6 @@
         "security": [{ "bearer": [] }]
       }
     },
-    "/user/data/xxx": {
-      "post": {
-        "operationId": "UserDataController_xxx",
-        "parameters": [],
-        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/XXXUserDataBodyDTO" } } } },
-        "responses": { "201": { "description": "" } },
-        "tags": ["用户数据"]
-      }
-    },
     "/user/pay": {
       "post": {
         "operationId": "PayController_pay",
@@ -871,11 +862,6 @@
         },
         "required": ["key", "value"]
       },
-      "XXXUserDataBodyDTO": {
-        "type": "object",
-        "properties": { "s": { "type": "number" }, "developerAccessKey": { "type": "string" } },
-        "required": ["s", "developerAccessKey"]
-      },
       "PostUserPayBodyDTO": {
         "type": "object",
         "properties": {
@@ -966,7 +952,7 @@
           "timestamp": {
             "type": "object",
             "description": "时间戳\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@memberof PostUserPay201ResDTO",
-            "default": "2025-06-18T06:11:12.909Z"
+            "default": "2025-06-25T10:58:02.800Z"
           },
           "data": {
             "description": "数据\n\n@author Zero <gczgroup@qq.com>\n@date 2024/02/11\n@type {PostUserPayData201ResDTO}\n@memberof PostUserPay201ResDTO",

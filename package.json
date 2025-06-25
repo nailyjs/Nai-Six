@@ -37,7 +37,7 @@
     "format": "prettier --write ./",
     "lint": "eslint \"./**/*.ts\" --fix",
     "prepare": "husky install && pnpx prisma generate && pnpm build:shared && pnpm build",
-    "generate": "pnpx prisma generate",
+    "generate": "prisma generate",
     "prisma-multischema": "prisma-multischema",
     "lint-staged": "lint-staged",
     "0x": "0x"
