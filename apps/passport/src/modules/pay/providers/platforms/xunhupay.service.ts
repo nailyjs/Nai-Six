@@ -68,6 +68,7 @@ export class XunhupayService implements PayServiceImpl {
     const trade_order_id = await this.payService.getOrderNo();
     const randomStr = new Date().getTime() + "-" + Math.random().toString().substring(2, 10);
     const requestBody: XunhupayBody = {
+      ...rest,
       version: 1.1,
       appid: `${appid}`,
       trade_order_id: trade_order_id,
@@ -81,7 +82,6 @@ export class XunhupayService implements PayServiceImpl {
       payment: payType === "Xunhupay_Wechat" ? "wechat" : "alipay",
       title: productName,
       wap_name: productName,
-      ...rest,
     };
     const hash = this.wxPaySign(requestBody, appsecret);
     requestBody.hash = hash;
